@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title> Vigenere Decoding </title>
+<meta charset="uft-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel ="stylesheet" type="text/css" href="vigenereHomePageStyle.css">
+
+
+<script src="bothEnAndDecodeScript.js"></script> 
+
+
+
+</head>
+
+
+
+<body class="dark-theme || light-theme">
+
+<div id="wrapper">
+	<div id="header">
+		<label class="switch" onchange = "toggleTheme()">
+			<input type="checkbox" checked>
+			<span class="slider"></span>
+		</label>
+		<h1><i>The Vigen&egrave;re Cipher</i></h1>
+		<h3>by Gilad Moskowitz</h3>
+	</div id="header">
+	<div id="content">
+		<ul>
+			<li> plaintext: <br>
+			<textarea id="plaintext" rows="10" cols="30"></textarea> </li>
+			<li>
+			key: <br> <input type="text" id="key"/> <br><br>
+			<button onclick="CryptoAnalysisVigenere()">Decode</button> <br><br>
+			<button onclick="VigenereEncoder()">Encode (All)</button> <br><br> 
+			<button onclick="VigenereEncoderAlpha()">Encode (Only letters)</button>
+			</li>
+			<li>
+			ciphertext: <br>
+			<textarea id="ciphertext" rows="10" cols="30"></textarea></li>
+		</ul>
+		
+		</br><p></p></br>
+		<div id="content_border"></div>
+		<div id="content_border"></div>
+		<div id="description">
+			<h3><i>Description</i></h3>
+			<p>&emsp; This program uses the <a href="vigenereDescription.html">Vigen&egrave;re Cipher</a> to encode and decode English text. 
+			When encoding English text, simply write the text you want encoded in the "plaintext" textbox, and the key in the corresponding "key" textbox. 
+			You can then press on "Encode (All)" which will return ciphertext that includes all the non-letter characters into the "ciphertext" textbox.
+			Alternatively, you can press on "Encode (Only letters)" which will return ciphertext with only the letter characters. 
+			</p>
+			<p>&emsp; You can also decode an English text encoded with the Vigen&egrave;re Cipher by inputting it in the "ciphertext" textbox. 
+			The algorithm for this process is described <a href="vigenereDescription.html#Algorithm">here</a>. 
+			The decoder can only work effeciently for large sized ciphertext, but the algorithm works well enough that it can often decipher text of "length" at least 30.
+			In this instance, the "length" of the ciphertext refers to the number of English letters contained in the text. 
+			</p>
+			<p></p></br><p></p>
+		</div>
+	</div>
+</div>
+
+
+
+
+</body>
+</html>
+
+
