@@ -399,10 +399,12 @@ function toggleTheme(){
 	document.body.classList.toggle("dark-theme");
 	if (currentTheme == "darkmode"){
 		document.getElementById("vDescription").src = "Vigenere_description_light_mode.pdf";
+		document.getElementById("vAlgorithm").src = "Vigenere_Algorithm_light_mode.pdf";
 		currentTheme = "lightmode";
 	}
 	else {
 		document.getElementById("vDescription").src = "Vigenere_description_dark_mode.pdf";
+		document.getElementById("vAlgorithm").src = "Vigenere_Algorithm_dark_mode.pdf";
 		currentTheme = "darkmode";
 	}
 }
