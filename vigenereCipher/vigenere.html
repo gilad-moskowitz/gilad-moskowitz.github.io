@@ -17,7 +17,7 @@
 
 
 
-<body class="dark-theme || light-theme">
+<body class="dark-theme || light-theme" onload="toggleButtonLabel()">
 
 <div id="wrapper">
 	<div id="header">
@@ -34,9 +34,9 @@
 			<textarea id="plaintext" rows="10" cols="30"></textarea> </li>
 			<li>
 			key: <br> <input type="text" id="key"/> <br><br>
-			<button onclick="CryptoAnalysisVigenere()">Decode</button> <br><br>
-			<button onclick="VigenereEncoder()">Encode (All)</button> <br><br> 
-			<button onclick="VigenereEncoderAlpha()">Encode (Only letters)</button>
+			<button id="decryptButton" onclick="CryptoAnalysisVigenere(); toggleButtonLabel();">Cryptanalyze</button> <br><br>
+			<button onclick="VigenereEncoder(); toggleButtonLabel();">Encrypt (All)</button> <br><br> 
+			<button onclick="VigenereEncoderAlpha(); toggleButtonLabel();">Encrypt (Only letters)</button>
 			</li>
 			<li>
 			ciphertext: <br>
@@ -48,25 +48,34 @@
 		<div id="content_border"></div>
 		<div id="description">
 			<h3><i>Description</i></h3>
-			<p>&emsp; This program uses the <a href="vigenereDescription.html">Vigen&egrave;re Cipher</a> to encode and decode English text. 
-			When encoding English text, simply write the text you want encoded in the "plaintext" textbox, and the key in the corresponding "key" textbox. 
-			You can then press on "Encode (All)" which will return ciphertext that includes all the non-letter characters into the "ciphertext" textbox.
-			Alternatively, you can press on "Encode (Only letters)" which will return ciphertext with only the letter characters. 
+			<p>&emsp; This program uses the <a href="vigenereDescription.html">Vigen&egrave;re Cipher</a> to encrypt and cryptanalyze English text. 
+			When encrypting English text, simply write the text you want encrypted in the "plaintext" textbox, and the key in the corresponding "key" textbox. 
+			You can then press on "Encrypt (All)" which will return ciphertext that includes all the non-letter characters into the "ciphertext" textbox.
+			Alternatively, you can press on "Encrypt (Only letters)" which will return ciphertext with only the letter characters. 
 			</p>
-			<p>&emsp; You can also decode an English text encoded with the Vigen&egrave;re Cipher by inputting it in the "ciphertext" textbox. 
+			<p>&emsp; You can also cryptanalyze an English text encoded with the Vigen&egrave;re Cipher by inputting it in the "ciphertext" textbox. 
 			The algorithm for this process is described <a href="vigenereDescription.html#Algorithm">here</a>. 
-			The decoder can only work effeciently for large sized ciphertext, but the algorithm works well enough that it can often decipher text of "length" at least 30.
+			The algorithm can only work effeciently for large sized ciphertext, but the it works well enough that it can often cryptanalyze text of "length" at least 30.
 			In this instance, the "length" of the ciphertext refers to the number of English letters contained in the text. 
+			If there is any text in the "key" textbox, the algorithm with only decipher the ciphertext using the given key.
 			</p>
 			<p></p></br><p></p>
 		</div>
 	</div>
 </div>
 
+<script>
+var texting = document.getElementById("key");
+texting.addEventListener('input', toggleButtonLabel);
 
-
+function toggleButtonLabel(){
+	let currentText = document.getElementById("key").value
+	if (currentText == "")
+		document.getElementById("decryptButton").innerHTML = "Cryptanalyze";
+	else
+		document.getElementById("decryptButton").innerHTML = "Decipher";
+}
+</script>
 
 </body>
 </html>
-
-
