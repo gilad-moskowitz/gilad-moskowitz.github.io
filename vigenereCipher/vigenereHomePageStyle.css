@@ -66,6 +66,15 @@ body {
 	padding-left: 100px;
 }
 
+#header a{
+	font-style: normal;
+	text-shadow: none;
+}
+
+#header a:hover {
+	text-decoration: underline;
+}
+
 #header label{
 	display: inline-block;
 	float: right;
