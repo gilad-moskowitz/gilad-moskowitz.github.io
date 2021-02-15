@@ -1,8 +1,104 @@
 <!DOCTYPE html>
 <html>
-<body>
-<h1>Home Page</h1>
-<p>I'm hosted with GitHub Pages.</p>
-<li><h3><a href="vigenereCipher/vigenere.html">Vigenere Cipher</a></h3></li>
+<!--
+<head>
+
+<title> Gilad Homepage </title>
+<meta charset="uft-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel ="stylesheet" type="text/css" href="homePageStyle.css">
+
+<script src="homepageJavascript.js"></script> 
+</head>
+-->
+
+<html>
+<head>
+<link rel ="stylesheet" type="text/css" href="homePageStyle.css">
+<script src="homepageJavascript.js"></script> 
+</head>
+<body class="dark-theme || light-theme" onload="typeUpPage()">
+<nav>
+
+	<ul>
+		<li><p>Gilad Moskowitz Homepage</p></li><li>
+		<a class="active" href="">Home</a></li><li>
+		<a href="project.html">Projects</a></li><li>
+		<a href="resume.html">Resume</a></li><li>
+		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
+		<li>
+			<label class="switch" onchange = "toggleTheme()">
+			<input type="checkbox" checked>
+			<span class="slider"></span>
+			</label>
+		</li>
+	</ul>
+</nav>
+<div id="wrapper">
+	<div id="introduction">
+		<p id="introduce"></p>
+	</div>
+</div>
+
+<script>
+var textin = "Hello, \n \n My name is Gilad Moskowitz and I am a mathematician, programmer, and avid fan of tabletop games. I completed my undergraduate education at UCLA where I double majored in Chemistry and Mathematics. I then took a small break from education to work and travel the world. I returned to school to pursue a M.S. in Applied Mathematics with a Concentration in Communication Systems at SDSU. My primary mathematic interests are number theory, abstract algebra, and combinatorics. I also enjoy applying machine learning and other algorithmic approaches to attempt to solve difficult math problems. \n \n Aside from my math and programming interests, in my free time I enjoy playing a variety of tabletop games, such as Settlers of Catan (with the Cities and Knights expansion, of course), chess, and D&D. I also love playing basketball and tennis, and occasionally some video games.";
+var count = 0;
+var out = "";
+var Skip = false;
+
+
+function typeUpPage() {
+	if(Skip)
+		return 0;
+	if (count == textin.length){
+		document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>');
+		noSkip = false;
+		return 0;
+	} 
+	else{
+		if((count < textin.length - 1) && (textin[count + 1] == "\n")){
+			out += textin[count];
+			count += 1;
+			document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
+			var t = setTimeout(function(){ typeUpPage() }, 100);
+		}
+		else{
+			out += textin[count];
+			count += 1;
+			document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
+			var t = setTimeout(function(){ typeUpPage() }, 35);
+		}
+	}
+}
+
+function pause(){
+	count += 1;
+	out += textin[count];
+	document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
+}
+
+var thing = "";
+var cursor = true;
+var speed = 250;
+setInterval(() => {
+	if(cursor) {
+		thing = "";
+		cursor = false;
+	}else {
+		thing = "|";
+		cursor = true;
+	}
+}, speed);
+
+
+function skipTyping() {
+	Skip = true;
+	document.getElementById("introduce").innerHTML = textin.replace(/\n/g, '<br/>');
+}
+document.body.addEventListener("click", skipTyping)
+</script>
+
 </body>
+
+
 </html>
