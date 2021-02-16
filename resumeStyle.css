@@ -1,6 +1,7 @@
 body.light-theme{
 	--bkg-color: #FFF;
 	--text-color: #000000;
+	--text-color-resume: #000000;
 	--text-color-url: #0080FF;
 	--text-area-color: #FFF;
 	--button-color: #b3ffff;
@@ -16,6 +17,7 @@ body.light-theme{
 body.dark-theme{
 	--bkg-color: #404040;
 	--text-color: #FFF;
+	--text-color-resume: #a3c2a3;
 	--text-color-url: #FFF;
 	--text-color-new: #35CC00;
 	--text-area-color: #999;
@@ -153,6 +155,6 @@ nav li a:hover {
 #Resume {
 	margin-left: 25mm;
 	margin-right: 25mm;
-	color: var(--text-color);
+	color: var(--text-color-resume);
 }
 
