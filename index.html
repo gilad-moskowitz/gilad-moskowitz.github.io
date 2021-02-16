@@ -17,7 +17,7 @@
 <link rel ="stylesheet" type="text/css" href="homePageStyle.css">
 <script src="homepageJavascript.js"></script> 
 </head>
-<body class="dark-theme || light-theme" onload="typeUpPage()">
+<body class="dark-theme || light-theme" onload="typeUpPage(); setTheme()">
 <nav>
 
 	<ul>
@@ -28,7 +28,7 @@
 		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
 		<li>
 			<label class="switch" onchange = "toggleTheme()">
-			<input type="checkbox" checked>
+			<input type="checkbox" id="darkModeSwitch" checked>
 			<span class="slider"></span>
 			</label>
 		</li>
@@ -96,6 +96,15 @@ function skipTyping() {
 	document.getElementById("introduce").innerHTML = textin.replace(/\n/g, '<br/>');
 }
 document.body.addEventListener("click", skipTyping)
+
+function setTheme() {
+	if(localStorage.myTheme == "light"){
+		document.body.classList.toggle("dark-theme");
+		document.getElementById("darkModeSwitch").checked = false;
+	}
+}
+
+
 </script>
 
 </body>
