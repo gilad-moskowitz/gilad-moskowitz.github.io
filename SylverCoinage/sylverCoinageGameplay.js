@@ -11,21 +11,23 @@ var currentGCD = -1;
 
 /** Reset all parameters **/
 function restartGame(){
+	gamesCounter += 1;
     currentTurn = -1;
     movesPlayed = [];
-    gamesCounter = 0;
     p1Wins = 0;
     p2Wins = 0;
     p1Penalties = 0;
     p2Penalties = 0;
     remainingGaps = [];
+	currentGCD = -1;
     document.getElementById("move").value = "";
     document.getElementById("currentTurn").innerHTML = "Current Turn: Player 1";
-    document.getElementById("gameNumber").innerHTML = "Initializing...";
+    document.getElementById("gameNumber").innerHTML = "Game " + (gamesCounter + 1);
     document.getElementById("movesAlready").innerHTML = "Initializing...";
     document.getElementById("movesLeft").innerHTML = "Initializing...";
     document.getElementById("penalties").innerHTML = "";
     document.getElementById("GameOver").innerHTML = "";
+	document.getElementById("gameButton").style.display = 'initial';
     return 0;
 }
 
@@ -161,6 +163,8 @@ function gaps(Semigroup){
 function getMove(){
     let getNewMove = document.getElementById("move").value;
     document.getElementById("move").value = "";
+	if (getNewMove == "")
+		return 0;
     return getNewMove;
 }
 
@@ -170,6 +174,8 @@ function legalMove(thisMove){
         return false;
     if (thisMove == "")
         return false;
+	if(movesPlayed.includes(thisMove))
+		return false;
     if(movesPlayed.length == 0)
         return true;
     if(currentGCD == -1)
@@ -355,11 +361,13 @@ function checkGameState(){
             p1Wins += 1;
             document.getElementById("currentTurn").innerHTML = "Game Over";
             document.getElementById("GameOver").innerHTML = "Player 1 wins " + "Current Score: " + [p1Wins, p2Wins];
+			document.getElementById("gameButton").style.display = 'none';
         }
         else {
             p2Wins += 1;
             document.getElementById("currentTurn").innerHTML = "Game Over";
             document.getElementById("GameOver").innerHTML = "Player 2 wins " + "Current Score: " + [p1Wins, p2Wins];
+			document.getElementById("gameButton").style.display = 'none';
         }
     }
     return [p1Wins, p2Wins];
@@ -382,12 +390,12 @@ function penaltyForPlayer(){
         if(p2Penalties >= 3){
             document.getElementById("penalties").innerHTML = "P2 has too many penalties, you lose";
             movesPlayed.push(1);
-            document.getElementById("movesAlready").innerHTML = movesPlayed;
         }
         else{
             document.getElementById("penalties").innerHTML = "P1 has " + p1Penalties + " penalties, and P2 has " + p2Penalties + " penalties";
         }
     }
+	checkGameState();
 }
 
 /** Code for playing **/
