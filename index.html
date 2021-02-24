@@ -9,7 +9,7 @@
 <link rel ="stylesheet" type="text/css" href="homePageStyle.css">
 
 </head>
-<body class="dark-theme || light-theme" onload="typeUpPage(); setTheme();">
+<body class="dark-theme || light-theme" onload="newTypingFunc(); setTheme();">
 <nav>
 	<ul>
 		<li><p>Gilad Moskowitz Homepage</p></li><li>
@@ -28,18 +28,22 @@
 <div id="wrapper">
 	<div id="introduction">
 		<p id="introduce"></p>
+		<p id="fullPage">Hello, \n \n My name is Gilad Moskowitz and I am a mathematician, programmer, and avid fan of tabletop games. I completed my undergraduate education at UCLA where I double majored in Chemistry and Mathematics. I then took a small break from education to work and travel the world. I returned to school to pursue a M.S. in Applied Mathematics with a Concentration in Communication Systems at SDSU. My primary mathematic interests are number theory, abstract algebra, and combinatorics. I also enjoy applying machine learning and other algorithmic approaches to attempt to solve difficult math problems. \n \n Aside from my math and programming interests, in my free time I enjoy playing a variety of tabletop games, such as Settlers of Catan (with the Cities and Knights expansion, of course), chess, and D&D. I also love playing basketball and tennis, and occasionally some video games.</p>
 	</div>
 </div>
 
 <script src="homepageJavascript.js"></script> 
 <script>
 var textin = "Hello (click to skip), \n \n My name is Gilad Moskowitz and I am a mathematician, programmer, and avid fan of tabletop games. I completed my undergraduate education at UCLA where I double majored in Chemistry and Mathematics. I then took a small break from education to work and travel the world. I returned to school to pursue a M.S. in Applied Mathematics with a Concentration in Communication Systems at SDSU. My primary mathematic interests are number theory, abstract algebra, and combinatorics. I also enjoy applying machine learning and other algorithmic approaches to attempt to solve difficult math problems. \n \n Aside from my math and programming interests, in my free time I enjoy playing a variety of tabletop games, such as Settlers of Catan (with the Cities and Knights expansion, of course), chess, and D&D. I also love playing basketball and tennis, and occasionally some video games.";
-var textin2 = "Hello, \n \n My name is Gilad Moskowitz and I am a mathematician, programmer, and avid fan of tabletop games. I completed my undergraduate education at UCLA where I double majored in Chemistry and Mathematics. I then took a small break from education to work and travel the world. I returned to school to pursue a M.S. in Applied Mathematics with a Concentration in Communication Systems at SDSU. My primary mathematic interests are number theory, abstract algebra, and combinatorics. I also enjoy applying machine learning and other algorithmic approaches to attempt to solve difficult math problems. \n \n Aside from my math and programming interests, in my free time I enjoy playing a variety of tabletop games, such as Settlers of Catan (with the Cities and Knights expansion, of course), chess, and D&D. I also love playing basketball and tennis, and occasionally some video games.";
+var textin2 = "I completed my undergraduate education at UCLA where I double majored in Chemistry and Mathematics. I then took a small break from education to work and travel the world. I returned to school to pursue a M.S. in Applied Mathematics with a Concentration in Communication Systems at SDSU. My primary mathematic interests are number theory, abstract algebra, and combinatorics. I also enjoy applying machine learning and other algorithmic approaches to attempt to solve difficult math problems. \n \n Aside from my math and programming interests, in my free time I enjoy playing a variety of tabletop games, such as Settlers of Catan (with the Cities and Knights expansion, of course), chess, and D&D. I also love playing basketball and tennis, and occasionally some video games.";
 var introductoryText = "Hello, my name is Gilad Moskowitz. \n \n I am a mathematician, program, and avid fan of tabletop games.";
 var count = 0;
 var out = "";
 var Skip = false;
+var Skip2 = false;
+var clickCount = 0;
 
+document.getElementById("fullPage").innerHTML = textin2.replace(/\n/g, '<br/>');
 
 function typeUpPage() {
 	if(Skip)
@@ -87,7 +91,15 @@ setInterval(() => {
 
 function skipTyping() {
 	Skip = true;
-	document.getElementById("introduce").innerHTML = textin2.replace(/\n/g, '<br/>');
+	clickCount += 1;
+	document.getElementById("introduce").innerHTML = introductoryText.replace(/\n/g, '<br/>');
+	if(clickCount < 2)
+		var finals = setTimeout(function(){ fadeOutEffect() }, 1000);
+	else{
+	Skip2 = true;
+		document.getElementById("introduce").remove();
+		document.getElementById("fullPage").style.opacity = 1;
+	}
 }
 document.body.addEventListener("click", skipTyping)
 
@@ -101,27 +113,76 @@ function setTheme() {
 
 /**SETTING UP PAGE**/
 function newTypingFunc() {
-	if(Skip)
+	if(Skip2){
 		return 0;
-	if (count == textin.length){
-		document.getElementById("introduce").innerHTML = textin2.replace(/\n/g, '<br/>');
+	}
+	if(Skip){
+		var finals = setTimeout(function(){ fadeOutEffect() }, 700);
+		return 0;
+	}
+	if (count == introductoryText.length){
+		document.getElementById("introduce").innerHTML = introductoryText.replace(/\n/g, '<br/>');
 		noSkip = false;
+		var finals = setTimeout(function(){ fadeOutEffect() }, 700);
 		return 0;
 	} 
 	else{
-		if((count < textin.length - 1) && (textin[count + 1] == "\n")){
-			out += textin[count];
+		if((count < introductoryText.length - 1) && (introductoryText[count + 1] == "\n")){
+			out += introductoryText[count];
 			count += 1;
 			document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
-			var t = setTimeout(function(){ typeUpPage() }, 100);
+			var t = setTimeout(function(){ newTypingFunc() }, 100);
 		}
 		else{
-			out += textin[count];
+			out += introductoryText[count];
 			count += 1;
 			document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
-			var t = setTimeout(function(){ typeUpPage() }, 35);
+			var t = setTimeout(function(){ newTypingFunc() }, 35);
 		}
 	}
+}
+
+function fadeOutEffect() {
+	if(Skip2)
+		return 0;
+	var rate = 0.002;
+    var fadeTarget = document.getElementById("introduce");
+    var fadeEffect = setInterval(function () {
+        if (!fadeTarget.style.opacity) {
+            fadeTarget.style.opacity = 1;
+        }
+        if (fadeTarget.style.opacity > 0) {
+			if(fadeTarget.style.opacity < 0.10)
+				rate = 0.004;
+			else
+				rate = rate*1.5;
+            fadeTarget.style.opacity -= rate;
+        } else {
+            clearInterval(fadeEffect);
+        }
+    }, 50);
+	setTimeout(function(){ fadeTarget.remove() }, 700);
+	setTimeout(function(){ fadeInEffect() }, 700);
+}
+
+
+function fadeInEffect() {
+	var rate2 = 0.1;
+    var fadingTarget = document.getElementById("fullPage");
+    var fadingEffect = setInterval(function () {
+        if (fadingTarget.style.opacity < 1) {
+			if (fadingTarget.style.opacity) {
+				fadingTarget.style.opacity = 0;
+			}
+			if(fadingTarget.style.opacity > 0.90)
+				rate2 = 0.004;
+			else
+				rate2 = rate2*1.5;
+            fadingTarget.style.opacity += rate2;
+        } else {
+            clearInterval(fadingEffect);
+        }
+    }, 50);
 }
 
 
