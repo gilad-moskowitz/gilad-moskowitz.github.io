@@ -1,4 +1,3 @@
-
 //var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 var xmlhttp = new XMLHttpRequest();
 var url = "https://raw.githubusercontent.com/gilad-moskowitz/VigenereCryptanalysis/main/bigramLogFreq.json";
@@ -395,16 +394,3 @@ function VigenereEncoder(){
     document.getElementById("ciphertext").value = ciphertext;
 }
 
-function toggleTheme(){
-	document.body.classList.toggle("dark-theme");
-	if (currentTheme == "darkmode"){
-		document.getElementById("vDescription").src = "Vigenere_description_light_mode.pdf";
-		document.getElementById("vAlgorithm").src = "Vigenere_Algorithm_light_mode.pdf";
-		currentTheme = "lightmode";
-	}
-	else {
-		document.getElementById("vDescription").src = "Vigenere_description_dark_mode.pdf";
-		document.getElementById("vAlgorithm").src = "Vigenere_Algorithm_dark_mode.pdf";
-		currentTheme = "darkmode";
-	}
-}
