@@ -5,30 +5,34 @@ body.light-theme{
 	--text-color-url: #0080FF;
 	--text-area-color: #FFF;
 	--button-color: #b3ffff;
-	--wrapper-color: #FFF;
+	--wrapper-color: #ddddee;
 	--wrapper-color-old: #99ccff;
 	--button-hover-color: #99ffdd;
 	--toggle-switch-bkg-color: #eee;
 	--toggle-slider-bkg-color: #999;
 	--toggle-switch-bkg-hover-color: #000000;
-	--nav-bkg-color: #99ccff;
+	--nav-bkg-color: #000;
+	--nav-button-color: #5353ac;
+	--nav-text-color: #FFF;
 }
 
 body.dark-theme{
 	--bkg-color: #404040;
 	--text-color: #FFF;
-	--text-color-resume: #a3c2a3;
+	--text-color-resume: #a9a9d6;
 	--text-color-url: #FFF;
 	--text-color-new: #35CC00;
 	--text-area-color: #999;
 	--button-color: #607d8b;
-	--wrapper-color: #000;
+	--wrapper-color: #333;
 	--wrapper-color-old: #536878;
 	--button-hover-color: #5353ac;
 	--toggle-switch-bkg-color: #b3cce6;
 	--toggle-slider-bkg-color: #407dbf;
 	--toggle-switch-bkg-hover-color: #FFF;
-	--nav-bkg-color: #333;
+	--nav-bkg-color: #000;
+	--nav-button-color: #5353ac;
+	--nav-text-color: #FFF;
 }
 
 body {
@@ -48,7 +52,7 @@ nav {
 }
 
 nav p{
-	color: var(--text-color);
+	color: var(--nav-text-color);
 	font-style: italic;
 	font-weight: bold;
 	left: 20px;
@@ -73,14 +77,14 @@ nav li {
 }
 
 nav li a {
-	color: var(--text-color);
+	color: var(--nav-text-color);
 	text-align: center;
 	padding: 14px 50px; 
 	text-decoration: none;
 }
 
 nav li a:hover {
-	background-color: var(--button-hover-color);
+	background-color: var(--nav-button-color);
 }
 
 .switch {
@@ -158,3 +162,12 @@ nav li a:hover {
 	color: var(--text-color-resume);
 }
 
+#Resume a {
+	font-size: 15px;
+	text-decoration: none;
+	color: var(--text-color-url);
+}
+
+#Resume a:hover {
+	text-decoration: underline;
+}

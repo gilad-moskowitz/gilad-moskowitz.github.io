@@ -3,6 +3,41 @@ body.light-theme{
 	--text-color: #000000;
 	--text-area-color: #FFF;
 	--button-color: #b3ffff;
+	--wrapper-color: #ddddee;
+	--wrapper-color-old: #99ccff;
+	--button-hover-color: #99ffdd;
+	--toggle-switch-bkg-color: #eee;
+	--toggle-slider-bkg-color: #999;
+	--toggle-switch-bkg-hover-color: #000000;
+	--nav-bkg-color: #000;
+	--nav-button-color: #5353ac;
+	--nav-text-color: #FFF;
+}
+
+body.dark-theme{
+	--bkg-color: #000000;
+	--text-color: #FFF;
+	--text-color-new: #a9a9d6;
+	--text-area-color: #999;
+	--button-color: #607d8b;
+	--wrapper-color: #333;
+	--wrapper-color-old: #536878;
+	--button-hover-color: #5353ac;
+	--toggle-switch-bkg-color: #b3cce6;
+	--toggle-slider-bkg-color: #407dbf;
+	--toggle-switch-bkg-hover-color: #FFF;
+	--nav-bkg-color: #000;
+	--nav-button-color: #5353ac;
+	--nav-text-color: #FFF;
+}
+
+/** Old Color Scheme **/
+/**
+body.light-theme{
+	--bkg-color: #FFF;
+	--text-color: #000000;
+	--text-area-color: #FFF;
+	--button-color: #b3ffff;
 	--wrapper-color: #FFF;
 	--wrapper-color-old: #99ccff;
 	--button-hover-color: #99ffdd;
@@ -26,6 +61,7 @@ body.dark-theme{
 	--toggle-switch-bkg-hover-color: #FFF;
 	--nav-bkg-color: #333;
 }
+**/
 
 body {
     background : var(--wrapper-color);
@@ -44,7 +80,7 @@ nav {
 }
 
 nav p{
-	color: var(--text-color);
+	color: var(--nav-text-color);
 	font-style: italic;
 	font-weight: bold;
 	left: 20px;
@@ -69,14 +105,14 @@ nav li {
 }
 
 nav li a {
-	color: var(--text-color);
+	color: var(--nav-text-color);
 	text-align: center;
 	padding: 14px 50px; 
 	text-decoration: none;
 }
 
 nav li a:hover {
-	background-color: var(--button-hover-color);
+	background-color: var(--nav-button-color);
 }
 
 .switch {
@@ -128,9 +164,7 @@ nav li a:hover {
 	transform: translateX(17px);
 }
 
-.switch input:checked + .slider:before {
-	transform: translateX(17px);
-}
+
 
 #wrapper {
 	width: 90%;
@@ -145,13 +179,13 @@ nav li a:hover {
 	padding-right: 20px;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	font-family: 'Courier New', monospace;
+	font-family: 'Brush Script MT', monospace;
 }
 
 #introduce {
 	white-space: wrap;
 	color: var(--text-color-new);
-	font-size: 18pt;
+	font-size: 25pt;
 }
 
 #cursor{
