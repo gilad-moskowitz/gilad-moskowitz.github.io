@@ -186,6 +186,8 @@ nav li a:hover {
 	white-space: wrap;
 	color: var(--text-color-new);
 	font-size: 25pt;
+	text-align: center;
+	margin-top: 5%;
 }
 
 #cursor{

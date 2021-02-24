@@ -9,7 +9,7 @@
 <link rel ="stylesheet" type="text/css" href="homePageStyle.css">
 
 </head>
-<body class="dark-theme || light-theme" onload="typeUpPage(); setTheme()">
+<body class="dark-theme || light-theme" onload="typeUpPage(); setTheme();">
 <nav>
 	<ul>
 		<li><p>Gilad Moskowitz Homepage</p></li><li>
@@ -35,6 +35,7 @@
 <script>
 var textin = "Hello (click to skip), \n \n My name is Gilad Moskowitz and I am a mathematician, programmer, and avid fan of tabletop games. I completed my undergraduate education at UCLA where I double majored in Chemistry and Mathematics. I then took a small break from education to work and travel the world. I returned to school to pursue a M.S. in Applied Mathematics with a Concentration in Communication Systems at SDSU. My primary mathematic interests are number theory, abstract algebra, and combinatorics. I also enjoy applying machine learning and other algorithmic approaches to attempt to solve difficult math problems. \n \n Aside from my math and programming interests, in my free time I enjoy playing a variety of tabletop games, such as Settlers of Catan (with the Cities and Knights expansion, of course), chess, and D&D. I also love playing basketball and tennis, and occasionally some video games.";
 var textin2 = "Hello, \n \n My name is Gilad Moskowitz and I am a mathematician, programmer, and avid fan of tabletop games. I completed my undergraduate education at UCLA where I double majored in Chemistry and Mathematics. I then took a small break from education to work and travel the world. I returned to school to pursue a M.S. in Applied Mathematics with a Concentration in Communication Systems at SDSU. My primary mathematic interests are number theory, abstract algebra, and combinatorics. I also enjoy applying machine learning and other algorithmic approaches to attempt to solve difficult math problems. \n \n Aside from my math and programming interests, in my free time I enjoy playing a variety of tabletop games, such as Settlers of Catan (with the Cities and Knights expansion, of course), chess, and D&D. I also love playing basketball and tennis, and occasionally some video games.";
+var introductoryText = "Hello, my name is Gilad Moskowitz. \n \n I am a mathematician, program, and avid fan of tabletop games.";
 var count = 0;
 var out = "";
 var Skip = false;
@@ -90,10 +91,36 @@ function skipTyping() {
 }
 document.body.addEventListener("click", skipTyping)
 
+/**SETTING UP PAGE THEME**/
 function setTheme() {
 	if(localStorage.myTheme == "light"){
 		document.body.classList.toggle("dark-theme");
 		document.getElementById("darkModeSwitch").checked = false;
+	}
+}
+
+/**SETTING UP PAGE**/
+function newTypingFunc() {
+	if(Skip)
+		return 0;
+	if (count == textin.length){
+		document.getElementById("introduce").innerHTML = textin2.replace(/\n/g, '<br/>');
+		noSkip = false;
+		return 0;
+	} 
+	else{
+		if((count < textin.length - 1) && (textin[count + 1] == "\n")){
+			out += textin[count];
+			count += 1;
+			document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
+			var t = setTimeout(function(){ typeUpPage() }, 100);
+		}
+		else{
+			out += textin[count];
+			count += 1;
+			document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
+			var t = setTimeout(function(){ typeUpPage() }, 35);
+		}
 	}
 }
 
