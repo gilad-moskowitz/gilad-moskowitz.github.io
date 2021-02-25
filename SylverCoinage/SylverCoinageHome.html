@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title> Sylver Coinage </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel ="stylesheet" type="text/css" href="sylverCoinageStyle.css">
+<script src="sylverCoinageGameplay.js"></script> 
+</head>
+<body class="dark-theme || light-theme" onload="setTheme(); settingTheGameUp();">
+<nav>
+	<ul>
+		<li><p>Gilad Moskowitz Homepage</p></li><li>
+		<a href="file:///C:/Users/Gilad/Desktop/github%20IO/index.html">Home</a></li><li>
+		<a class="active" href="file:///C:/Users/Gilad/Desktop/github%20IO/project.html">Projects</a></li><li>
+		<a href="file:///C:/Users/Gilad/Desktop/github%20IO/resume.html">Resume</a></li><li>
+		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
+		<li>
+			<label class="switch" onchange = "toggleTheme()">
+			<input type="checkbox" id="darkModeSwitch" checked>
+			<span class="slider"></span>
+			</label>
+		</li>
+	</ul>
+</nav>
+<div id="wrapper">
+	<div id="header">
+		<h1><i>Sylver Coinage</i></h1>
+		<h3>by <a href="https://gilad-moskowitz.github.io/">Gilad Moskowitz</a></h3>
+	</div id="header">
+	<div id="game">
+		<button type="button" onclick="playVSHuman()" id="playHuman">Play Human</button>
+		<button type="button" onclick="playVSBot()" id="playBot">Play Bot</button>
+		<div id="firstPart">
+			<button type="button" onclick="restartGame()">Restart</button>
+			<button type="button" onclick="resetGame()">Reset (choose oponenent)</button>
+			<br>
+			<input type="number" id="move">
+		</div>
+		<div id = "vsBotGame">
+			<button type="button" onclick="playMoveVSBot()" id="gameButton">Play Move</button>
+		</div>
+		<div id = "vsHumanGame">
+			<button type="button" onclick="playMoveVSBot()" id="gameButton2">Play Move</button>
+		</div>
+		<div id="secondPart">
+			<p id="currentTurn">Current Turn: Player 1</p>
+			<p id="gameNumber">Game 1</p>
+			<p id="movesAlready">Initializing...</p>
+			<p id="movesLeft" style="white-space:wrap">Initializing...</p>
+			<p id="penalties"></p>
+			<p id="GameOver"><p>
+		</div>
+	</div>
+</div>
+
+
+</body>
+
+
+</html>
