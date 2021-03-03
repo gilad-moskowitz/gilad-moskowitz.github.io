@@ -627,24 +627,24 @@ function coverRelations(gap, linComb){
 
 
 /** Setting the page theme and coloration **/
-var currentTheme = "darkmode";
-if (localStorage.myTheme != "light"){
-	localStorage.myTheme = "dark";
-	document.getElementById("darkModeSwitch").checked = true;
+var currentTheme = "lightmode";
+if (localStorage.myTheme != "dark"){
+	localStorage.myTheme = "light";
+	document.getElementById("darkModeSwitch").checked = false;
 }
 
 function toggleTheme(){
-	if (localStorage.myTheme == "dark"){
-		currentTheme = "lightmode";
-		localStorage.myTheme = "light";
-		document.body.classList.toggle("dark-theme");
-		document.getElementById("darkModeSwitch").checked = false;
-	}
-	else {
+	if (localStorage.myTheme == "light"){
 		currentTheme = "darkmode";
 		localStorage.myTheme = "dark";
 		document.body.classList.toggle("dark-theme");
 		document.getElementById("darkModeSwitch").checked = true;
+	}
+	else {
+		currentTheme = "lightmode";
+		localStorage.myTheme = "light";
+		document.body.classList.toggle("dark-theme");
+		document.getElementById("darkModeSwitch").checked = false;
 	}
 }
 
