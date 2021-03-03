@@ -3,7 +3,7 @@ body.light-theme{
 	--text-color: #000000;
 	--text-area-color: #FFF;
 	--button-color: #b3ffff;
-	--wrapper-color: #FFF;
+	--wrapper-color: #d9d9f2;
 	--wrapper-color-old: #99ccff;
 	--button-hover-color: #99ffdd;
 	--toggle-switch-bkg-color: #eee;
@@ -13,22 +13,22 @@ body.light-theme{
 }
 
 body.dark-theme{
-	--bkg-color: #404040;
+	--bkg-color: #333;
 	--text-color: #FFF;
-	--text-color-new: #35CC00;
+	--text-color-new: #fcfc9c;
 	--text-area-color: #999;
-	--button-color: #607d8b;
-	--wrapper-color: #000;
+	--button-color: #363663;
+	--wrapper-color: #5353ac;
 	--wrapper-color-old: #536878;
 	--button-hover-color: #5353ac;
 	--toggle-switch-bkg-color: #b3cce6;
 	--toggle-slider-bkg-color: #407dbf;
 	--toggle-switch-bkg-hover-color: #FFF;
-	--nav-bkg-color: #333;
+	--nav-bkg-color: #000;
 }
 
 body {
-    background : var(--wrapper-color);
+    background : var(--bkg-color);
     margin : 0;
 	padding: 0;
     font-family : "Helvetica", "Arial";
@@ -133,25 +133,48 @@ nav li a:hover {
 #wrapper {
 	width: 90%;
     max-width: 940px;
+	min-height: 750px;
 	height: 500px;
     height: auto;
     background : var(--wrapper-color);
     margin : 0 auto;
 	margin-top: 100px;
 	text-align: left;
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 55px;
+	padding-right: 55px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	font-family: 'Courier New', monospace;
-}
-
-#introduce {
-	white-space: wrap;
 	color: var(--text-color-new);
-	font-size: 18pt;
+	border-radius: 25px;
 }
 
-#cursor{
-	font-size: 30px;
+.gameStartButton {
+	width: 45%;
+	height: 200px;
+	font-size: calc(12px + 2vw);
+	border-radius: 25px;
+	background-color: var(--button-color);
+	box-shadow: 0 2px #999;
+}
+
+.gameStartButton:hover {background-color: var(--button-hover-color)}
+
+.gameStartButton:active {
+	background-color: #var(--button-hover-color);
+	box-shadow: 0 0 #999;
+	transform: translateY(4px);
+}
+
+#myDynamicTable {
+	text-align: center;
+}
+
+#myDynamicTable td:hover {
+	cursor: pointer;
+}
+
+
+#myDynamicTable #NotAllowed:hover {
+	cursor: not-allowed;
 }

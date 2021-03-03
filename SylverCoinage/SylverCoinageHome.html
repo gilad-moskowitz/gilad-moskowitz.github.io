@@ -28,11 +28,10 @@
 <div id="wrapper">
 	<div id="header">
 		<h1><i>Sylver Coinage</i></h1>
-		<h3>by <a href="https://gilad-moskowitz.github.io/">Gilad Moskowitz</a></h3>
 	</div id="header">
 	<div id="game">
-		<button type="button" onclick="playVSHuman()" id="playHuman">Play Human</button>
-		<button type="button" onclick="playVSBot()" id="playBot">Play Bot</button>
+		<button type="button" onclick="playVSHuman()" id="playHuman" class="gameStartButton">Play Human</button>
+		<button type="button" onclick="playVSBot()" id="playBot" class="gameStartButton">Play Bot</button>
 		<div id="firstPart">
 			<button type="button" onclick="restartGame()">Restart</button>
 			<button type="button" onclick="resetGame()">Reset (choose oponenent)</button>
@@ -52,12 +51,14 @@
 			<p id="movesLeft" style="white-space:wrap">Initializing...</p>
 			<p id="penalties"></p>
 			<p id="GameOver"><p>
+			<div id="myDynamicTable"></div>
 		</div>
 	</div>
 </div>
 
 
 </body>
+
 
 
 </html>

@@ -10,6 +10,7 @@ var remainingGaps = [];
 var currentGCD = -1;
 var playingBot = false;
 var playingHuman = false;
+var relations = [];
 
 /** Setting Up the Page **/
 function settingTheGameUp(){
@@ -63,11 +64,10 @@ function restartGame(){
 	gamesCounter += 1;
     currentTurn = -1;
     movesPlayed = [];
-    p1Wins = 0;
-    p2Wins = 0;
     p1Penalties = 0;
     p2Penalties = 0;
     remainingGaps = [];
+	relations = [];
 	currentGCD = -1;
     document.getElementById("move").value = "";
     document.getElementById("currentTurn").innerHTML = "Current Turn: Player 1";
@@ -77,6 +77,7 @@ function restartGame(){
     document.getElementById("penalties").innerHTML = "";
     document.getElementById("GameOver").innerHTML = "";
 	document.getElementById("gameButton").style.display = 'initial';
+	document.getElementById("myDynamicTable").innerHTML = "";
     return 0;
 }
 
@@ -394,10 +395,20 @@ function checkGameState(){
             document.getElementById("movesLeft").innerHTML = "There are an infinite number of moves left";
         else if(remainingGaps.length == 0){
             remainingGaps = gaps(ListByGensUpToE(movesPlayed));
-            document.getElementById("movesLeft").innerHTML = remainingGaps.join(', ');
+			if(remainingGaps.length > 500)
+				document.getElementById("movesLeft").innerHTML = remainingGaps.join(', ');
+			else{
+				document.getElementById("movesLeft").innerHTML = "";
+				var doingIt = addTable();
+			}
         }
         else{
-            document.getElementById("movesLeft").innerHTML = remainingGaps.join(', ');
+            if(remainingGaps.length > 500)
+				document.getElementById("movesLeft").innerHTML = remainingGaps.join(', ');
+			else{
+				document.getElementById("movesLeft").innerHTML = "";
+				var doingIt = addTable();
+			}
         }
         if (currentTurn == -1)
             document.getElementById("currentTurn").innerHTML = "Current Turn: Player 1";
@@ -405,6 +416,7 @@ function checkGameState(){
             document.getElementById("currentTurn").innerHTML = "Current Turn: Player 2";
     }
     else {
+		document.getElementById("myDynamicTable").innerHTML = "";
         document.getElementById("movesLeft").innerHTML = remainingGaps.join(', ');
         if (currentTurn == -1){
             p1Wins += 1;
@@ -419,6 +431,14 @@ function checkGameState(){
 			document.getElementById("gameButton").style.display = 'none';
         }
     }
+	if(remainingGaps.length > 0){
+		lineCombo = []
+		for (i = 0; i < Math.max(...remainingGaps); i++){
+			if(!remainingGaps.includes(i))
+				lineCombo.push(i);
+		}
+		relations = coverRelations(remainingGaps, lineCombo);
+	}
     return [p1Wins, p2Wins];
 }
 
@@ -428,6 +448,7 @@ function penaltyForPlayer(){
         p1Penalties += 1;
         if(p1Penalties >= 3){
             document.getElementById("penalties").innerHTML = "Player 1 has too many penalties, you lose";
+			p1Penalties = 0;
             movesPlayed.push(1);
         }
         else{
@@ -437,6 +458,7 @@ function penaltyForPlayer(){
     else{
         p2Penalties += 1;
         if(p2Penalties >= 3){
+			p2Penalties = 0;
             document.getElementById("penalties").innerHTML = "P2 has too many penalties, you lose";
             movesPlayed.push(1);
         }
@@ -495,6 +517,113 @@ function playMoveVSBot(){
     }
     playBotMove();
 }
+
+function addTable() {
+	if(remainingGaps.length > 0){
+		let t = Math.ceil((remainingGaps.length)/5);
+		
+		var myTableDiv = document.getElementById("myDynamicTable");
+		myTableDiv.innerHTML = "";
+		var table = document.createElement('TABLE');
+		table.border = '1';
+
+		var tableBody = document.createElement('TBODY');
+		table.appendChild(tableBody);
+
+		for (var i = 0; i < t; i++) {
+			var tr = document.createElement('TR');
+			tableBody.appendChild(tr);
+
+			for (var j = 0; j < 5; j++) {
+				var td = document.createElement('TD');
+				td.width = '75';
+				td.setAttribute('class', 'possibleMove');
+				if(i*5 + j < remainingGaps.length){
+					td.setAttribute('id', remainingGaps[i*5 + j]);
+					td.appendChild(document.createTextNode(remainingGaps[i*5 + j]));
+				} else{
+					td.setAttribute('id', "NotAllowed");
+					td.appendChild(document.createTextNode(""));
+				}
+				tr.appendChild(td);
+				}
+		}
+		myTableDiv.appendChild(table);
+		
+		var tds = document.getElementsByClassName("possibleMove");
+		var getID = function() {
+				let newlyPlayed = parseInt(this.id);
+				let linearCombos = [];
+				for (let j = 0; j < Math.max(...remainingGaps); j++){
+					if(!remainingGaps.includes(j))
+						linearCombos.push(j);
+				}
+				let newGappies = [];
+				for(let x = 0; x < remainingGaps.length; x++){
+					let x_stays = true;
+					for(let y = 0; y < linearCombos.length; y++){
+						if(((remainingGaps[x] - linearCombos[y]) >= 0) && ((remainingGaps[x] - linearCombos[y])%newlyPlayed == 0)){
+							x_stays = false;
+							break;
+						}
+					}
+					if(x_stays)
+						newGappies.push(remainingGaps[x]);
+				}
+				remainingGaps = [...newGappies];
+				movesPlayed.push(newlyPlayed);
+				checkGameState();
+				playBotMove();
+			}
+		
+		var removeHighlight = function removingHighlights() {
+			for(let i = 0; i < tds.length; i++) {
+				document.getElementById(tds[i].id).style.backgroundColor = "inherit";
+			}
+		}
+
+		for(var i = 0; i < tds.length; i++) {
+			if(tds[i].id != "NotAllowed"){
+				tds[i].onclick = getID;
+				tds[i].onmouseover = highlight;
+				tds[i].onmouseout = removeHighlight;
+			}
+		};
+	}
+}
+
+var highlight = function highlightKilling() {
+	let eliminator = parseInt(this.id);
+	document.getElementById(eliminator).style.backgroundColor = "#ffb3b3";
+	for (let i = 0; i < relations[eliminator].length; i++){
+		current = relations[eliminator][i];
+		current = current.toString();
+		document.getElementById(current).style.backgroundColor = "#ffb3b3";
+	}
+}
+
+
+
+function coverRelations(gap, linComb){
+	let dictionary = {};
+    for (let i = 0; i < gap.length; i++){
+        let covers = [];
+        for (let j = i + 1; j < gap.length; j++){
+            for (let k = 0; k < linComb.length; k++){
+                if(gaps[j] - linComb[k] < gap[i])
+                    break;
+                if(((gap[j] - linComb[k]) > 0) && ((gap[j] - linComb[k])%gap[i] == 0)){
+                    covers.push(gap[j]);
+                    break;
+				}
+			}
+		}
+        dictionary[gap[i]] = covers;
+    }
+	return dictionary
+}
+
+
 
 
 /** Setting the page theme and coloration **/
