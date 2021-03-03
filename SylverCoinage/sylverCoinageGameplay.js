@@ -385,7 +385,7 @@ function playBotMove(){
 
 /** Game State Checking Function **/
 function checkGameState(){
-    document.getElementById("movesAlready").innerHTML = movesPlayed;
+    document.getElementById("movesAlready").innerHTML = movesPlayed.join(', ');
     currentTurn = Math.pow(-1, movesPlayed.length + 1);
     if(currentGCD != 1)
         currentGCD = gcd_list(movesPlayed);

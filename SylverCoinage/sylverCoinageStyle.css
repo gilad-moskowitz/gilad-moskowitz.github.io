@@ -166,6 +166,10 @@ nav li a:hover {
 	transform: translateY(4px);
 }
 
+#movesAlready {
+	white-space: pre-wrap;
+}
+
 #myDynamicTable {
 	text-align: center;
 }
