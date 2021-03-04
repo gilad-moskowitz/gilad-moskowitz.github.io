@@ -1,6 +1,7 @@
 body.light-theme{
 	--bkg-color: #FFF;
 	--text-color: #000000;
+	--text-color-url: #0080FF;
 	--text-area-color: #FFF;
 	--button-color: #b3ffff;
 	--wrapper-color: #ddddee;
@@ -18,6 +19,7 @@ body.dark-theme{
 	--bkg-color: #000000;
 	--text-color: #FFF;
 	--text-color-new: #a9a9d6;
+	--text-color-url: #FFF;
 	--text-area-color: #999;
 	--button-color: #607d8b;
 	--wrapper-color: #333;
@@ -77,6 +79,7 @@ nav {
 	position: fixed; /* Set the navbar to fixed position */
 	top: 0; /* Position the navbar at the top of the page */
 	width: 100%; /* Full width */
+	z-index: 9999;
 }
 
 nav p{
@@ -173,30 +176,118 @@ nav li a:hover {
     height: auto;
     background : var(--wrapper-color);
     margin : 0 auto;
-	margin-top: 100px;
+	margin-top: 40px;
 	text-align: left;
 	padding-left: 20px;
 	padding-right: 20px;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	font-family: 'Brush Script MT', monospace;
 }
 
+#introduction {
+	padding-bottom: 3vw;
+}
+
+#fullPage {
+	font-size: calc(12px + 0.9vw);
+	font-family: 'Arial';
+	color: var(--text-color-new);
+}
+
+#fullPage a {
+	text-decoration: none;
+	color: var(--text-color-url);
+}
+
+#fullPage a:hover{
+	text-decoration: underline;
+}
+
+#fullPage h2 {
+	padding-left: 2vw;
+}
+
+#mainImage {
+	width: 85%;
+	margin: 70px 30px 0 0;
+	transform-origin: 0 0;
+	float: left;
+}
+
+#fullPagefill {
+	line-height: 1.3;
+}
+
+#mathBackground {
+	line-height: 1.6;
+	padding-bottom: 8vh;
+}
+
+#additionalText {
+	margin-left: 1.3vw;
+	padding-bottom: 10px;
+}
+
+.nsHover {
+	font-style: italic;
+}
+
+.nsHover:hover {cursor: pointer;}
+
+.nsDef {
+	display: none;
+	background: #cecee4;
+	color: #000;
+	border-radius: 25px;
+}
+
+.halfPage {
+	width: 50%;
+	float: left;
+}
+
+.wholePage {
+	width: 100%;
+	float: left; 
+}
+
+
+/**image on hover text**/
+.zoomingImage {
+	transition: transform .4s;
+	height: 20%;
+	width: 30%;
+	margin: 0 30px 0 0;
+	transform-origin: 0 0;
+	float: left;
+}
+
+.zoomingImage:hover {
+	-ms-transform: scale(1.5); 
+	-webkit-transform: scale(1.5); 
+	transform: scale(1.5); 
+}
+
+
+
+/** OLD CODE THAT WORKS WITH OLD INDEX FILE
 #introduce {
 	white-space: wrap;
 	color: var(--text-color-new);
 	font-size: 25pt;
 	text-align: center;
-	margin-top: 5%;
+	margin-top: 15%;
+	font-family: 'Brush Script MT', monospace;
+	margin-bottom: -10000px;
 }
 
 #cursor{
 	font-size: 30px;
 }
+**/
 
-#fullPage {
-	opacity: 0;
-	font-size: 30px;
-	font-family: 'Times New Roman';
-	color: var(--text-color-new);
-}
+
+
+
+
+

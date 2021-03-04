@@ -1,20 +1,29 @@
-var currentTheme = "darkmode";
-if (localStorage.myTheme != "light"){
-	localStorage.myTheme = "dark";
-	document.getElementById("darkModeSwitch").checked = true;
+/** Setting the page theme and coloration **/
+var currentTheme = "lightmode";
+if (localStorage.myTheme != "dark"){
+	localStorage.myTheme = "light";
+	document.getElementById("darkModeSwitch").checked = false;
 }
 
 function toggleTheme(){
-	if (localStorage.myTheme == "dark"){
+	if (localStorage.myTheme == "light"){
+		currentTheme = "darkmode";
+		localStorage.myTheme = "dark";
+		document.body.classList.toggle("dark-theme");
+		document.getElementById("darkModeSwitch").checked = true;
+	}
+	else {
 		currentTheme = "lightmode";
 		localStorage.myTheme = "light";
 		document.body.classList.toggle("dark-theme");
 		document.getElementById("darkModeSwitch").checked = false;
 	}
-	else {
-		currentTheme = "darkmode";
-		localStorage.myTheme = "dark";
+}
+
+
+function setTheme() {
+	if(localStorage.myTheme == "light"){
 		document.body.classList.toggle("dark-theme");
-		document.getElementById("darkModeSwitch").checked = true;
+		document.getElementById("darkModeSwitch").checked = false;
 	}
 }

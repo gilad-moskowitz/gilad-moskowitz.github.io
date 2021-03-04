@@ -151,7 +151,7 @@ nav li a:hover {
 	padding-right: 20px;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	font-family: 'Courier New', monospace;
+	font-family: 'Arial', monospace;
 }
 
 #Projects ul {
@@ -173,10 +173,19 @@ nav li a:hover {
 	text-decoration: underline;
 }
 
-/**image on hover zoom**/
-.vigenereImage {
-	background-image: url("visualOfVigenere.png");
+#vigenereImage {
+	background-image: url("vigenereVisual.png");
 	background-size: 250px 180px;
+}
+
+#sylverImage {
+	background-image: url("sylverVisual.png");
+	background-size: 250px 180px;
+}
+
+/**image on hover zoom**/
+.growingImage {
+	border-radius: 25px;
 	transition: transform .2s;
 	height: 180px;
 	width: 250px;
@@ -185,7 +194,7 @@ nav li a:hover {
 	float: left;
 }
 
-.vigenereImage:hover {
+.growingImage:hover {
 	-ms-transform: scale(2.5); 
 	-webkit-transform: scale(2.5); 
 	transform: scale(2.5); 
