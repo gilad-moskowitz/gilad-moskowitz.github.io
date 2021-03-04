@@ -1,9 +1,10 @@
 body.light-theme{
-	--bkg-color: #FFF;
+	--bkg-color: #ddddee;
 	--text-color: #000000;
 	--text-area-color: #FFF;
+	--text-color-url: #0073e6;
 	--button-color: #b3ffff;
-	--wrapper-color: #d9d9f2;
+	--wrapper-color: #c6c6eb;
 	--wrapper-color-old: #99ccff;
 	--button-hover-color: #99ffdd;
 	--toggle-switch-bkg-color: #eee;
@@ -16,6 +17,7 @@ body.dark-theme{
 	--bkg-color: #333;
 	--text-color: #FFF;
 	--text-color-new: #fcfc9c;
+	--text-color-url: #FFF;
 	--text-area-color: #999;
 	--button-color: #363663;
 	--wrapper-color: #5353ac;
@@ -181,4 +183,25 @@ nav li a:hover {
 
 #myDynamicTable #NotAllowed:hover {
 	cursor: not-allowed;
+}
+
+#emperorIntro {
+	line-height: 1.2;
+	font-family: 'Verdana';
+	font-style: italic;
+	color: #404040;
+}
+
+#rules a {
+	text-decoration: none;
+	color: var(--text-color-url);
+}
+
+#rules a:hover{
+	text-decoration: underline;
+}
+
+#actualRules {
+	font-family: 'Helvetica';
+	line-height: 1.4;
 }

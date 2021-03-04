@@ -40,12 +40,14 @@ function playVSHuman(){
 	playingHuman = true;
 	document.getElementById("playHuman").style.display = 'none';
 	document.getElementById("playBot").style.display = 'none';
+	document.getElementById("rules").style.display = 'none';
 	settingTheGameUp();
 }
 function playVSBot(){
 	playingBot = true;
 	document.getElementById("playHuman").style.display = 'none';
 	document.getElementById("playBot").style.display = 'none';
+	document.getElementById("rules").style.display = 'none';
 	settingTheGameUp();
 }
 
@@ -54,6 +56,7 @@ function resetGame(){
 	playingHuman = false;
 	document.getElementById("playHuman").style.display = 'initial';
 	document.getElementById("playBot").style.display = 'initial';
+	document.getElementById("rules").style.display = 'initial';
 	gamesCounter = -1;
 	restartGame();
 	settingTheGameUp();

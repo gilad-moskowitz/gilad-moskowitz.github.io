@@ -13,9 +13,9 @@
 <nav>
 	<ul>
 		<li><p>Gilad Moskowitz Homepage</p></li><li>
-		<a href="file:///C:/Users/Gilad/Desktop/github%20IO/index.html">Home</a></li><li>
-		<a class="active" href="file:///C:/Users/Gilad/Desktop/github%20IO/project.html">Projects</a></li><li>
-		<a href="file:///C:/Users/Gilad/Desktop/github%20IO/resume.html">Resume</a></li><li>
+		<a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
+		<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
+		<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
 		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
 		<li>
 			<label class="switch" onchange = "toggleTheme()">
@@ -30,6 +30,31 @@
 		<h1><i>Sylver Coinage</i></h1>
 	</div id="header">
 	<div id="game">
+		<div id="rules">
+			<div id="emperorIntro">
+				The emperor decides to establish a new system of currency with a new set of coin denominations. 
+				Each coin denomination must have an integer value, otherwise it would be too difficult to use. 
+				The emperor decides to give the project to his two greatest mathematicians, James and John.
+				They would take turns coming up with new coin denominations for the workers to mint.
+				If a mathematician comes up with a coin value that can be arrived at with already minted coins, they would be executed.
+				Eventually, one of the James decide to create a coin of value one. 
+				This made all the previously ordered to be minted coins obsolete and all the workers commissioned with making those coins were fired.
+				Even though James decreed a legitimate new coin value, the workers were very angry about this and decided to execute him anyways.
+			</div>
+			<div id="actualRules">
+				<br>
+				<br>
+				The above introduction is written in reference to <a href="https://en.wikipedia.org/wiki/John_Horton_Conway">John H. Conway's</a> introduction of the game in <i><a href="https://en.wikipedia.org/wiki/Winning_Ways_for_Your_Mathematical_Plays">Winning Ways for Your Mathematical Plays</a></i>.
+				The game was actually named after <a href="https://en.wikipedia.org/wiki/James_Joseph_Sylvester">James Joseph Sylvester</a> who came up with the equation of a <span title="Largest element not in the semigroup">Frobenius number</span> for a <span title="Please reference definition on my home page">numerical semigroup</span> with <span title="number of minimal generators for cofinite numerical semigroup">embedding dimension</span> two.
+				<br>
+				The rules of the game are as follows:
+				<ul>
+					<li>Each player takes their turning naming an integer that cannot be made as a linear combination of previously named integers</li><li>
+					The first player to name the number 1 loses</li><li>
+					For the benefit of the players, this version of the game allows you to make an illegal move (i.e. name an integer that CAN be made as a linear combination of previously named integers) up to 2 times. On the third time making this mistake, you automatically choose 1 and lose.</li>
+				</ul>
+			</div>
+		</div>
 		<button type="button" onclick="playVSHuman()" id="playHuman" class="gameStartButton">Play Human</button>
 		<button type="button" onclick="playVSBot()" id="playBot" class="gameStartButton">Play Bot</button>
 		<div id="firstPart">
