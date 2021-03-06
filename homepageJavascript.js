@@ -27,3 +27,4 @@ function setTheme() {
 		document.getElementById("darkModeSwitch").checked = false;
 	}
 }
+

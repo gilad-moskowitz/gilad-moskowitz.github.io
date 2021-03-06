@@ -14,21 +14,42 @@
 
 </head>
 <body class="dark-theme || light-theme" onload="setTheme();">
-<nav>
+
+<!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+<nav id="navBar">
 	<ul>
-		<li><p>Gilad Moskowitz Homepage</p></li><li>
-		<a class="active" href="">Home</a></li><li>
+		<li><a class="active" href="">Home</a></li><li>
 		<a href="project.html">Projects</a></li><li>
 		<a href="resume.html">Resume</a></li><li>
-		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
-		<li>
+		<a href="https://github.com/gilad-moskowitz">github</a></li>
+		<li><div id="revealOnHover">
 			<label class="switch" onchange = "toggleTheme()">
 			<input type="checkbox" id="darkModeSwitch" checked>
 			<span class="slider"></span>
 			</label>
-		</li>
+		<div></li>
 	</ul>
 </nav>
+
+<div class="collapsible-menu">
+	<input type="checkbox" id="menu">
+	<label for="menu"><img src="menuicon.png" id="menuBarIcon">Menu</label>
+	<div class="menu-content">
+		<ul>
+			<li><a class="active" href="">Home</a></li><li>
+			<a href="project.html">Projects</a></li><li>
+			<a href="resume.html">Resume</a></li><li>
+			<a href="https://github.com/gilad-moskowitz">github</a></li>
+		</ul>
+	</div>
+</div>
+<!-- END NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+
+
+<div id="intro">
+<img src="backgroundPic.jpg" id="firstPic">
+<div id="centeredText"><h1>GILAD MOSKOWITZ</h1><h3>MATHEMATICIAN, PROGRAMMER, AVID FAN OF TABLE-TOP GAMES</h3></div>
+<div>
 
 <div id="wrapper">
 	<div id="introduction">
@@ -132,6 +153,7 @@
 
 <script>
 var hideCount = 0;
+var menuCount = 0;
 
 /** Displaying on Click **/
 /** DISPLAY NUMERICAL SEMIGROUP DEFINITION **/
@@ -233,6 +255,18 @@ function displayDefinition5(stringy) {
 	window.addEventListener("click", hiding5 = function () {hideDefinition5(stringy)}, false);
 }
 document.getElementById("gaps").addEventListener("click", displaying5 = function () {displayDefinition5("gaps")}, false);
+
+
+function removeCheck() {
+	if(menuCount > 1){
+		document.getElementById("menu").checked = false;
+		menuCount = 0;
+	}
+	else
+		menuCount ++;
+}
+document.body.addEventListener("click", removeCheck);
+
 </script>
 
 </body>

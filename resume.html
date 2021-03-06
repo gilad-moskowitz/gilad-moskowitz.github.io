@@ -9,22 +9,38 @@
 
 </head>
 <body class="dark-theme || light-theme" onload="setTheme()">
-<nav>
 
+<!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+<nav id="navBar">
 	<ul>
-		<li><p>Gilad Moskowitz Homepage</p></li><li>
-		<a href="index.html">Home</a></li><li>
-		<a href="project.html">Projects</a></li><li>
-		<a class="active" href="">Resume</a></li><li>
-		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
-		<li>
+		<li><a href="index.html">Home</a></li><li>
+		<a class="active" href="">Projects</a></li><li>
+		<a href="resume.html">Resume</a></li><li>
+		<a href="https://github.com/gilad-moskowitz">github</a></li>
+		<li><div id="revealOnHover">
 			<label class="switch" onchange = "toggleTheme()">
 			<input type="checkbox" id="darkModeSwitch" checked>
 			<span class="slider"></span>
 			</label>
-		</li>
+		<div></li>
 	</ul>
 </nav>
+
+<div class="collapsible-menu">
+	<input type="checkbox" id="menu">
+	<label for="menu"><img src="menuicon.png" id="menuBarIcon">Menu</label>
+	<div class="menu-content">
+		<ul>
+			<li><a class="active" href="">Home</a></li><li>
+			<a href="project.html">Projects</a></li><li>
+			<a href="resume.html">Resume</a></li><li>
+			<a href="https://github.com/gilad-moskowitz">github</a></li>
+		</ul>
+	</div>
+</div>
+<!-- END NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+
+
 <div id="wrapper">
 	<div id="Resume">
 		<p style='margin-top:0in;margin-right:0in;margin-bottom:0in;margin-left:0in;line-height:115%;font-size:15px;font-family:"Calibri",sans-serif;text-align:center;'><strong><span style='font-size:21px;line-height:115%;font-family:"Times New Roman",serif;'>Gilad Moskowitz</span></strong></p>
@@ -116,6 +132,16 @@ function setTheme() {
 		document.getElementById("darkModeSwitch").checked = false;
 	}
 }
+
+function removeCheck() {
+	if(menuCount > 1){
+		document.getElementById("menu").checked = false;
+		menuCount = 0;
+	}
+	else
+		menuCount ++;
+}
+document.body.addEventListener("click", removeCheck);
 </script>
 
 </body>

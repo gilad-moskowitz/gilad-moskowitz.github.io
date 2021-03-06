@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title> Home </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel ="stylesheet" type="text/css" href="homePageStyle.css">
+
+
+<!--LINKS TO IMPORT LATEX TYPING-->
+<!--
+<script type="text/javascript" src="http://math.etsu.edu/LaTeXMathML/LaTeXMathML.js"></script>
+<link rel="stylesheet" type="text/css" href="http://math.etsu.edu/LaTeXMathML/LaTeXMathML.standardarticle.css" />
+-->
+
+
+</head>
+<!--Old call to load page, would have fade effect<body class="dark-theme || light-theme" onload="newTypingFunc(); setTheme();">-->
+<body class="dark-theme || light-theme" onload="setTheme();">
+<nav>
+	<ul>
+		<li><p>Gilad Moskowitz Homepage</p></li><li>
+		<a class="active" href="">Home</a></li><li>
+		<a href="project.html">Projects</a></li><li>
+		<a href="resume.html">Resume</a></li><li>
+		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
+		<li>
+			<label class="switch" onchange = "toggleTheme()">
+			<input type="checkbox" id="darkModeSwitch" checked>
+			<span class="slider"></span>
+			</label>
+		</li>
+	</ul>
+</nav>
+
+<div id="wrapper">
+	<div id="introduction">
+		<p id="introduce"></p>
+		<div id="fullPage">
+			<div class='halfPage'>
+				<h2>About Me</h2>
+				<div class = "myImg"><a href="#mathBackground"><img src="myImage.jpg" id="mainImage"></a></div>
+			</div>
+			<div class='halfPage'>
+				<p id="fullPagefill">
+					I completed my undergraduate education at UCLA where I double majored in Chemistry and Mathematics. 
+					I then took a small break from education to work and travel the world. 
+					I returned to school to pursue a M.S. in Applied Mathematics with a Concentration in Communication Systems at SDSU. 
+					My primary mathematic interests are number theory, abstract algebra, and combinatorics. 
+					I also enjoy applying machine learning and other algorithmic approaches to attempt to solve difficult math problems. 
+					For more information on my educational and mathematical background you can check out my <a href="moskowitzResume.pdf">resume</a>.
+					<br><br>
+					In my free time, I enjoy playing a variety of tabletop games, such as Settlers of Catan (with the Cities and Knights expansion, of course), chess, and D&D. 
+					I also love playing basketball and tennis, and occasionally some video games.
+				</p>
+			</div>
+			<div class='wholePage' id="mathBackground">
+				<h3>My Mathematical Interests</h3>
+				&emsp;Most of my mathematical research involves the study of <span class="nsHover" id="numericalSemigroup">numerical semigroups</span> 
+				<div class="nsDef" id="numericalSemigroupDefn">
+					<LATEX>
+					\begin{defn}
+						A numerical semigroup is a subsemigroup of $(\!&#8469;_0, +\!).$
+					\end{defn}
+					<div id="additionalText">We often write a numerical <span id="semigroup" class="nsHover">semigroup</span> as $S = \langle\!n_1, n_2, ..., n_k \!\rangle$ for $n_j \in &#8469;$ and $n_j < n_{j+1}.$ 
+					The elements of $S$ are then the non-negative integers that can be written as linear combinations of the generators of $S$.</div>
+					</LATEX>
+				</div>
+				<div class="nsDef" id="semigroupDefn">
+					<LATEX>
+					\begin{defn}
+						A semigroup is a set, $S,$ with an associative binary operator, $+.$
+					\end{defn}
+					</LATEX>
+				</div>
+				and their properties. 
+				Particularly, the properties that I study are the <span class="nsHover" id="factorization">factorizations</span>, 
+				<div class="nsDef" id="factorizationDefn">
+					<LATEX>
+					\begin{defn}
+						Let $S = \langle n_1, n_2, \dots, n_k \rangle$ be a numerical semigroup. We say that $\mathbf{p} = (p_1, p_2, ..., p_k)$ is a \emph{factorization} of $n \in S$ if 
+						\[n = p_1n_1 + p_2n_2 + ... + p_kn_k.\]
+						We say that this factorization has \emph{length} $|$ $\mathbf{p}| = p_1 + p_2 + ... + p_k$. 
+					\end{defn}
+					\begin{defn}
+						The \emph{factorization set} of an integer $n \in S$ is 
+						\[\mathsf{Z}_S(n) = \{(p_1, p_2, ..., p_k) : n = p_1n_1 + p_2n_2 + ... + p_kn_k\}.\]
+						When it is clear which semigroup we are referring to, we simply write $\mathsf{Z}_S(n)$.
+					\end{defn}
+					</LATEX>
+				</div>
+				<span class="nsHover" id="lengthSet">length sets</span>, 
+				<div class="nsDef" id="lengthSetDefn">
+					<LATEX>
+					\begin{defn}
+						The \emph{length set} of an integer $n \in S$ is 
+						\[\mathsf{L}_S(n) = \{|\mathbf{p}| : \mathbf{p} = (p_1, p_2, ..., p_k) \in \mathsf{Z}_S(n) \}.\]
+						When there is no ambiguity, we simply write $\mathsf{L}(n)$.
+					\end{defn}
+					</LATEX>
+				</div>
+				and <span class="nsHover" id="gaps">gaps</span>.
+				<div class="nsDef" id="gapsDefn">
+					<LATEX>
+					\begin{defn}
+						Let $S$ be a numerical semigroup, then we define the gaps of $S$ as the set
+						\[\{i : i \in &#8469;_0 \mbox{ and } i \notin S\}.\]
+					\end{defn}
+					</LATEX>
+				</div>
+				I have worked several projects that were centered around the factorization set and length set of a numerical semigroup. 
+				<br>
+				&emsp;Currently, I have shifted my focus to examine the gaps of a numerical semigroup. 
+				This project is centered on the game <i><a href="SylverCoinage/SylverCoinageHome.html">Sylver Coinage</a></i>, and attempts to tackle the problem with the lens of a numerical semigroup. 
+				I am actively building towards a competition where the competitors submit bots to play the game Sylver Coinage, and the winner is the bot with the best overall score.
+				This project has required me to develop serveral pieces of code for working with numerical semigroups in Javascript and Python<sup><a href="https://github.com/gilad-moskowitz/numericalSemigroupPackage">1</a></sup>.
+				<br>
+				&emsp;Beyond numerical semigroups, I have also explored other areas of mathematics, including toying around with factorization algorithms, using machine learning to try and predict properties of the integers, and a few cryptography related projects.
+				Additionally, I truly enjoy teaching mathematics and am in the process of writting up notes to introduce students to proof based mathematics. 
+				I hope one day to put together an introductory Algebra textbook for elementry school students, but I know that this will be a long and timely endeavor. 
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="hello1"></div>
+
+<!--NEW LATEX IMPORTS-->
+<script type="text/javascript" src="latexConverter.js"></script>
+<link rel="stylesheet" type="text/css" href="latexStyle.css" />
+
+<!--SETTING UP PAGE THEME-->
+<script src="homepageJavascript.js"></script> 
+
+
+<script>
+var introductoryText = "Hello, my name is Gilad Moskowitz. \n \n I am a mathematician, programmer, and avid fan of tabletop games.";
+var count = 0;
+var out = "";
+var Skip = false;
+var Skip2 = false;
+var clickCount = 0;
+var hideCount = 0;
+
+/**
+function skipTyping() {
+	Skip = true;
+	clickCount += 1;
+	document.body.removeEventListener("click", skipTyping);
+	if(clickCount < 2){
+		document.getElementById("introduce").innerHTML = introductoryText.replace(/\n/g, '<br/>');
+		var finals = setTimeout(function(){ fadeOutEffect() }, 1000);
+		document.body.addEventListener("click", skipTyping);
+	} else if(!Skip2){
+		Skip2 = true;
+		if(document.getElementById("introduce") != null)
+			document.getElementById("introduce").remove();
+		document.getElementById("fullPage").style.opacity = 1;
+		document.body.removeEventListener("click", skipTyping);
+	}
+	else{return 0;}
+}
+document.body.addEventListener("click", skipTyping);
+
+
+
+/**SETTING UP PAGE
+function newTypingFunc() {
+	if(Skip2){
+		return 0;
+	}
+	if(Skip){
+		var finals = setTimeout(function(){ fadeOutEffect() }, 700);
+		return 0;
+	}
+	if (count == introductoryText.length){
+		document.getElementById("introduce").innerHTML = introductoryText.replace(/\n/g, '<br/>');
+		noSkip = false;
+		var finals = setTimeout(function(){ fadeOutEffect() }, 700);
+		return 0;
+	} 
+	else{
+		if((count < introductoryText.length - 1) && (introductoryText[count + 1] == "\n")){
+			out += introductoryText[count];
+			count += 1;
+			document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
+			var t = setTimeout(function(){ newTypingFunc() }, 100);
+		}
+		else{
+			out += introductoryText[count];
+			count += 1;
+			document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
+			var t = setTimeout(function(){ newTypingFunc() }, 35);
+		}
+	}
+}
+var thing = "";
+var cursor = true;
+var speed = 250;
+setInterval(() => {
+	if(cursor) {
+		thing = "";
+		cursor = false;
+	}else {
+		thing = "|";
+		cursor = true;
+	}
+}, speed);
+
+function fadeOutEffect() {
+	if(Skip2)
+		return 0;
+	var rate = 0.002;
+	if(document.getElementById("introduce") != null)
+		var fadeTarget = document.getElementById("introduce");
+	else{
+		return 0;
+	}
+    var fadeEffect = setInterval(function () {
+        if (!fadeTarget.style.opacity) {
+            fadeTarget.style.opacity = 1;
+        }
+        if (fadeTarget.style.opacity > 0) {
+			if(fadeTarget.style.opacity < 0.10)
+				rate = 0.004;
+			else
+				rate = rate*1.5;
+            fadeTarget.style.opacity -= rate;
+        } else {
+			clickCount += 1;
+			fadeTarget.remove();
+			setTimeout(function(){ fadeInEffect() }, 50);
+            clearInterval(fadeEffect);
+        }
+    }, 50);
+}
+
+
+function fadeInEffect() {
+	var rate2 = 0.1;
+    var fadingTarget = document.getElementById("fullPage");
+    var fadingEffect = setInterval(function () {
+        if (fadingTarget.style.opacity < 1) {
+			if (fadingTarget.style.opacity) {
+				fadingTarget.style.opacity = 0;
+			}
+			if(fadingTarget.style.opacity > 0.90)
+				rate2 = 0.004;
+			else
+				rate2 = rate2*1.5;
+            fadingTarget.style.opacity += rate2;
+        } else {
+			document.body.removeEventListener("click", skipTyping);
+            clearInterval(fadingEffect);
+        }
+    }, 50);
+}
+**/
+
+/** Displaying on Click **/
+/** DISPLAY NUMERICAL SEMIGROUP DEFINITION **/
+function hideDefinition(stringo) {
+	if(hideCount > 0){
+		hideCount = 0;
+		document.getElementById(stringo + "Defn").style.display = "none";
+		document.getElementById(stringo).addEventListener("click", displaying = function () {displayDefinition(stringo)}, false);
+		window.removeEventListener("click", hiding, false);
+	}
+	else
+		hideCount++;
+}
+
+
+function displayDefinition(stringy) {
+	document.getElementById(stringy + "Defn").style.display = "block";
+	document.getElementById(stringy).removeEventListener("click", displaying, false);
+	window.addEventListener("click", hiding = function () {hideDefinition(stringy)}, false);
+}
+document.getElementById("numericalSemigroup").addEventListener("click", displaying = function () {displayDefinition("numericalSemigroup")}, false);
+
+/** DISPLAY SEMIGROUP DEFINITION **/
+function hideDefinition2(stringo) {
+	if(hideCount > 0){
+		hideCount = 0;
+		document.getElementById(stringo + "Defn").style.display = "none";
+		document.getElementById(stringo).addEventListener("click", displaying2 = function () {displayDefinition2(stringo)}, false);
+		window.removeEventListener("click", hiding2, false);
+	}
+	else
+		hideCount++;
+}
+
+
+function displayDefinition2(stringy) {
+	document.getElementById(stringy + "Defn").style.display = "block";
+	document.getElementById(stringy).removeEventListener("click", displaying2, false);
+	window.addEventListener("click", hiding2 = function () {hideDefinition2(stringy)}, false);
+}
+document.getElementById("semigroup").addEventListener("click", displaying2 = function () {displayDefinition2("semigroup")}, false);
+
+/** DISPLAY FACTORIZATION DEFINITION **/
+function hideDefinition3(stringo) {
+	if(hideCount > 0){
+		hideCount = 0;
+		document.getElementById(stringo + "Defn").style.display = "none";
+		document.getElementById(stringo).addEventListener("click", displaying3 = function () {displayDefinition3(stringo)}, false);
+		window.removeEventListener("click", hiding3, false);
+	}
+	else
+		hideCount++;
+}
+
+
+function displayDefinition3(stringy) {
+	document.getElementById(stringy + "Defn").style.display = "block";
+	document.getElementById(stringy).removeEventListener("click", displaying3, false);
+	window.addEventListener("click", hiding3 = function () {hideDefinition3(stringy)}, false);
+}
+document.getElementById("factorization").addEventListener("click", displaying3 = function () {displayDefinition3("factorization")}, false);
+
+/** DISPLAY LENGTH SET DEFINITION **/
+function hideDefinition4(stringo) {
+	if(hideCount > 0){
+		hideCount = 0;
+		document.getElementById(stringo + "Defn").style.display = "none";
+		document.getElementById(stringo).addEventListener("click", displaying4 = function () {displayDefinition4(stringo)}, false);
+		window.removeEventListener("click", hiding4, false);
+	}
+	else
+		hideCount++;
+}
+
+
+function displayDefinition4(stringy) {
+	document.getElementById(stringy + "Defn").style.display = "block";
+	document.getElementById(stringy).removeEventListener("click", displaying4, false);
+	window.addEventListener("click", hiding4 = function () {hideDefinition4(stringy)}, false);
+}
+document.getElementById("lengthSet").addEventListener("click", displaying4 = function () {displayDefinition4("lengthSet")}, false);
+
+/** DISPLAY GAPS DEFINITION **/
+function hideDefinition5(stringo) {
+	if(hideCount > 0){
+		hideCount = 0;
+		document.getElementById(stringo + "Defn").style.display = "none";
+		document.getElementById(stringo).addEventListener("click", displaying5 = function () {displayDefinition5(stringo)}, false);
+		window.removeEventListener("click", hiding5, false);
+	}
+	else
+		hideCount++;
+}
+
+
+function displayDefinition5(stringy) {
+	document.getElementById(stringy + "Defn").style.display = "block";
+	document.getElementById(stringy).removeEventListener("click", displaying5, false);
+	window.addEventListener("click", hiding5 = function () {hideDefinition5(stringy)}, false);
+}
+document.getElementById("gaps").addEventListener("click", displaying5 = function () {displayDefinition5("gaps")}, false);
+
+
+
+/** OLD CODE **/
+/**
+function typeUpPage() {
+	if(Skip)
+		return 0;
+	if (count == textin.length){
+		document.getElementById("introduce").innerHTML = textin2.replace(/\n/g, '<br/>');
+		noSkip = false;
+		return 0;
+	} 
+	else{
+		if((count < textin.length - 1) && (textin[count + 1] == "\n")){
+			out += textin[count];
+			count += 1;
+			document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
+			var t = setTimeout(function(){ typeUpPage() }, 100);
+		}
+		else{
+			out += textin[count];
+			count += 1;
+			document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
+			var t = setTimeout(function(){ typeUpPage() }, 35);
+		}
+	}
+}
+
+function pause(){
+	count += 1;
+	out += textin[count];
+	document.getElementById("introduce").innerHTML = out.replace(/\n/g, '<br/>') + thing;
+}
+
+
+**/
+</script>
+
+</body>
+
+
+</html>
