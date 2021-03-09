@@ -3,7 +3,7 @@ body.light-theme{
 	--text-color: #737373;
 	--text-color-url: #0080FF;
 	--text-area-color: #FFF;
-	--text-color-new: #000;
+	--text-color-new: #404040;
 	--centered-text-color: #404040;
 	--button-color: #b3ffff;
 	--wrapper-color: #f2f2f2;
@@ -100,7 +100,7 @@ nav li a:hover {
 .switch {
 	position:fixed;
 	top: 10px;
-	left: 10px;
+	right: 10px;
 	width: 39px;
 	height: 22px;
 	display: block;
@@ -152,7 +152,7 @@ nav li a:hover {
 
 #wrapper {
 	width: 90%;
-    max-width: 1000px;
+    max-width: 940px;
 	height: 500px;
     height: auto;
     background : var(--wrapper-color);
@@ -169,7 +169,7 @@ nav li a:hover {
 #Resume {
 	margin-left: 25mm;
 	margin-right: 25mm;
-	color: var(--text-color-new);
+	color: var(--text-color-resume);
 }
 
 #Resume a {

@@ -170,7 +170,7 @@ nav li a:hover {
 }
 
 #Projects ul li{
-	margin: 0 0 200px 0;
+	margin: 0 0 100px 0;
 }
 
 #Projects a {
@@ -184,24 +184,29 @@ nav li a:hover {
 }
 
 #vigenereImage {
-	background-image: url("vigenereVisual.png");
-	background-size: 250px 180px;
+	width: 90%;
 }
 
 #sylverImage {
-	background-image: url("sylverVisual.png");
-	background-size: 250px 180px;
+	width: 90%;
+}
+
+.thirdPage {
+	width: 33%;
+	float: left;
+}
+
+.2thirdPage {
+	width: 67%;
+	float: left;
 }
 
 /**image on hover zoom**/
 .growingImage {
 	border-radius: 25px;
 	transition: transform .2s;
-	height: 180px;
-	width: 250px;
 	margin: 0 30px 0 0;
 	transform-origin: 0 0;
-	float: left;
 }
 
 .growingImage:hover {
@@ -306,5 +311,14 @@ nav li a:hover {
 	}
 	#navBar {
 		display: none;
+	}
+	.thirdPage {
+		width: 100%;
+		float: left;
+	}
+
+	.2thirdPage {
+		width: 100%;
+		float: left;
 	}
 }

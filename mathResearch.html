@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title> Resume </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel ="stylesheet" type="text/css" href="resumeStyle.css">
+
+</head>
+<body class="dark-theme || light-theme" onload="setTheme()">
+<!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+<nav id="navBar">
+	<ul>
+		<li><a href="index.html">Home</a></li><li>
+		<a href="project.html">Projects</a></li><li>
+		<a class="active" href="">Resume</a></li><li>
+		<a href="https://github.com/gilad-moskowitz">github</a></li>
+		<li><div id="revealOnHover">
+			<label class="switch" onchange = "toggleTheme()">
+			<input type="checkbox" id="darkModeSwitch" checked>
+			<span class="slider"></span>
+			</label>
+		<div></li>
+	</ul>
+</nav>
+
+<div class="collapsible-menu">
+	<input type="checkbox" id="menu">
+	<label for="menu"><img src="menuicon.png" id="menuBarIcon">Menu</label>
+	<div class="menu-content">
+		<ul>
+			<li><a href="index.html">Home</a></li><li>
+			<a href="project.html">Projects</a></li><li>
+			<a class="active" href="">Resume</a></li><li>
+			<a href="https://github.com/gilad-moskowitz">github</a></li>
+		</ul>
+	</div>
+</div>
+<!-- END NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+
+
+<div id="wrapper">
+	<div id="Math Projects">
+		<ul>
+			<li><a href="dynamicAlgs.pdf" target="_blank">Dynamic Algorithms in Numerical Semigroups:</a>&nbsp; I examined the existing dynamic code for calculating the length set and factorization set for an element in a numerical semigroup. I coded the algorithms into Python and compared their runtimes with old algorithms that used brute force methodologies.</li>
+		</ul>
+	</div>
+</div>
+
+
+<script src="homepageJavascript.js"></script> 
+<script>
+function setTheme() {
+	if(localStorage.myTheme == "light"){
+		document.body.classList.toggle("dark-theme");
+		document.getElementById("darkModeSwitch").checked = false;
+	}
+}
+
+function removeCheck() {
+	if(menuCount > 1){
+		document.getElementById("menu").checked = false;
+		menuCount = 0;
+	}
+	else
+		menuCount ++;
+}
+document.body.addEventListener("click", removeCheck);
+</script>
+
+</body>
+
+
+</html>
