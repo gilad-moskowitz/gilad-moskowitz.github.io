@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title> Sylver Coinage </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel ="stylesheet" type="text/css" href="sylverCoinageStyle.css">
+
+</head>
+<body class="light-theme || dark-theme" onload="setTheme(); loadBot();">
+<!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+<nav id="navBar">
+	<ul>
+		<li><a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
+		<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
+		<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
+		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
+		<li><div id="revealOnHover">
+			<label class="switch" onchange = "toggleTheme()">
+			<input type="checkbox" id="darkModeSwitch" checked>
+			<span class="slider"></span>
+			</label>
+		<div></li>
+	</ul>
+</nav>
+
+<div class="collapsible-menu">
+	<input type="checkbox" id="menu">
+	<label for="menu"><img src="menuicon.png" id="menuBarIcon">Menu</label>
+	<div class="menu-content">
+		<ul>
+			<li><a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
+			<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
+			<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
+			<a href="https://github.com/gilad-moskowitz">github</a></li>
+		</ul>
+	</div>
+</div>
+<!-- END NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+
+<div id="wrapper">
+	<div id="header">
+		<h1><i>Sylver Coinage</i></h1>
+	</div id="header">
+	<div id="game">
+		<div id="firstPart">
+			<button type="button" onclick="restartGame()">Restart</button>
+			<button type="button" onclick="location.href='SylverCoinageHome.html'">Return Home</button>
+			<br>
+			<br>
+		</div>
+		<div id="initializing">
+		Enter the number of games you want to test your bot against mine: 
+		<input type="number" id="numbOfGame">
+		<button type="button" onclick="numberOfGames()" id="numGames">Enter</button>
+		</div>
+		<div id="secondPart">
+			<p id="mustHave"></p>
+			<p id="results"></p>
+			<p id="outputResults"></p>
+		</div>
+	</div>
+	<div id="placeHolder"></div>
+</div>
+<script src="testBotArenaJSCode.js"></script> 
+<script>
+var menuCount = 0;
+function removeCheck() {
+	if(menuCount > 1){
+		document.getElementById("menu").checked = false;
+		menuCount = 0;
+	}
+	else
+		menuCount ++;
+}
+document.body.addEventListener("click", removeCheck);
+</script>
+
+
+</body>
+
+
+
+</html>

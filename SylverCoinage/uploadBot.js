@@ -11,91 +11,10 @@ var currentGCD = -1;
 var playingBot = false;
 var playingHuman = false;
 var relations = [];
+var uploadedFunction = "";
 
 
-/** Setting Up the Page **/
-function settingTheGameUp(){
-	if(!playingBot){
-		document.getElementById("vsBotGame").style.display = 'none';
-		document.getElementById("firstPart").style.display = 'none';
-		document.getElementById("secondPart").style.display = 'none';
-	}
-	if(!playingHuman){
-		document.getElementById("vsHumanGame").style.display = 'none';
-		document.getElementById("firstPart").style.display = 'none';
-		document.getElementById("secondPart").style.display = 'none';
-	}
-	if(playingBot){
-		document.getElementById("vsBotGame").style.display = 'initial';
-		document.getElementById("firstPart").style.display = 'initial';
-		document.getElementById("secondPart").style.display = 'initial';
-	}
-	if(playingHuman){
-		document.getElementById("vsHumanGame").style.display = 'initial';
-		document.getElementById("firstPart").style.display = 'initial';
-		document.getElementById("secondPart").style.display = 'initial';
-	}
-}
 
-function playVSHuman(){
-	playingHuman = true;
-	document.getElementById("playHuman").style.display = 'none';
-	document.getElementById("playBot").style.display = 'none';
-	document.getElementById("uploadBot").style.display = 'none';
-	document.getElementById("testBot").style.display = 'none';
-	document.getElementById("rules").style.display = 'none';
-	settingTheGameUp();
-}
-function playVSBot(){
-	playingBot = true;
-	document.getElementById("playHuman").style.display = 'none';
-	document.getElementById("playBot").style.display = 'none';
-	document.getElementById("uploadBot").style.display = 'none';
-	document.getElementById("testBot").style.display = 'none';
-	document.getElementById("rules").style.display = 'none';
-	settingTheGameUp();
-}
-
-function resetGame(){
-	playingBot = false;
-	playingHuman = false;
-	document.getElementById("playHuman").style.display = 'initial';
-	document.getElementById("playBot").style.display = 'initial';
-	document.getElementById("uploadBot").style.display = 'initial';
-	document.getElementById("testBot").style.display = 'initial';
-	document.getElementById("rules").style.display = 'initial';
-	gamesCounter = -1;
-	restartGame();
-	settingTheGameUp();
-}
-
-/** Reset all parameters **/
-function restartGame(){
-	gamesCounter += 1;
-    currentTurn = Math.pow(-1, (gamesCounter+1));
-    movesPlayed = [];
-    p1Penalties = 0;
-    p2Penalties = 0;
-    remainingGaps = [];
-	relations = [];
-	currentGCD = -1;
-    document.getElementById("move").value = "";
-	if(currentTurn == -1)
-		document.getElementById("currentTurn").innerHTML = "Current Turn: Player 1";
-	else
-		document.getElementById("currentTurn").innerHTML = "Current Turn: Player 2";
-    document.getElementById("gameNumber").innerHTML = "Game " + (gamesCounter + 1);
-    document.getElementById("movesAlready").innerHTML = "(Waiting for first move)";
-    document.getElementById("movesLeft").innerHTML = "(Waiting for first move)";
-	document.getElementById("remainingMoves").innerHTML = "";
-    document.getElementById("penalties").innerHTML = "";
-    document.getElementById("GameOver").innerHTML = "";
-	document.getElementById("gameButton").style.display = 'initial';
-	document.getElementById("myDynamicTable").innerHTML = "";
-	if(currentTurn == 1 && playingBot == true)
-		playBotMove();
-    return 0;
-}
 
 /** Math functions **/
 function PrimeFactorization(n){
@@ -255,10 +174,6 @@ function legalMove(thisMove){
             return false;
     }
     else{
-		for(let i = 0; i < movesPlayed.length; i++){
-			if(thisMove%movesPlayed[i] == 0)
-				return false
-		}
         if(gcd(thisMove, currentGCD) == currentGCD){
             let newGens = [];
             for (let i = 0; i < movesPlayed.length; i++){
@@ -359,9 +274,9 @@ function alwaysOddBot(){
         return parseInt(1);
 }
 
-function playBotMove(){
+function playBotMove(bot){
     if((currentTurn == 1) && (document.getElementById("currentTurn").innerHTML != "Game Over")) {
-        let botMove = alwaysOddBot();
+        let botMove = bot;
         if (remainingGaps.length == 0) {
             if (legalMove(botMove)) {
                 movesPlayed.push(botMove);
@@ -540,167 +455,148 @@ function playMoveVSBot(){
             penaltyForPlayer()
         }
     }
-    playBotMove();
+    playBotMove(alwaysOddBot());
 }
 
 
-function playMoveVSHuman(){
-    let newlyPlayed = parseInt(getMove());
-    if (remainingGaps.length == 0){
-        if (legalMove(newlyPlayed)){
-            movesPlayed.push(newlyPlayed);
-            checkGameState();
-        }
-        else{
-            penaltyForPlayer();
-        }
-    }
-    else{
-        let including = false;
-        for(let q = 0; q < remainingGaps.length; q++){
-            if(parseInt(newlyPlayed) == parseInt(remainingGaps[q])){
-                including = true;
-                break;
-            }
-        }
-        if(including){
-            let linearCombos = [];
-            for (let j = 0; j < Math.max(...remainingGaps); j++){
-                if(!remainingGaps.includes(j))
-                    linearCombos.push(j);
-            }
-            let newGappies = [];
-            for(let x = 0; x < remainingGaps.length; x++){
-                let x_stays = true;
-                for(let y = 0; y < linearCombos.length; y++){
-                    if(((remainingGaps[x] - linearCombos[y]) >= 0) && ((remainingGaps[x] - linearCombos[y])%newlyPlayed == 0)){
-                        x_stays = false;
-                        break;
-                    }
-                }
-                if(x_stays)
-                    newGappies.push(remainingGaps[x]);
-            }
-            remainingGaps = [...newGappies];
-            movesPlayed.push(newlyPlayed);
-            checkGameState();
-        }
-        else{
-            penaltyForPlayer()
-        }
-    }
+/* CODE FOR USER UPLOAD */
+var __count = 0;
+const __detectInfiniteLoop = () => {
+	if(__count > 10000000) {
+		throw new Error('Infinite Loop detected');
+	}
+	__count += 1;
 }
 
-
-
-/* UX CODE */
-function addTable() {
-	if(remainingGaps.length > 0){
-		let t = Math.ceil((remainingGaps.length)/5);
-		
-		var myTableDiv = document.getElementById("myDynamicTable");
-		myTableDiv.innerHTML = "";
-		var table = document.createElement('TABLE');
-		table.border = '1';
-
-		var tableBody = document.createElement('TBODY');
-		table.appendChild(tableBody);
-
-		for (var i = 0; i < t; i++) {
-			var tr = document.createElement('TR');
-			tableBody.appendChild(tr);
-
-			for (var j = 0; j < 5; j++) {
-				var td = document.createElement('TD');
-				td.width = '75';
-				td.setAttribute('class', 'possibleMove');
-				if(i*5 + j < remainingGaps.length){
-					td.setAttribute('id', remainingGaps[i*5 + j]);
-					td.appendChild(document.createTextNode(remainingGaps[i*5 + j]));
-				} else{
-					td.setAttribute('id', "NotAllowed");
-					td.appendChild(document.createTextNode(""));
-				}
-				tr.appendChild(td);
-				}
+function parseScriptAndFix(theScript) {
+	let newString = theScript;
+	let position = 0;
+	let stillGoing = true;
+	let stillGoing2 = true;
+	var replacement = "{__detectInfiniteLoop();"
+	while(stillGoing){
+		let whilePosition = newString.indexOf("while", position);
+		if(whilePosition == -1){
+			stillGoing = false;
+			break;
 		}
-		myTableDiv.appendChild(table);
-		
-		var tds = document.getElementsByClassName("possibleMove");
-		var getID = function() {
-				let newlyPlayed = parseInt(this.id);
-				let linearCombos = [];
-				for (let j = 0; j < Math.max(...remainingGaps); j++){
-					if(!remainingGaps.includes(j))
-						linearCombos.push(j);
-				}
-				let newGappies = [];
-				for(let x = 0; x < remainingGaps.length; x++){
-					let x_stays = true;
-					for(let y = 0; y < linearCombos.length; y++){
-						if(((remainingGaps[x] - linearCombos[y]) >= 0) && ((remainingGaps[x] - linearCombos[y])%newlyPlayed == 0)){
-							x_stays = false;
-							break;
-						}
-					}
-					if(x_stays)
-						newGappies.push(remainingGaps[x]);
-				}
-				remainingGaps = [...newGappies];
-				movesPlayed.push(newlyPlayed);
-				checkGameState();
-				playBotMove();
-			}
-		
-		var removeHighlight = function removingHighlights() {
-			for(let i = 0; i < tds.length; i++) {
-				document.getElementById(tds[i].id).style.backgroundColor = "inherit";
-			}
+		let breakPoint = newString.indexOf("{", whilePosition);
+		if(breakPoint == -1){
+			stillGoing = false;
+			break;
 		}
+		newString = newString.substr(0, breakPoint) + replacement + newString.substr(breakPoint + 1); 
+		position = newString.indexOf("while", position) + 1;
+	}
+	position = 0;
+	while(stillGoing2){
+		let forPosition = newString.indexOf("for", position);
+		if(forPosition == -1){
+			stillGoing2 = false;
+			break;
+		}
+		let breakPoint = newString.indexOf("{", forPosition);
+		if(breakPoint == -1){
+			stillGoing2 = false;
+			break;
+		}
+		newString = newString.substr(0, breakPoint) + replacement + newString.substr(breakPoint + 1); 
+		position = newString.indexOf("for", position) + 1;
+	}
+	return newString;
+}
 
-		for(var i = 0; i < tds.length; i++) {
-			if(tds[i].id != "NotAllowed"){
-				tds[i].onclick = getID;
-				tds[i].onmouseover = highlight;
-				tds[i].onmouseout = removeHighlight;
-			}
-		};
+function uploadFunc(){
+	document.getElementById("accepted").innerHTML = "";
+	document.getElementById("errorLog").innerHTML = "";
+	var functionalBot = true;
+	var temp = document.getElementById("uploadFunction").value
+	var updatedTemp = parseScriptAndFix(temp);
+    var newFunction = "<script>" + updatedTemp + "</script>";
+    var placehold = document.getElementById("placeHolder");
+    placehold.innerHTML = newFunction;
+    var oldScript = placehold.querySelector('script');
+    var newScript = document.createElement('script');
+    newScript.textContent = oldScript.textContent;
+    var attrs = oldScript.attributes;
+    for(var j=0;j<attrs.length;j++){
+        newScript.setAttribute(attrs[j],oldScript.getAttribute(attrs[j]));
+    }
+    oldScript.parentNode.replaceChild(newScript,oldScript);
+	//Setting up the bot testing protocol
+	let movesTrial = movesPlayed;
+	let gapsTrial = remainingGaps;
+	try {
+		myNewBot(movesTrial, gapsTrial);
+	} catch(err) {
+		document.getElementById("errorLog").innerHTML = '<br>' + '<br>' + "Error log: " + '<br>';
+		document.getElementById("errorLog").innerHTML += err.message + '<br>';
+		console.clear();
+		__count = 0;
+		functionalBot = false;
+	}
+	try {
+		movesTrial = [];
+		gapsTrial = [];
+		let theNewMove = myNewBot(movesTrial, gapsTrial);
+		if(theNewMove > 30 || theNewMove < 1)
+			throw new Error("Your bot doesn't follow the rules for the first move");
+	} catch(err) {
+		document.getElementById("errorLog").innerHTML = '<br>' + '<br>' + "Error log: " + '<br>';
+		document.getElementById("errorLog").innerHTML += err.message + '<br>';
+		console.clear();
+		__count = 0;
+		functionalBot = false;
+	}
+	try {
+		movesTrial = [4, 6];
+		gapsTrial = [];
+		let theNewMove = myNewBot(movesTrial, gapsTrial);
+		if(theNewMove > 100 || theNewMove < 1)
+			throw new Error("Your bot doesn't follow the rules for an infinite position");
+	} catch(err) {
+		document.getElementById("errorLog").innerHTML = '<br>' + '<br>' + "Error log: " + '<br>';
+		document.getElementById("errorLog").innerHTML += err.message + '<br>';
+		console.clear();
+		__count = 0;
+		functionalBot = false;
+	}
+	try {
+		movesTrial = [6, 9, 12];
+		gapsTrial = [];
+		let theNewMove = myNewBot(movesTrial, gapsTrial);
+		if(theNewMove > 100 || theNewMove < 1)
+			throw new Error("Your bot doesn't follow the rules for an infinite position");
+	} catch(err) {
+		document.getElementById("errorLog").innerHTML = '<br>' + '<br>' + "Error log: " + '<br>';
+		document.getElementById("errorLog").innerHTML += err.message + '<br>';
+		console.clear();
+		__count = 0;
+		functionalBot = false;
+	}
+	try {
+		movesTrial = [6, 9, 20];
+		gapsTrial = [1, 2, 3, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 22, 23, 25, 28, 31, 34, 37, 43];
+		let theNewMove = myNewBot(movesTrial, gapsTrial);
+		if(!gapsTrial.includes(theNewMove))
+			throw new Error("Your bot picked an illegal move, just a heads up but still acceptable.");
+	} catch(err) {
+		document.getElementById("errorLog").innerHTML = '<br>' + '<br>' + "Error log: " + '<br>';
+		document.getElementById("errorLog").innerHTML += err.message + '<br>';
+		console.clear();
+		__count = 0;
+	}
+	finally {
+		if(functionalBot){
+			document.getElementById("accepted").innerHTML = '<br>' + '<br>' + "Your bot has been accepted. Please return to the main page." + '<br>';
+			localStorage.MyNewBot = updatedTemp;
+		}
+		else{
+			document.getElementById("accepted").innerHTML = '<br>' + '<br>' + "Your bot was not accepted. Please try again." + '<br>';
+			localStorage.MyNewBot = 'undefined';
+		}
 	}
 }
-
-var highlight = function highlightKilling() {
-	let eliminator = parseInt(this.id);
-	document.getElementById(eliminator).style.backgroundColor = "#ffb3b3";
-	for (let i = 0; i < relations[eliminator].length; i++){
-		current = relations[eliminator][i];
-		current = current.toString();
-		document.getElementById(current).style.backgroundColor = "#ffb3b3";
-	}
-}
-
-
-
-function coverRelations(gap, linComb){
-	let dictionary = {};
-    for (let i = 0; i < gap.length; i++){
-        let covers = [];
-        for (let j = i + 1; j < gap.length; j++){
-            for (let k = 0; k < linComb.length; k++){
-                if(gaps[j] - linComb[k] < gap[i])
-                    break;
-                if(((gap[j] - linComb[k]) > 0) && ((gap[j] - linComb[k])%gap[i] == 0)){
-                    covers.push(gap[j]);
-                    break;
-				}
-			}
-		}
-        dictionary[gap[i]] = covers;
-    }
-	return dictionary
-}
-
-
-
 
 /** Setting the page theme and coloration **/
 var currentTheme = "lightmode";

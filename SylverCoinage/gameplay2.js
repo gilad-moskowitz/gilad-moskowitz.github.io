@@ -8,92 +8,24 @@ var p1Penalties = 0;
 var p2Penalties = 0;
 var remainingGaps = [];
 var currentGCD = -1;
-var playingBot = false;
-var playingHuman = false;
-var relations = [];
-
-
-/** Setting Up the Page **/
-function settingTheGameUp(){
-	if(!playingBot){
-		document.getElementById("vsBotGame").style.display = 'none';
-		document.getElementById("firstPart").style.display = 'none';
-		document.getElementById("secondPart").style.display = 'none';
-	}
-	if(!playingHuman){
-		document.getElementById("vsHumanGame").style.display = 'none';
-		document.getElementById("firstPart").style.display = 'none';
-		document.getElementById("secondPart").style.display = 'none';
-	}
-	if(playingBot){
-		document.getElementById("vsBotGame").style.display = 'initial';
-		document.getElementById("firstPart").style.display = 'initial';
-		document.getElementById("secondPart").style.display = 'initial';
-	}
-	if(playingHuman){
-		document.getElementById("vsHumanGame").style.display = 'initial';
-		document.getElementById("firstPart").style.display = 'initial';
-		document.getElementById("secondPart").style.display = 'initial';
-	}
-}
-
-function playVSHuman(){
-	playingHuman = true;
-	document.getElementById("playHuman").style.display = 'none';
-	document.getElementById("playBot").style.display = 'none';
-	document.getElementById("uploadBot").style.display = 'none';
-	document.getElementById("testBot").style.display = 'none';
-	document.getElementById("rules").style.display = 'none';
-	settingTheGameUp();
-}
-function playVSBot(){
-	playingBot = true;
-	document.getElementById("playHuman").style.display = 'none';
-	document.getElementById("playBot").style.display = 'none';
-	document.getElementById("uploadBot").style.display = 'none';
-	document.getElementById("testBot").style.display = 'none';
-	document.getElementById("rules").style.display = 'none';
-	settingTheGameUp();
-}
-
-function resetGame(){
-	playingBot = false;
-	playingHuman = false;
-	document.getElementById("playHuman").style.display = 'initial';
-	document.getElementById("playBot").style.display = 'initial';
-	document.getElementById("uploadBot").style.display = 'initial';
-	document.getElementById("testBot").style.display = 'initial';
-	document.getElementById("rules").style.display = 'initial';
-	gamesCounter = -1;
-	restartGame();
-	settingTheGameUp();
-}
 
 /** Reset all parameters **/
 function restartGame(){
-	gamesCounter += 1;
-    currentTurn = Math.pow(-1, (gamesCounter+1));
+    currentTurn = -1;
     movesPlayed = [];
+    gamesCounter = 0;
+    p1Wins = 0;
+    p2Wins = 0;
     p1Penalties = 0;
     p2Penalties = 0;
     remainingGaps = [];
-	relations = [];
-	currentGCD = -1;
     document.getElementById("move").value = "";
-	if(currentTurn == -1)
-		document.getElementById("currentTurn").innerHTML = "Current Turn: Player 1";
-	else
-		document.getElementById("currentTurn").innerHTML = "Current Turn: Player 2";
-    document.getElementById("gameNumber").innerHTML = "Game " + (gamesCounter + 1);
-    document.getElementById("movesAlready").innerHTML = "(Waiting for first move)";
-    document.getElementById("movesLeft").innerHTML = "(Waiting for first move)";
-	document.getElementById("remainingMoves").innerHTML = "";
+    document.getElementById("currentTurn").innerHTML = "Current Turn: Player 1";
+    document.getElementById("gameNumber").innerHTML = "Initializing...";
+    document.getElementById("movesAlready").innerHTML = "Initializing...";
+    document.getElementById("movesLeft").innerHTML = "Initializing...";
     document.getElementById("penalties").innerHTML = "";
     document.getElementById("GameOver").innerHTML = "";
-	document.getElementById("gameButton").style.display = 'initial';
-	document.getElementById("myDynamicTable").innerHTML = "";
-	if(currentTurn == 1 && playingBot == true)
-		playBotMove();
     return 0;
 }
 
@@ -229,9 +161,7 @@ function gaps(Semigroup){
 function getMove(){
     let getNewMove = document.getElementById("move").value;
     document.getElementById("move").value = "";
-	if (getNewMove == "")
-		return 0;
-    return getNewMove;
+    return parseInt(getNewMove);
 }
 
 /** Checking the legality of a given move **/
@@ -240,8 +170,6 @@ function legalMove(thisMove){
         return false;
     if (thisMove == "")
         return false;
-	if(movesPlayed.includes(thisMove))
-		return false;
     if(movesPlayed.length == 0)
         return true;
     if(currentGCD == -1)
@@ -255,10 +183,6 @@ function legalMove(thisMove){
             return false;
     }
     else{
-		for(let i = 0; i < movesPlayed.length; i++){
-			if(thisMove%movesPlayed[i] == 0)
-				return false
-		}
         if(gcd(thisMove, currentGCD) == currentGCD){
             let newGens = [];
             for (let i = 0; i < movesPlayed.length; i++){
@@ -288,9 +212,7 @@ function gameNotComplete(list){
 /** Code for bot **/
 function alwaysOddBot(){
     if (movesPlayed.length == 0){
-        let possibility = getRandomInt(1, 7);
-		let primes = [5, 5, 7, 11, 13, 17, 19, 23];
-		return primes[possibility];
+        return getRandomInt(4, 50);
     }
     else if (movesPlayed.includes(3) && !movesPlayed.includes(2)){
         return 2;
@@ -407,9 +329,8 @@ function playBotMove(){
 
 /** Game State Checking Function **/
 function checkGameState(){
-	document.getElementById("remainingMoves").innerHTML = "The remaining legal moves are: ";
-    document.getElementById("movesAlready").innerHTML = movesPlayed.join(', ');
-    currentTurn = Math.pow(-1, movesPlayed.length + gamesCounter + 1);
+    document.getElementById("movesAlready").innerHTML = movesPlayed;
+    currentTurn = Math.pow(-1, movesPlayed.length + 1);
     if(currentGCD != 1)
         currentGCD = gcd_list(movesPlayed);
     document.getElementById("gameNumber").innerHTML = "Game " + (gamesCounter + 1);
@@ -418,20 +339,10 @@ function checkGameState(){
             document.getElementById("movesLeft").innerHTML = "There are an infinite number of moves left";
         else if(remainingGaps.length == 0){
             remainingGaps = gaps(ListByGensUpToE(movesPlayed));
-			if(remainingGaps.length > 500)
-				document.getElementById("movesLeft").innerHTML = remainingGaps.join(', ');
-			else{
-				document.getElementById("movesLeft").innerHTML = "";
-				var doingIt = addTable();
-			}
+            document.getElementById("movesLeft").innerHTML = remainingGaps;
         }
         else{
-            if(remainingGaps.length > 500)
-				document.getElementById("movesLeft").innerHTML = remainingGaps.join(', ');
-			else{
-				document.getElementById("movesLeft").innerHTML = "";
-				var doingIt = addTable();
-			}
+            document.getElementById("movesLeft").innerHTML = remainingGaps;
         }
         if (currentTurn == -1)
             document.getElementById("currentTurn").innerHTML = "Current Turn: Player 1";
@@ -439,31 +350,18 @@ function checkGameState(){
             document.getElementById("currentTurn").innerHTML = "Current Turn: Player 2";
     }
     else {
-		document.getElementById("myDynamicTable").innerHTML = "";
-        document.getElementById("movesLeft").innerHTML = remainingGaps.join(', ');
+        document.getElementById("movesLeft").innerHTML = remainingGaps;
         if (currentTurn == -1){
             p1Wins += 1;
-			document.getElementById("remainingMoves").innerHTML = "There are no remaining legal moves";
             document.getElementById("currentTurn").innerHTML = "Game Over";
             document.getElementById("GameOver").innerHTML = "Player 1 wins " + "Current Score: " + [p1Wins, p2Wins];
-			document.getElementById("gameButton").style.display = 'none';
         }
         else {
             p2Wins += 1;
-			document.getElementById("remainingMoves").innerHTML = "There are no remaining legal moves";
             document.getElementById("currentTurn").innerHTML = "Game Over";
             document.getElementById("GameOver").innerHTML = "Player 2 wins " + "Current Score: " + [p1Wins, p2Wins];
-			document.getElementById("gameButton").style.display = 'none';
         }
     }
-	if(remainingGaps.length > 0){
-		lineCombo = []
-		for (i = 0; i < Math.max(...remainingGaps); i++){
-			if(!remainingGaps.includes(i))
-				lineCombo.push(i);
-		}
-		relations = coverRelations(remainingGaps, lineCombo);
-	}
     return [p1Wins, p2Wins];
 }
 
@@ -473,7 +371,6 @@ function penaltyForPlayer(){
         p1Penalties += 1;
         if(p1Penalties >= 3){
             document.getElementById("penalties").innerHTML = "Player 1 has too many penalties, you lose";
-			p1Penalties = 0;
             movesPlayed.push(1);
         }
         else{
@@ -483,15 +380,14 @@ function penaltyForPlayer(){
     else{
         p2Penalties += 1;
         if(p2Penalties >= 3){
-			p2Penalties = 0;
             document.getElementById("penalties").innerHTML = "P2 has too many penalties, you lose";
             movesPlayed.push(1);
+            document.getElementById("movesAlready").innerHTML = movesPlayed;
         }
         else{
             document.getElementById("penalties").innerHTML = "P1 has " + p1Penalties + " penalties, and P2 has " + p2Penalties + " penalties";
         }
     }
-	checkGameState();
 }
 
 /** Code for playing **/
@@ -543,191 +439,199 @@ function playMoveVSBot(){
     playBotMove();
 }
 
-
-function playMoveVSHuman(){
-    let newlyPlayed = parseInt(getMove());
-    if (remainingGaps.length == 0){
-        if (legalMove(newlyPlayed)){
-            movesPlayed.push(newlyPlayed);
-            checkGameState();
+/** Old Code **/
+/**
+ function SylverCoinageVSBot(){
+    let theeMoves = [];
+    for(let r = 0; r < movesPlayed.length; r++){
+        theeMoves.push(parseInt(movesPlayed[r]));
+    }
+    if(theeMoves.includes(1)){
+        ListSmall = [];
+        SylverCoinageManual(movesPlayed);
+        return 0;
+    }
+    currentTurnIs = Math.pow(-1, movesPlayed.length + 1);
+    if (currentTurnIs == 1){
+        let newlyPlayed = alwaysOddBot(movesPlayed, ListSmall);
+        if (ListSmall.length == 0){
+            if (legalMove(newlyPlayed, movesPlayed)){
+                movesPlayed.push(newlyPlayed);
+                document.getElementById("movesAlready").innerHTML = movesPlayed;
+            }
+            else{
+                if(currentTurnIs == -1){
+                    p1_penalties += 1;
+                    if(p1_penalties >= 3){
+                        document.getElementById("penalties").innerHTML = "P1 has too many penalties, you lose";
+                        movesPlayed.push(1);
+                    }
+                    else{
+                        document.getElementById("penalties").innerHTML = "P1 has " + p1_penalties + " penalties, and P2 has " + p2_penalties + " penalties";
+                    }
+                }
+                else{
+                    p2_penalties += 1;
+                    if(p2_penalties >= 3){
+                        document.getElementById("penalties").innerHTML = "P2 has too many penalties, you lose";
+                        movesPlayed.push(1);
+                        document.getElementById("movesAlready").innerHTML = movesPlayed;
+                    }
+                    else{
+                        document.getElementById("penalties").innerHTML = "P1 has " + p1_penalties + " penalties, and P2 has " + p2_penalties + " penalties";
+                    }
+                }
+            }
         }
         else{
-            penaltyForPlayer();
+            let including = false;
+            for(let q = 0; q < ListSmall.length; q++){
+                if(parseInt(newlyPlayed) == parseInt(ListSmall[q])){
+                    including = true;
+                    break;
+                }
+            }
+            if(including){
+                let linearCombos = [];
+                for (let j = 0; j < Math.max(...ListSmall); j++){
+                    if(!ListSmall.includes(j))
+                        linearCombos.push(j);
+                }
+                let newGappies = [];
+                for(let x = 0; x < ListSmall.length; x++){
+                    x_stays = true;
+                    for(let y = 0; y < linearCombos.length; y++){
+                        if(((ListSmall[x] - linearCombos[y]) >= 0) && ((ListSmall[x] - linearCombos[y])%newlyPlayed == 0)){
+                            x_stays = false;
+                            break;
+                        }
+                    }
+                    if(x_stays)
+                        newGappies.push(ListSmall[x]);
+                }
+                ListSmall = [...newGappies];
+                movesPlayed.push(newlyPlayed);
+                document.getElementById("movesAlready").innerHTML = movesPlayed;
+            }
+            else{
+                if(currentTurnIs == -1){
+                    p1_penalties += 1;
+                    if(p1_penalties >= 3){
+                        document.getElementById("penalties").innerHTML = "P1 has too many penalties, you lose";
+                        movesPlayed.push(1);
+                    }
+                    else{
+                        document.getElementById("penalties").innerHTML = "P1 has " + p1_penalties + " penalties, and P2 has " + p2_penalties + " penalties";
+                    }
+                }
+                else{
+                    p2_penalties += 1;
+                    if(p2_penalties >= 3){
+                        document.getElementById("penalties").innerHTML = "P2 has too many penalties, you lose";
+                        movesPlayed.push(1);
+                        document.getElementById("movesAlready").innerHTML = movesPlayed;
+                    }
+                    else{
+                        document.getElementById("penalties").innerHTML = "P1 has " + p1_penalties + " penalties, and P2 has " + p2_penalties + " penalties";
+                    }
+                }
+            }
+        }
+    }
+    SylverCoinageManual(movesPlayed);
+}
+
+ function playMove(){
+    let newlyPlayed = getMove();
+    if (ListSmall.length == 0){
+        if (legalMove(newlyPlayed, movesPlayed)){
+            movesPlayed.push(newlyPlayed);
+            document.getElementById("movesAlready").innerHTML = movesPlayed;
+        }
+        else{
+            if(currentTurnIs == -1){
+                p1_penalties += 1;
+                if(p1_penalties >= 3){
+                    document.getElementById("penalties").innerHTML = "P1 has too many penalties, you lose";
+                    movesPlayed.push(1);
+                }
+                else{
+                    document.getElementById("penalties").innerHTML = "P1 has " + p1_penalties + " penalties, and P2 has " + p2_penalties + " penalties";
+                }
+            }
+            else{
+                p2_penalties += 1;
+                if(p2_penalties >= 3){
+                    document.getElementById("penalties").innerHTML = "P2 has too many penalties, you lose";
+                    movesPlayed.push(1);
+                    document.getElementById("movesAlready").innerHTML = movesPlayed;
+                }
+                else{
+                    document.getElementById("penalties").innerHTML = "P1 has " + p1_penalties + " penalties, and P2 has " + p2_penalties + " penalties";
+                }
+            }
         }
     }
     else{
         let including = false;
-        for(let q = 0; q < remainingGaps.length; q++){
-            if(parseInt(newlyPlayed) == parseInt(remainingGaps[q])){
+        for(let q = 0; q < ListSmall.length; q++){
+            if(parseInt(newlyPlayed) == parseInt(ListSmall[q])){
                 including = true;
                 break;
             }
         }
         if(including){
             let linearCombos = [];
-            for (let j = 0; j < Math.max(...remainingGaps); j++){
-                if(!remainingGaps.includes(j))
+            for (let j = 0; j < Math.max(...ListSmall); j++){
+                if(!ListSmall.includes(j))
                     linearCombos.push(j);
             }
             let newGappies = [];
-            for(let x = 0; x < remainingGaps.length; x++){
-                let x_stays = true;
+            for(let x = 0; x < ListSmall.length; x++){
+                x_stays = true;
                 for(let y = 0; y < linearCombos.length; y++){
-                    if(((remainingGaps[x] - linearCombos[y]) >= 0) && ((remainingGaps[x] - linearCombos[y])%newlyPlayed == 0)){
+                    if(((ListSmall[x] - linearCombos[y]) >= 0) && ((ListSmall[x] - linearCombos[y])%newlyPlayed == 0)){
                         x_stays = false;
                         break;
                     }
                 }
                 if(x_stays)
-                    newGappies.push(remainingGaps[x]);
+                    newGappies.push(ListSmall[x]);
             }
-            remainingGaps = [...newGappies];
+            ListSmall = [...newGappies];
             movesPlayed.push(newlyPlayed);
-            checkGameState();
+            document.getElementById("movesAlready").innerHTML = movesPlayed;
         }
         else{
-            penaltyForPlayer()
+            if(currentTurnIs == -1){
+                p1_penalties += 1;
+                if(p1_penalties >= 3){
+                    document.getElementById("penalties").innerHTML = "P1 has too many penalties, you lose";
+                    movesPlayed.push(1);
+                }
+                else{
+                    document.getElementById("penalties").innerHTML = "P1 has " + p1_penalties + " penalties, and P2 has " + p2_penalties + " penalties";
+                }
+            }
+            else{
+                p2_penalties += 1;
+                if(p2_penalties >= 3){
+                    document.getElementById("penalties").innerHTML = "P2 has too many penalties, you lose";
+                    movesPlayed.push(1);
+                    document.getElementById("movesAlready").innerHTML = movesPlayed;
+                }
+                else{
+                    document.getElementById("penalties").innerHTML = "P1 has " + p1_penalties + " penalties, and P2 has " + p2_penalties + " penalties";
+                }
+            }
         }
     }
+    SylverCoinageManual(movesPlayed);
 }
 
-
-
-/* UX CODE */
-function addTable() {
-	if(remainingGaps.length > 0){
-		let t = Math.ceil((remainingGaps.length)/5);
-		
-		var myTableDiv = document.getElementById("myDynamicTable");
-		myTableDiv.innerHTML = "";
-		var table = document.createElement('TABLE');
-		table.border = '1';
-
-		var tableBody = document.createElement('TBODY');
-		table.appendChild(tableBody);
-
-		for (var i = 0; i < t; i++) {
-			var tr = document.createElement('TR');
-			tableBody.appendChild(tr);
-
-			for (var j = 0; j < 5; j++) {
-				var td = document.createElement('TD');
-				td.width = '75';
-				td.setAttribute('class', 'possibleMove');
-				if(i*5 + j < remainingGaps.length){
-					td.setAttribute('id', remainingGaps[i*5 + j]);
-					td.appendChild(document.createTextNode(remainingGaps[i*5 + j]));
-				} else{
-					td.setAttribute('id', "NotAllowed");
-					td.appendChild(document.createTextNode(""));
-				}
-				tr.appendChild(td);
-				}
-		}
-		myTableDiv.appendChild(table);
-		
-		var tds = document.getElementsByClassName("possibleMove");
-		var getID = function() {
-				let newlyPlayed = parseInt(this.id);
-				let linearCombos = [];
-				for (let j = 0; j < Math.max(...remainingGaps); j++){
-					if(!remainingGaps.includes(j))
-						linearCombos.push(j);
-				}
-				let newGappies = [];
-				for(let x = 0; x < remainingGaps.length; x++){
-					let x_stays = true;
-					for(let y = 0; y < linearCombos.length; y++){
-						if(((remainingGaps[x] - linearCombos[y]) >= 0) && ((remainingGaps[x] - linearCombos[y])%newlyPlayed == 0)){
-							x_stays = false;
-							break;
-						}
-					}
-					if(x_stays)
-						newGappies.push(remainingGaps[x]);
-				}
-				remainingGaps = [...newGappies];
-				movesPlayed.push(newlyPlayed);
-				checkGameState();
-				playBotMove();
-			}
-		
-		var removeHighlight = function removingHighlights() {
-			for(let i = 0; i < tds.length; i++) {
-				document.getElementById(tds[i].id).style.backgroundColor = "inherit";
-			}
-		}
-
-		for(var i = 0; i < tds.length; i++) {
-			if(tds[i].id != "NotAllowed"){
-				tds[i].onclick = getID;
-				tds[i].onmouseover = highlight;
-				tds[i].onmouseout = removeHighlight;
-			}
-		};
-	}
+ function humanPlayer(movesDone, remainingPossibleMoves) {
+    return getMove();
 }
-
-var highlight = function highlightKilling() {
-	let eliminator = parseInt(this.id);
-	document.getElementById(eliminator).style.backgroundColor = "#ffb3b3";
-	for (let i = 0; i < relations[eliminator].length; i++){
-		current = relations[eliminator][i];
-		current = current.toString();
-		document.getElementById(current).style.backgroundColor = "#ffb3b3";
-	}
-}
+ **/
 
 
-
-function coverRelations(gap, linComb){
-	let dictionary = {};
-    for (let i = 0; i < gap.length; i++){
-        let covers = [];
-        for (let j = i + 1; j < gap.length; j++){
-            for (let k = 0; k < linComb.length; k++){
-                if(gaps[j] - linComb[k] < gap[i])
-                    break;
-                if(((gap[j] - linComb[k]) > 0) && ((gap[j] - linComb[k])%gap[i] == 0)){
-                    covers.push(gap[j]);
-                    break;
-				}
-			}
-		}
-        dictionary[gap[i]] = covers;
-    }
-	return dictionary
-}
-
-
-
-
-/** Setting the page theme and coloration **/
-var currentTheme = "lightmode";
-if (localStorage.myTheme != "dark"){
-	localStorage.myTheme = "light";
-	document.getElementById("darkModeSwitch").checked = false;
-}
-
-function toggleTheme(){
-	if (localStorage.myTheme == "light"){
-		currentTheme = "darkmode";
-		localStorage.myTheme = "dark";
-		document.body.classList.toggle("dark-theme");
-		document.getElementById("darkModeSwitch").checked = true;
-	}
-	else {
-		currentTheme = "lightmode";
-		localStorage.myTheme = "light";
-		document.body.classList.toggle("dark-theme");
-		document.getElementById("darkModeSwitch").checked = false;
-	}
-}
-
-
-function setTheme() {
-	if(localStorage.myTheme == "light"){
-		document.body.classList.toggle("dark-theme");
-		document.getElementById("darkModeSwitch").checked = false;
-	}
-}

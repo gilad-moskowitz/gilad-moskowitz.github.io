@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title> Sylver Coinage </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel ="stylesheet" type="text/css" href="sylverCoinageStyle.css">
+
+</head>
+<body class="light-theme || dark-theme" onload="setTheme();">
+<!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+<nav id="navBar">
+	<ul>
+		<li><a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
+		<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
+		<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
+		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
+		<li><div id="revealOnHover">
+			<label class="switch" onchange = "toggleTheme()">
+			<input type="checkbox" id="darkModeSwitch" checked>
+			<span class="slider"></span>
+			</label>
+		</li>
+	</ul>
+</nav>
+
+<div class="collapsible-menu">
+	<input type="checkbox" id="menu">
+	<label for="menu"><img src="menuicon.png" id="menuBarIcon">Menu</label>
+	<div class="menu-content">
+		<ul>
+			<li><a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
+			<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
+			<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
+			<a href="https://github.com/gilad-moskowitz">github</a></li>
+		</ul>
+	</div>
+</div>
+<!-- END NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+<div id="wrapper">
+	<div id="header">
+		<h1><i>Sylver Coinage</i></h1>
+	</div>
+	<div id="game">
+		<div id = "functionalityOfBot" class="wholePage">
+			Here you have the option to upload a bot and test it against my current bot. Note, when you upload the bot, please give the page about 30 seconds to run some tests using your bot and make sure it works as intented. 
+			The rules for your code are as follows:
+			<ul>
+				<li>Your function takes in two arguments, both lists. The first is the list of all the moves already played. The second is a list of all remaining legal moves if there are only finitely many of them.</li>
+				<li>Your function returns an integer. If it is the first move of the game, your function returns an integer less than 30. In a given infinite position, your funtion returns a move less than 100. If the position is finite, your bot can return any move.</li>
+				<li>The function I will call to get your bot move is going to be: myBotMove(movesAlready, remainingMoves).</li>
+			</ul>
+		</div>
+		<button id="Upload" onclick="uploadFunc();">Upload Function</button>
+			<button id="Upload" onclick="location.href='SylverCoinageHome.html';">Return home</button>
+		<div id="areaForUploadingBot">
+			
+			<div class="wholePage">
+				<textarea id="uploadFunction" rows="25" cols="70" style="resize: none; float:left;"></textarea>		
+				<div id="placeHolder"></div>
+				<div id="errorLog"></div>
+				<div id="accepted"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="uploadBot.js"></script> 
+<script>
+var menuCount = 0;
+function removeCheck() {
+	if(menuCount > 1){
+		document.getElementById("menu").checked = false;
+		menuCount = 0;
+	}
+	else
+		menuCount ++;
+}
+document.body.addEventListener("click", removeCheck);
+</script>
+</body>
+
+
+
+</html>

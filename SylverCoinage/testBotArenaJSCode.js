@@ -11,67 +11,12 @@ var currentGCD = -1;
 var playingBot = false;
 var playingHuman = false;
 var relations = [];
-
-
-/** Setting Up the Page **/
-function settingTheGameUp(){
-	if(!playingBot){
-		document.getElementById("vsBotGame").style.display = 'none';
-		document.getElementById("firstPart").style.display = 'none';
-		document.getElementById("secondPart").style.display = 'none';
-	}
-	if(!playingHuman){
-		document.getElementById("vsHumanGame").style.display = 'none';
-		document.getElementById("firstPart").style.display = 'none';
-		document.getElementById("secondPart").style.display = 'none';
-	}
-	if(playingBot){
-		document.getElementById("vsBotGame").style.display = 'initial';
-		document.getElementById("firstPart").style.display = 'initial';
-		document.getElementById("secondPart").style.display = 'initial';
-	}
-	if(playingHuman){
-		document.getElementById("vsHumanGame").style.display = 'initial';
-		document.getElementById("firstPart").style.display = 'initial';
-		document.getElementById("secondPart").style.display = 'initial';
-	}
-}
-
-function playVSHuman(){
-	playingHuman = true;
-	document.getElementById("playHuman").style.display = 'none';
-	document.getElementById("playBot").style.display = 'none';
-	document.getElementById("uploadBot").style.display = 'none';
-	document.getElementById("testBot").style.display = 'none';
-	document.getElementById("rules").style.display = 'none';
-	settingTheGameUp();
-}
-function playVSBot(){
-	playingBot = true;
-	document.getElementById("playHuman").style.display = 'none';
-	document.getElementById("playBot").style.display = 'none';
-	document.getElementById("uploadBot").style.display = 'none';
-	document.getElementById("testBot").style.display = 'none';
-	document.getElementById("rules").style.display = 'none';
-	settingTheGameUp();
-}
-
-function resetGame(){
-	playingBot = false;
-	playingHuman = false;
-	document.getElementById("playHuman").style.display = 'initial';
-	document.getElementById("playBot").style.display = 'initial';
-	document.getElementById("uploadBot").style.display = 'initial';
-	document.getElementById("testBot").style.display = 'initial';
-	document.getElementById("rules").style.display = 'initial';
-	gamesCounter = -1;
-	restartGame();
-	settingTheGameUp();
-}
+var numberGames = 1;
+var winsAndLosses = [];
 
 /** Reset all parameters **/
 function restartGame(){
-	gamesCounter += 1;
+	gamesCounter = 0;
     currentTurn = Math.pow(-1, (gamesCounter+1));
     movesPlayed = [];
     p1Penalties = 0;
@@ -79,19 +24,10 @@ function restartGame(){
     remainingGaps = [];
 	relations = [];
 	currentGCD = -1;
-    document.getElementById("move").value = "";
-	if(currentTurn == -1)
-		document.getElementById("currentTurn").innerHTML = "Current Turn: Player 1";
-	else
-		document.getElementById("currentTurn").innerHTML = "Current Turn: Player 2";
-    document.getElementById("gameNumber").innerHTML = "Game " + (gamesCounter + 1);
-    document.getElementById("movesAlready").innerHTML = "(Waiting for first move)";
-    document.getElementById("movesLeft").innerHTML = "(Waiting for first move)";
-	document.getElementById("remainingMoves").innerHTML = "";
-    document.getElementById("penalties").innerHTML = "";
-    document.getElementById("GameOver").innerHTML = "";
-	document.getElementById("gameButton").style.display = 'initial';
-	document.getElementById("myDynamicTable").innerHTML = "";
+    document.getElementById("numGames").value = "";
+    document.getElementById("results").innerHTML = "";
+    document.getElementById("outputResults").innerHTML = "";
+	document.getElementById("initializing").style.display = 'initial';
 	if(currentTurn == 1 && playingBot == true)
 		playBotMove();
     return 0;
@@ -225,14 +161,6 @@ function gaps(Semigroup){
     return gapList;
 }
 
-/** Getting the move from the user (input) **/
-function getMove(){
-    let getNewMove = document.getElementById("move").value;
-    document.getElementById("move").value = "";
-	if (getNewMove == "")
-		return 0;
-    return getNewMove;
-}
 
 /** Checking the legality of a given move **/
 function legalMove(thisMove){
@@ -360,8 +288,55 @@ function alwaysOddBot(){
 }
 
 function playBotMove(){
-    if((currentTurn == 1) && (document.getElementById("currentTurn").innerHTML != "Game Over")) {
+    if((currentTurn == 1) && gameNotComplete(movesPlayed)) {
         let botMove = alwaysOddBot();
+        if (remainingGaps.length == 0) {
+            if (legalMove(botMove)) {
+                movesPlayed.push(botMove);
+                checkGameState();
+            } else {
+                penaltyForPlayer();
+            }
+        } else {
+            let including = false;
+            for (let q = 0; q < remainingGaps.length; q++) {
+                if (parseInt(botMove) == parseInt(remainingGaps[q])) {
+                    including = true;
+                    break;
+                }
+            }
+            if (including) {
+                let linearCombos = [];
+                for (let j = 0; j < Math.max(...remainingGaps); j++) {
+                    if (!remainingGaps.includes(j))
+                        linearCombos.push(j);
+                }
+                let newGappies = [];
+                for (let x = 0; x < remainingGaps.length; x++) {
+                    let x_stays = true;
+                    for (let y = 0; y < linearCombos.length; y++) {
+                        if (((remainingGaps[x] - linearCombos[y]) >= 0) && ((remainingGaps[x] - linearCombos[y]) % botMove == 0)) {
+                            x_stays = false;
+                            break;
+                        }
+                    }
+                    if (x_stays)
+                        newGappies.push(remainingGaps[x]);
+                }
+                remainingGaps = [...newGappies];
+                movesPlayed.push(botMove);
+                checkGameState();
+            } else {
+                penaltyForPlayer()
+            }
+        }
+    }
+}
+
+/* Play new bot move */
+function playNewBotMove(){
+    if((currentTurn == -1) && gameNotComplete(movesPlayed)) {
+        let botMove = myNewBot(movesPlayed, remainingGaps);
         if (remainingGaps.length == 0) {
             if (legalMove(botMove)) {
                 movesPlayed.push(botMove);
@@ -407,64 +382,24 @@ function playBotMove(){
 
 /** Game State Checking Function **/
 function checkGameState(){
-	document.getElementById("remainingMoves").innerHTML = "The remaining legal moves are: ";
-    document.getElementById("movesAlready").innerHTML = movesPlayed.join(', ');
     currentTurn = Math.pow(-1, movesPlayed.length + gamesCounter + 1);
     if(currentGCD != 1)
         currentGCD = gcd_list(movesPlayed);
-    document.getElementById("gameNumber").innerHTML = "Game " + (gamesCounter + 1);
     if(gameNotComplete(movesPlayed)){
-        if(currentGCD != 1)
-            document.getElementById("movesLeft").innerHTML = "There are an infinite number of moves left";
-        else if(remainingGaps.length == 0){
+        if(remainingGaps.length == 0 && currentGCD == 1){
             remainingGaps = gaps(ListByGensUpToE(movesPlayed));
-			if(remainingGaps.length > 500)
-				document.getElementById("movesLeft").innerHTML = remainingGaps.join(', ');
-			else{
-				document.getElementById("movesLeft").innerHTML = "";
-				var doingIt = addTable();
-			}
-        }
-        else{
-            if(remainingGaps.length > 500)
-				document.getElementById("movesLeft").innerHTML = remainingGaps.join(', ');
-			else{
-				document.getElementById("movesLeft").innerHTML = "";
-				var doingIt = addTable();
-			}
-        }
-        if (currentTurn == -1)
-            document.getElementById("currentTurn").innerHTML = "Current Turn: Player 1";
-        else
-            document.getElementById("currentTurn").innerHTML = "Current Turn: Player 2";
+		}
     }
     else {
-		document.getElementById("myDynamicTable").innerHTML = "";
-        document.getElementById("movesLeft").innerHTML = remainingGaps.join(', ');
         if (currentTurn == -1){
             p1Wins += 1;
-			document.getElementById("remainingMoves").innerHTML = "There are no remaining legal moves";
-            document.getElementById("currentTurn").innerHTML = "Game Over";
-            document.getElementById("GameOver").innerHTML = "Player 1 wins " + "Current Score: " + [p1Wins, p2Wins];
-			document.getElementById("gameButton").style.display = 'none';
         }
         else {
             p2Wins += 1;
-			document.getElementById("remainingMoves").innerHTML = "There are no remaining legal moves";
-            document.getElementById("currentTurn").innerHTML = "Game Over";
-            document.getElementById("GameOver").innerHTML = "Player 2 wins " + "Current Score: " + [p1Wins, p2Wins];
-			document.getElementById("gameButton").style.display = 'none';
         }
     }
-	if(remainingGaps.length > 0){
-		lineCombo = []
-		for (i = 0; i < Math.max(...remainingGaps); i++){
-			if(!remainingGaps.includes(i))
-				lineCombo.push(i);
-		}
-		relations = coverRelations(remainingGaps, lineCombo);
-	}
-    return [p1Wins, p2Wins];
+	winsAndLosses = [p1Wins, p2Wins];
+    return winsAndLosses;
 }
 
 /** penalties function **/
@@ -494,212 +429,72 @@ function penaltyForPlayer(){
 	checkGameState();
 }
 
-/** Code for playing **/
-function playMoveVSBot(){
-    let newlyPlayed = parseInt(getMove());
-    if (remainingGaps.length == 0){
-        if (legalMove(newlyPlayed)){
-            movesPlayed.push(newlyPlayed);
-            checkGameState();
-        }
-        else{
-            penaltyForPlayer();
-        }
+/* Upload the bot */
+function loadBot(){
+	var temp = localStorage.MyNewBot;
+    var newFunction = "<script>" + temp + "</script>";
+    var placehold = document.getElementById("placeHolder");
+    placehold.innerHTML = newFunction;
+    var oldScript = placehold.querySelector('script');
+    var newScript = document.createElement('script');
+    newScript.textContent = oldScript.textContent;
+    var attrs = oldScript.attributes;
+    for(var j=0;j<attrs.length;j++){
+        newScript.setAttribute(attrs[j],oldScript.getAttribute(attrs[j]));
     }
-    else{
-        let including = false;
-        for(let q = 0; q < remainingGaps.length; q++){
-            if(parseInt(newlyPlayed) == parseInt(remainingGaps[q])){
-                including = true;
-                break;
-            }
-        }
-        if(including){
-            let linearCombos = [];
-            for (let j = 0; j < Math.max(...remainingGaps); j++){
-                if(!remainingGaps.includes(j))
-                    linearCombos.push(j);
-            }
-            let newGappies = [];
-            for(let x = 0; x < remainingGaps.length; x++){
-                let x_stays = true;
-                for(let y = 0; y < linearCombos.length; y++){
-                    if(((remainingGaps[x] - linearCombos[y]) >= 0) && ((remainingGaps[x] - linearCombos[y])%newlyPlayed == 0)){
-                        x_stays = false;
-                        break;
-                    }
-                }
-                if(x_stays)
-                    newGappies.push(remainingGaps[x]);
-            }
-            remainingGaps = [...newGappies];
-            movesPlayed.push(newlyPlayed);
-            checkGameState();
-        }
-        else{
-            penaltyForPlayer()
-        }
-    }
-    playBotMove();
+    oldScript.parentNode.replaceChild(newScript,oldScript);
 }
 
-
-function playMoveVSHuman(){
-    let newlyPlayed = parseInt(getMove());
-    if (remainingGaps.length == 0){
-        if (legalMove(newlyPlayed)){
-            movesPlayed.push(newlyPlayed);
-            checkGameState();
-        }
-        else{
-            penaltyForPlayer();
-        }
-    }
-    else{
-        let including = false;
-        for(let q = 0; q < remainingGaps.length; q++){
-            if(parseInt(newlyPlayed) == parseInt(remainingGaps[q])){
-                including = true;
-                break;
-            }
-        }
-        if(including){
-            let linearCombos = [];
-            for (let j = 0; j < Math.max(...remainingGaps); j++){
-                if(!remainingGaps.includes(j))
-                    linearCombos.push(j);
-            }
-            let newGappies = [];
-            for(let x = 0; x < remainingGaps.length; x++){
-                let x_stays = true;
-                for(let y = 0; y < linearCombos.length; y++){
-                    if(((remainingGaps[x] - linearCombos[y]) >= 0) && ((remainingGaps[x] - linearCombos[y])%newlyPlayed == 0)){
-                        x_stays = false;
-                        break;
-                    }
-                }
-                if(x_stays)
-                    newGappies.push(remainingGaps[x]);
-            }
-            remainingGaps = [...newGappies];
-            movesPlayed.push(newlyPlayed);
-            checkGameState();
-        }
-        else{
-            penaltyForPlayer()
-        }
-    }
+/* Automated Playing Code */
+function numberOfGames() {
+	let tempValue = parseInt(document.getElementById("numbOfGame").value);
+	document.getElementById("numbOfGame").value = "";
+	if (tempValue >= 1)
+		numberGames = tempValue;
+	else
+		document.getElementById("mustHave").innerHTML = "Must have at least 1 game";
+	document.getElementById("initializing").style.display = 'none';
+	automatedTest();
 }
 
-
-
-/* UX CODE */
-function addTable() {
-	if(remainingGaps.length > 0){
-		let t = Math.ceil((remainingGaps.length)/5);
-		
-		var myTableDiv = document.getElementById("myDynamicTable");
-		myTableDiv.innerHTML = "";
-		var table = document.createElement('TABLE');
-		table.border = '1';
-
-		var tableBody = document.createElement('TBODY');
-		table.appendChild(tableBody);
-
-		for (var i = 0; i < t; i++) {
-			var tr = document.createElement('TR');
-			tableBody.appendChild(tr);
-
-			for (var j = 0; j < 5; j++) {
-				var td = document.createElement('TD');
-				td.width = '75';
-				td.setAttribute('class', 'possibleMove');
-				if(i*5 + j < remainingGaps.length){
-					td.setAttribute('id', remainingGaps[i*5 + j]);
-					td.appendChild(document.createTextNode(remainingGaps[i*5 + j]));
-				} else{
-					td.setAttribute('id', "NotAllowed");
-					td.appendChild(document.createTextNode(""));
-				}
-				tr.appendChild(td);
-				}
-		}
-		myTableDiv.appendChild(table);
-		
-		var tds = document.getElementsByClassName("possibleMove");
-		var getID = function() {
-				let newlyPlayed = parseInt(this.id);
-				let linearCombos = [];
-				for (let j = 0; j < Math.max(...remainingGaps); j++){
-					if(!remainingGaps.includes(j))
-						linearCombos.push(j);
-				}
-				let newGappies = [];
-				for(let x = 0; x < remainingGaps.length; x++){
-					let x_stays = true;
-					for(let y = 0; y < linearCombos.length; y++){
-						if(((remainingGaps[x] - linearCombos[y]) >= 0) && ((remainingGaps[x] - linearCombos[y])%newlyPlayed == 0)){
-							x_stays = false;
-							break;
-						}
-					}
-					if(x_stays)
-						newGappies.push(remainingGaps[x]);
-				}
-				remainingGaps = [...newGappies];
-				movesPlayed.push(newlyPlayed);
-				checkGameState();
+function automatedTest() {
+	while(gamesCounter < numberGames){
+		currentTurn = Math.pow(-1, (gamesCounter+1));
+		while(gameNotComplete(movesPlayed)){
+			if(currentTurn == -1){
+				playNewBotMove();
+			}
+			else{
 				playBotMove();
 			}
-		
-		var removeHighlight = function removingHighlights() {
-			for(let i = 0; i < tds.length; i++) {
-				document.getElementById(tds[i].id).style.backgroundColor = "inherit";
-			}
 		}
-
-		for(var i = 0; i < tds.length; i++) {
-			if(tds[i].id != "NotAllowed"){
-				tds[i].onclick = getID;
-				tds[i].onmouseover = highlight;
-				tds[i].onmouseout = removeHighlight;
-			}
-		};
-	}
-}
-
-var highlight = function highlightKilling() {
-	let eliminator = parseInt(this.id);
-	document.getElementById(eliminator).style.backgroundColor = "#ffb3b3";
-	for (let i = 0; i < relations[eliminator].length; i++){
-		current = relations[eliminator][i];
-		current = current.toString();
-		document.getElementById(current).style.backgroundColor = "#ffb3b3";
+		document.getElementById("results").innerHTML = "Results: ";
+		let printResult = '<br>';
+		printResult += "Game " + (gamesCounter + 1) + "<br>";
+		printResult += "Moves played this game: "
+		printResult += movesPlayed.join(', ');
+		printResult += "<br> Wins/Losses: ";
+		printResult += winsAndLosses.join(', ');
+		printResult += "<br> Penalties: ";
+		printResult += [p1Penalties, p2Penalties].join(', ');
+		printResult += "<br>";
+		document.getElementById("outputResults").innerHTML += printResult;
+		movesPlayed = [];
+		remainingGaps = [];
+		currentGCD = -1;
+		gamesCounter += 1;
 	}
 }
 
 
-
-function coverRelations(gap, linComb){
-	let dictionary = {};
-    for (let i = 0; i < gap.length; i++){
-        let covers = [];
-        for (let j = i + 1; j < gap.length; j++){
-            for (let k = 0; k < linComb.length; k++){
-                if(gaps[j] - linComb[k] < gap[i])
-                    break;
-                if(((gap[j] - linComb[k]) > 0) && ((gap[j] - linComb[k])%gap[i] == 0)){
-                    covers.push(gap[j]);
-                    break;
-				}
-			}
-		}
-        dictionary[gap[i]] = covers;
-    }
-	return dictionary
+/* CODE FOR USER UPLOAD */
+var __count = 0;
+const __detectInfiniteLoop = () => {
+	if(__count > 10000000) {
+		throw new Error('Infinite Loop detected');
+	}
+	__count += 1;
 }
-
-
 
 
 /** Setting the page theme and coloration **/

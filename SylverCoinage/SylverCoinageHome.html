@@ -9,22 +9,37 @@
 <link rel ="stylesheet" type="text/css" href="sylverCoinageStyle.css">
 
 </head>
-<body class="light-theme || dark-theme" onload="setTheme(); settingTheGameUp();">
-<nav>
+<body class="light-theme || dark-theme" onload="setTheme(); settingTheGameUp(); checkIfBotAvailable();">
+<!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+<nav id="navBar">
 	<ul>
-		<li><p>Gilad Moskowitz Homepage</p></li><li>
-		<a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
+		<li><a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
 		<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
 		<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
 		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
-		<li>
+		<li><div id="revealOnHover">
 			<label class="switch" onchange = "toggleTheme()">
 			<input type="checkbox" id="darkModeSwitch" checked>
 			<span class="slider"></span>
 			</label>
-		</li>
+		<div></li>
 	</ul>
 </nav>
+
+<div class="collapsible-menu">
+	<input type="checkbox" id="menu">
+	<label for="menu"><img src="menuicon.png" id="menuBarIcon">Menu</label>
+	<div class="menu-content">
+		<ul>
+			<li><a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
+			<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
+			<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
+			<a href="https://github.com/gilad-moskowitz">github</a></li>
+		</ul>
+	</div>
+</div>
+<!-- END NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+
 <div id="wrapper">
 	<div id="header">
 		<h1><i>Sylver Coinage</i></h1>
@@ -55,8 +70,14 @@
 				</ul>
 			</div>
 		</div>
-		<button type="button" onclick="playVSHuman()" id="playHuman" class="gameStartButton">Play Human</button>
-		<button type="button" onclick="playVSBot()" id="playBot" class="gameStartButton">Play Bot</button>
+		<div class='wholePage'>
+			<button type="button" onclick="playVSHuman()" id="playHuman" class="gameStartButton">Play Human</button>
+			<button type="button" onclick="playVSBot()" id="playBot" class="gameStartButton">Play Bot</button>
+		</div>
+		<div class='wholePage'>
+			<button type="button" onclick="location.href='sylverCoinageUploadBot.html';" id="uploadBot" class="gameStartButton">Upload Bot</button>
+			<button type="button" onclick="location.href='testBotArena.html'" id="testBot" class="gameStartButton">Test Uploaded Bot</button>
+		</div>
 		<div id="firstPart">
 			<button type="button" onclick="restartGame()">Restart</button>
 			<button type="button" onclick="resetGame()">Reset (choose oponenent)</button>
@@ -67,13 +88,14 @@
 			<button type="button" onclick="playMoveVSBot()" id="gameButton">Play Move</button>
 		</div>
 		<div id = "vsHumanGame">
-			<button type="button" onclick="playMoveVSBot()" id="gameButton2">Play Move</button>
+			<button type="button" onclick="playMoveVSHuman()" id="gameButton2">Play Move</button>
 		</div>
 		<div id="secondPart">
 			<p id="currentTurn">Current Turn: Player 1</p>
 			<p id="gameNumber">Game 1</p>
-			<p id="movesAlready">Initializing...</p>
-			<p id="movesLeft" style="white-space:wrap">Initializing...</p>
+			<p id="movesAlready">(Waiting for first move)</p>
+			<p id="remainingMoves"></p>
+			<p id="movesLeft" style="white-space:wrap">(Waiting for first move)</p>
 			<p id="penalties"></p>
 			<p id="GameOver"><p>
 			<div id="myDynamicTable"></div>
@@ -81,6 +103,40 @@
 	</div>
 </div>
 <script src="sylverCoinageGameplay.js"></script> 
+<script>
+var menuCount = 0;
+function removeCheck() {
+	if(menuCount > 1){
+		document.getElementById("menu").checked = false;
+		menuCount = 0;
+	}
+	else
+		menuCount ++;
+}
+document.body.addEventListener("click", removeCheck);
+</script>
+
+<script>
+function checkIfBotAvailable() {
+	if(localStorage.MyNewBot == "undefined" || localStorage.MyNewBot == undefined){
+		document.getElementById("testBot").innerText = "No bot available";
+		document.getElementById("testBot").disabled = true;
+		document.getElementById("testBot").classList.remove('gameStartButton');
+		document.getElementById("testBot").classList.add('disabledGameStartButton');
+	}
+	else {
+		document.getElementById("testBot").innerText = "Test Uploaded Bot";
+		document.getElementById("testBot").disabled = false;
+		document.getElementById("testBot").classList.remove('disabledGameStartButton');
+		document.getElementById("testBot").classList.add('gameStartButton');
+	}
+}
+</script>
+<script>
+function unavailable() {
+	document.getElementById("testBot").style.cursor = "not-allowed";
+}
+</script>
 
 </body>
 
