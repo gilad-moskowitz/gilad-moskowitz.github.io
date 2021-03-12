@@ -14,15 +14,14 @@
 <script src="bothEnAndDecodeScript.js"></script> 
 
 <body class="dark-theme || light-theme" onload="toggleButtonLabel(); setTheme();">
-
-<nav>
+<!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+<nav id="navBar">
 	<ul>
-		<li><p>Gilad Moskowitz Homepage</p></li><li>
-		<a href="https://gilad-moskowitz.github.io/index.html">Home</a></li><li>
-		<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
-		<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
-		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
-		<li>
+		<li><a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
+			<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
+			<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
+			<a href="https://github.com/gilad-moskowitz">github</a></li>
+		<li><div id="revealOnHover">
 			<label class="switch" onchange = "toggleTheme()">
 			<input type="checkbox" id="darkModeSwitch" checked>
 			<span class="slider"></span>
@@ -30,6 +29,20 @@
 		</li>
 	</ul>
 </nav>
+
+<div class="collapsible-menu">
+	<input type="checkbox" id="menu">
+	<label for="menu"><img src="menuicon.png" id="menuBarIcon">Menu</label>
+	<div class="menu-content">
+		<ul>
+			<li><a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
+			<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
+			<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
+			<a href="https://github.com/gilad-moskowitz">github</a></li>
+		</ul>
+	</div>
+</div>
+<!-- END NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
 
 <div id="wrapper">
 	<div id="header">
@@ -116,6 +129,19 @@ function setTheme() {
 		document.getElementById("darkModeSwitch").checked = false;
 	}
 }
+</script>
+
+<script>
+var menuCount = 0;
+function removeCheck() {
+	if(menuCount > 1){
+		document.getElementById("menu").checked = false;
+		menuCount = 0;
+	}
+	else
+		menuCount ++;
+}
+document.body.addEventListener("click", removeCheck);
 </script>
 
 </body>
