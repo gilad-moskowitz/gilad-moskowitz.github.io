@@ -35,6 +35,7 @@ body.dark-theme{
 	--nav-bkg-color: #000;
 	--nav-button-color: #5353ac;
 	--nav-text-color: #FFF;
+	--top-of-page: transparent;
 }
 
 /** Old Color Scheme **/
@@ -79,12 +80,13 @@ body {
 
 nav {
 	overflow: hidden;
-	background-color: var(--nav-bkg-color);
+	background: var(--top-of-page);
 	position: fixed; /* Set the navbar to fixed position */
 	top: 0; /* Position the navbar at the top of the page */
 	width: 100%; /* Full width */
 	z-index: 9999;
 	height: 42px;
+	transition: 0.5s;
 }
 
 nav p{
@@ -183,11 +185,12 @@ nav li a:hover {
 #intro {
 	position: relative;
 	margin: 0px;
+	margin-top: -30px;
 }
 
 #centeredText {
 	position: absolute;
-	top: 40%;
+	top: 33%;
 	left: 50%;
 	text-align: center;
 	transform: translate(-50%, -50%);
@@ -204,7 +207,7 @@ nav li a:hover {
 
 #firstPic {
 	width: 100%;
-	opacity: 0.4;
+	opacity: 0.6;
 	top: 0px;
 }
 

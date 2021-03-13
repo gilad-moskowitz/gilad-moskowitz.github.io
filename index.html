@@ -13,7 +13,7 @@
 
 
 </head>
-<body class="dark-theme || light-theme" onload="setTheme();">
+<body class="dark-theme || light-theme" onload="setTheme(); changeTopDisplay();">
 <!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
 <nav id="navBar">
 	<ul>
@@ -154,6 +154,7 @@
 <script>
 var hideCount = 0;
 var menuCount = 0;
+var scrolled = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
 
 /** Displaying on Click **/
 /** DISPLAY NUMERICAL SEMIGROUP DEFINITION **/
@@ -266,6 +267,18 @@ function removeCheck() {
 		menuCount ++;
 }
 document.body.addEventListener("click", removeCheck);
+
+function changeTopDisplay() {
+	scrolled = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
+	if(scrolled == 0){
+		document.getElementById('navBar').style.background = 'var(--top-of-page)';
+	}
+	else {
+		document.getElementById('navBar').style.background = 'var(--nav-bkg-color)';
+	}
+}
+
+window.addEventListener('scroll', changeTopDisplay);
 
 </script>
 
