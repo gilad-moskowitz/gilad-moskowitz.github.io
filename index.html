@@ -155,6 +155,7 @@
 var hideCount = 0;
 var menuCount = 0;
 var scrolled = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
+var theWindowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 
 /** Displaying on Click **/
 /** DISPLAY NUMERICAL SEMIGROUP DEFINITION **/
@@ -270,7 +271,8 @@ document.body.addEventListener("click", removeCheck);
 
 function changeTopDisplay() {
 	scrolled = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
-	if(scrolled == 0){
+	theWindowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+	if((scrolled == 0 && theWindowWidth > 650)){
 		document.getElementById('navBar').style.background = 'var(--top-of-page)';
 	}
 	else {
@@ -279,6 +281,10 @@ function changeTopDisplay() {
 }
 
 window.addEventListener('scroll', changeTopDisplay);
+window.onresize = changeTopDisplay;
+
+
+
 
 </script>
 
