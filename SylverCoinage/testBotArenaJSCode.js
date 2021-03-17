@@ -13,21 +13,31 @@ var playingHuman = false;
 var relations = [];
 var numberGames = 1;
 var winsAndLosses = [];
+var haventSelectedBot = true;
+var botChoice = 0;
+/** Information for table of wins and losses **/
+var winsPerBot = [0, 0, 0, 0];
+var lossesPerBot = [0, 0, 0, 0];
 
 /** Reset all parameters **/
 function restartGame(){
+	document.getElementById("statsTable").style.display = 'initial';
 	gamesCounter = 0;
     currentTurn = Math.pow(-1, (gamesCounter+1));
     movesPlayed = [];
     p1Penalties = 0;
     p2Penalties = 0;
+	p1Wins = 0;
+	p2Wins = 0;
     remainingGaps = [];
 	relations = [];
 	currentGCD = -1;
+	haventSelectedBot = true;
     document.getElementById("numGames").value = "";
     document.getElementById("results").innerHTML = "";
     document.getElementById("outputResults").innerHTML = "";
 	document.getElementById("initializing").style.display = 'initial';
+	document.getElementById("selectBot").style.display = 'initial';
 	if(currentTurn == 1 && playingBot == true)
 		playBotMove();
     return 0;
@@ -213,7 +223,7 @@ function gameNotComplete(list){
         return true;
 }
 
-/** Code for bot **/
+/** Code for bots **/
 function alwaysOddBot(){
     if (movesPlayed.length == 0){
         let possibility = getRandomInt(1, 7);
@@ -287,9 +297,152 @@ function alwaysOddBot(){
         return parseInt(1);
 }
 
+function alwaysMaxBot() {
+	if (movesPlayed.length == 0){
+        let possibility = getRandomInt(1, 7);
+		let primes = [5, 5, 7, 11, 13, 17, 19, 23];
+		return primes[possibility];
+    }
+    else if (movesPlayed.includes(3) && !movesPlayed.includes(2)){
+        return 2;
+    }
+    else if (movesPlayed.includes(2) && !movesPlayed.includes(3)){
+        return 3;
+    }
+    else if (movesPlayed.includes(2) && movesPlayed.includes(3)){
+        return parseInt(1);
+    }
+    if ((currentGCD > 1) && (movesPlayed.length == 1)){
+        let factor = PrimeFactorization(parseInt(movesPlayed[0]))
+        if ((factor.length == 1) && (parseInt(movesPlayed[0]) > 10))
+            return 9;
+        else if (factor.length == 1)
+            return (parseInt(movesPlayed[0]) + 1);
+        else{
+            for(let e = 0; e < factor.length; e++){
+                if(parseInt(factor[e]) > 3)
+                    return parseInt(factor[e]);
+            }
+            if(parseInt(movesPlayed[0]) > 16)
+                return 16;
+            else
+                return (parseInt(movesPlayed[0]) + 1);
+        }
+    }
+    else if ((currentGCD > 1))
+        return (Math.min(...movesPlayed) + 1);
+    if ((currentGCD == 1) && (remainingGaps.length == 0)){
+        remainingGaps = gaps(ListByGensUpToE(movesPlayed));
+    }
+    if (remainingGaps.length > 1){
+        return Math.max(...remainingGaps);
+    }
+    else
+        return parseInt(1);
+}
+
+function alwaysMinBot() {
+	if (movesPlayed.length == 0){
+        let possibility = getRandomInt(1, 7);
+		let primes = [5, 5, 7, 11, 13, 17, 19, 23];
+		return primes[possibility];
+    }
+    else if (movesPlayed.includes(3) && !movesPlayed.includes(2)){
+        return 2;
+    }
+    else if (movesPlayed.includes(2) && !movesPlayed.includes(3)){
+        return 3;
+    }
+    else if (movesPlayed.includes(2) && movesPlayed.includes(3)){
+        return parseInt(1);
+    }
+    if ((currentGCD > 1) && (movesPlayed.length == 1)){
+        let factor = PrimeFactorization(parseInt(movesPlayed[0]))
+        if ((factor.length == 1) && (parseInt(movesPlayed[0]) > 10))
+            return 9;
+        else if (factor.length == 1)
+            return (parseInt(movesPlayed[0]) + 1);
+        else{
+            for(let e = 0; e < factor.length; e++){
+                if(parseInt(factor[e]) > 3)
+                    return parseInt(factor[e]);
+            }
+            if(parseInt(movesPlayed[0]) > 16)
+                return 16;
+            else
+                return (parseInt(movesPlayed[0]) + 1);
+        }
+    }
+    else if ((currentGCD > 1))
+        return (Math.min(...movesPlayed) + 1);
+    if ((currentGCD == 1) && (remainingGaps.length == 0)){
+        remainingGaps = gaps(ListByGensUpToE(movesPlayed));
+    }
+    if (remainingGaps.length > 3){
+        return parseInt(remainingGaps[3]);
+    }
+	else if (remainingGaps.length > 1){
+		return Math.max(...remainingGaps);
+	}
+    else
+        return parseInt(1);
+}
+
+function alwaysRandomBot() {
+	if (movesPlayed.length == 0){
+        let possibility = getRandomInt(1, 7);
+		let primes = [5, 5, 7, 11, 13, 17, 19, 23];
+		return primes[possibility];
+    }
+    else if (movesPlayed.includes(3) && !movesPlayed.includes(2)){
+        return 2;
+    }
+    else if (movesPlayed.includes(2) && !movesPlayed.includes(3)){
+        return 3;
+    }
+    else if (movesPlayed.includes(2) && movesPlayed.includes(3)){
+        return parseInt(1);
+    }
+    if ((currentGCD > 1) && (movesPlayed.length == 1)){
+        let factor = PrimeFactorization(parseInt(movesPlayed[0]))
+        if ((factor.length == 1) && (parseInt(movesPlayed[0]) > 10))
+            return 9;
+        else if (factor.length == 1)
+            return (parseInt(movesPlayed[0]) + 1);
+        else{
+            for(let e = 0; e < factor.length; e++){
+                if(parseInt(factor[e]) > 3)
+                    return parseInt(factor[e]);
+            }
+            if(parseInt(movesPlayed[0]) > 16)
+                return 16;
+            else
+                return (parseInt(movesPlayed[0]) + 1);
+        }
+    }
+    else if ((currentGCD > 1))
+        return (Math.min(...movesPlayed) + 1);
+    if ((currentGCD == 1) && (remainingGaps.length == 0)){
+        remainingGaps = gaps(ListByGensUpToE(movesPlayed));
+    }
+    if (remainingGaps.length > 3){
+		let randomChoice = getRandomInt(3, remainingGaps.length - 1);
+        return parseInt(remainingGaps[randomChoice]);
+    }
+	else if (remainingGaps.length > 1){
+		return Math.max(...remainingGaps);
+	}
+    else
+        return parseInt(1);
+}
+
+var possibleBots = [alwaysOddBot, alwaysMaxBot, alwaysMinBot, alwaysRandomBot];
+
+
+/** CODE TO PLAY BOT MOVE **/
 function playBotMove(){
     if((currentTurn == 1) && gameNotComplete(movesPlayed)) {
-        let botMove = alwaysOddBot();
+        let botMove = possibleBots[botChoice]();
         if (remainingGaps.length == 0) {
             if (legalMove(botMove)) {
                 movesPlayed.push(botMove);
@@ -393,9 +546,11 @@ function checkGameState(){
     else {
         if (currentTurn == -1){
             p1Wins += 1;
+			winsPerBot[botChoice] += 1;
         }
         else {
             p2Wins += 1;
+			lossesPerBot[botChoice] += 1;
         }
     }
 	winsAndLosses = [p1Wins, p2Wins];
@@ -454,10 +609,16 @@ function numberOfGames() {
 	else
 		document.getElementById("mustHave").innerHTML = "Must have at least 1 game";
 	document.getElementById("initializing").style.display = 'none';
+	if(haventSelectedBot){
+		document.getElementById("selectBot").style.display = 'none';
+		haventSelectedBot = false;
+		botChoice = document.getElementById("botSelector").value;
+	}
 	automatedTest();
 }
 
 function automatedTest() {
+	document.getElementById("statsTable").style.display = 'none';
 	while(gamesCounter < numberGames){
 		currentTurn = Math.pow(-1, (gamesCounter+1));
 		while(gameNotComplete(movesPlayed)){
@@ -484,6 +645,14 @@ function automatedTest() {
 		currentGCD = -1;
 		gamesCounter += 1;
 	}
+	document.getElementById("t1Wins").innerHTML = winsPerBot[0];
+	document.getElementById("t1Losses").innerHTML = lossesPerBot[0];
+	document.getElementById("t2Wins").innerHTML = winsPerBot[1];
+	document.getElementById("t2Losses").innerHTML = lossesPerBot[1];
+	document.getElementById("t3Wins").innerHTML = winsPerBot[2];
+	document.getElementById("t3Losses").innerHTML = lossesPerBot[2];
+	document.getElementById("t4Wins").innerHTML = winsPerBot[3];
+	document.getElementById("t4Losses").innerHTML = lossesPerBot[3];
 }
 
 

@@ -49,6 +49,18 @@
 			<button type="button" onclick="restartGame()">Restart</button>
 			<button type="button" onclick="location.href='SylverCoinageHome.html'">Return Home</button>
 			<br>
+			<div id="selectBot">
+			<br>
+				<form>
+					Select the bot you want to play against (2 games):
+					<select id="botSelector">
+						<option value="0">Test Bot (hard)</option>
+						<option value="1">Test Bot 2 (medium)</option>
+						<option value="2">Test Bot 3 (easy)</option>
+						<option value="3">Test Bot 4 (unknowable)</option>
+					</select>
+				</form>
+			</div>
 			<br>
 		</div>
 		<div id="initializing">
@@ -59,10 +71,40 @@
 		<div id="secondPart">
 			<p id="mustHave"></p>
 			<p id="results"></p>
+			<p id="currentPlayers"></p>
 			<p id="outputResults"></p>
 		</div>
 	</div>
 	<div id="placeHolder"></div>
+	<div id="botStats">
+	<table id="statsTable">
+		<tr>
+			<th>VS</th>
+			<th>Wins</th> 
+			<th>Losses</th>
+		</tr>
+		<tr>
+			<td>Test Bot 1</td>
+			<td id="t1Wins">0</td>
+			<td id="t1Losses">0</td>
+		</tr>
+		<tr>
+			<td>Test Bot 2</td>
+			<td id="t2Wins">0</td>
+			<td id="t2Losses">0</td>
+		</tr>
+		<tr>
+			<td>Test Bot 3</td>
+			<td id="t3Wins">0</td>
+			<td id="t3Losses">0</td>
+		</tr>
+		<tr>
+			<td>Test Bot 4</td>
+			<td id="t4Wins">0</td>
+			<td id="t4Losses">0</td>
+		</tr>
+	</table>
+	</div>
 </div>
 <script src="testBotArenaJSCode.js"></script> 
 <script>
@@ -78,6 +120,18 @@ function removeCheck() {
 document.body.addEventListener("click", removeCheck);
 </script>
 
+<style>
+#statsTable {
+	border-color: #000;
+	text-align: center;
+}
+th, td {
+	border: 1px solid black;
+}
+th, td {
+	padding: 5px 15px;
+}
+</style>
 
 </body>
 

@@ -82,6 +82,19 @@
 			<button type="button" onclick="restartGame()">Restart</button>
 			<button type="button" onclick="resetGame()">Reset (choose oponenent)</button>
 			<br>
+			<div id="selectBot">
+			<br>
+				<form>
+					Select the bot you want to play against (2 games):
+					<select id="botSelector">
+						<option value="0">Test Bot (hard)</option>
+						<option value="1">Test Bot 2 (medium)</option>
+						<option value="2">Test Bot 3 (easy)</option>
+						<option value="3">Test Bot 4 (unknowable)</option>
+					</select>
+				</form>
+			</div>
+			<br>
 			<input type="number" id="move">
 		</div>
 		<div id = "vsBotGame">

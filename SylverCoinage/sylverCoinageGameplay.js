@@ -11,6 +11,8 @@ var currentGCD = -1;
 var playingBot = false;
 var playingHuman = false;
 var relations = [];
+var haventSelectedBot = true;
+var botChoice = 0;
 
 
 /** Setting Up the Page **/
@@ -80,8 +82,11 @@ function restartGame(){
 	relations = [];
 	currentGCD = -1;
     document.getElementById("move").value = "";
-	if(currentTurn == -1)
+	if(currentTurn == -1){
 		document.getElementById("currentTurn").innerHTML = "Current Turn: Player 1";
+		document.getElementById("selectBot").style.display = 'initial';
+		haventSelectedBot = true;
+	}
 	else
 		document.getElementById("currentTurn").innerHTML = "Current Turn: Player 2";
     document.getElementById("gameNumber").innerHTML = "Game " + (gamesCounter + 1);
@@ -285,7 +290,7 @@ function gameNotComplete(list){
         return true;
 }
 
-/** Code for bot **/
+/** Code for bots **/
 function alwaysOddBot(){
     if (movesPlayed.length == 0){
         let possibility = getRandomInt(1, 7);
@@ -359,9 +364,151 @@ function alwaysOddBot(){
         return parseInt(1);
 }
 
+function alwaysMaxBot() {
+	if (movesPlayed.length == 0){
+        let possibility = getRandomInt(1, 7);
+		let primes = [5, 5, 7, 11, 13, 17, 19, 23];
+		return primes[possibility];
+    }
+    else if (movesPlayed.includes(3) && !movesPlayed.includes(2)){
+        return 2;
+    }
+    else if (movesPlayed.includes(2) && !movesPlayed.includes(3)){
+        return 3;
+    }
+    else if (movesPlayed.includes(2) && movesPlayed.includes(3)){
+        return parseInt(1);
+    }
+    if ((currentGCD > 1) && (movesPlayed.length == 1)){
+        let factor = PrimeFactorization(parseInt(movesPlayed[0]))
+        if ((factor.length == 1) && (parseInt(movesPlayed[0]) > 10))
+            return 9;
+        else if (factor.length == 1)
+            return (parseInt(movesPlayed[0]) + 1);
+        else{
+            for(let e = 0; e < factor.length; e++){
+                if(parseInt(factor[e]) > 3)
+                    return parseInt(factor[e]);
+            }
+            if(parseInt(movesPlayed[0]) > 16)
+                return 16;
+            else
+                return (parseInt(movesPlayed[0]) + 1);
+        }
+    }
+    else if ((currentGCD > 1))
+        return (Math.min(...movesPlayed) + 1);
+    if ((currentGCD == 1) && (remainingGaps.length == 0)){
+        remainingGaps = gaps(ListByGensUpToE(movesPlayed));
+    }
+    if (remainingGaps.length > 1){
+        return Math.max(...remainingGaps);
+    }
+    else
+        return parseInt(1);
+}
+
+function alwaysMinBot() {
+	if (movesPlayed.length == 0){
+        let possibility = getRandomInt(1, 7);
+		let primes = [5, 5, 7, 11, 13, 17, 19, 23];
+		return primes[possibility];
+    }
+    else if (movesPlayed.includes(3) && !movesPlayed.includes(2)){
+        return 2;
+    }
+    else if (movesPlayed.includes(2) && !movesPlayed.includes(3)){
+        return 3;
+    }
+    else if (movesPlayed.includes(2) && movesPlayed.includes(3)){
+        return parseInt(1);
+    }
+    if ((currentGCD > 1) && (movesPlayed.length == 1)){
+        let factor = PrimeFactorization(parseInt(movesPlayed[0]))
+        if ((factor.length == 1) && (parseInt(movesPlayed[0]) > 10))
+            return 9;
+        else if (factor.length == 1)
+            return (parseInt(movesPlayed[0]) + 1);
+        else{
+            for(let e = 0; e < factor.length; e++){
+                if(parseInt(factor[e]) > 3)
+                    return parseInt(factor[e]);
+            }
+            if(parseInt(movesPlayed[0]) > 16)
+                return 16;
+            else
+                return (parseInt(movesPlayed[0]) + 1);
+        }
+    }
+    else if ((currentGCD > 1))
+        return (Math.min(...movesPlayed) + 1);
+    if ((currentGCD == 1) && (remainingGaps.length == 0)){
+        remainingGaps = gaps(ListByGensUpToE(movesPlayed));
+    }
+    if (remainingGaps.length > 3){
+        return parseInt(remainingGaps[3]);
+    }
+	else if (remainingGaps.length > 1){
+		return Math.max(...remainingGaps);
+	}
+    else
+        return parseInt(1);
+}
+
+function alwaysRandomBot() {
+	if (movesPlayed.length == 0){
+        let possibility = getRandomInt(1, 7);
+		let primes = [5, 5, 7, 11, 13, 17, 19, 23];
+		return primes[possibility];
+    }
+    else if (movesPlayed.includes(3) && !movesPlayed.includes(2)){
+        return 2;
+    }
+    else if (movesPlayed.includes(2) && !movesPlayed.includes(3)){
+        return 3;
+    }
+    else if (movesPlayed.includes(2) && movesPlayed.includes(3)){
+        return parseInt(1);
+    }
+    if ((currentGCD > 1) && (movesPlayed.length == 1)){
+        let factor = PrimeFactorization(parseInt(movesPlayed[0]))
+        if ((factor.length == 1) && (parseInt(movesPlayed[0]) > 10))
+            return 9;
+        else if (factor.length == 1)
+            return (parseInt(movesPlayed[0]) + 1);
+        else{
+            for(let e = 0; e < factor.length; e++){
+                if(parseInt(factor[e]) > 3)
+                    return parseInt(factor[e]);
+            }
+            if(parseInt(movesPlayed[0]) > 16)
+                return 16;
+            else
+                return (parseInt(movesPlayed[0]) + 1);
+        }
+    }
+    else if ((currentGCD > 1))
+        return (Math.min(...movesPlayed) + 1);
+    if ((currentGCD == 1) && (remainingGaps.length == 0)){
+        remainingGaps = gaps(ListByGensUpToE(movesPlayed));
+    }
+    if (remainingGaps.length > 3){
+		let randomChoice = getRandomInt(3, remainingGaps.length - 1);
+        return parseInt(remainingGaps[randomChoice]);
+    }
+	else if (remainingGaps.length > 1){
+		return Math.max(...remainingGaps);
+	}
+    else
+        return parseInt(1);
+}
+
+var possibleBots = [alwaysOddBot, alwaysMaxBot, alwaysMinBot, alwaysRandomBot];
+
+/** CODE TO PLAY THE BOT'S MOVE **/
 function playBotMove(){
     if((currentTurn == 1) && (document.getElementById("currentTurn").innerHTML != "Game Over")) {
-        let botMove = alwaysOddBot();
+        let botMove = possibleBots[botChoice]();
         if (remainingGaps.length == 0) {
             if (legalMove(botMove)) {
                 movesPlayed.push(botMove);
@@ -496,6 +643,11 @@ function penaltyForPlayer(){
 
 /** Code for playing **/
 function playMoveVSBot(){
+	if(haventSelectedBot){
+		document.getElementById("selectBot").style.display = 'none';
+		haventSelectedBot = false;
+		botChoice = document.getElementById("botSelector").value;
+	}
     let newlyPlayed = parseInt(getMove());
     if (remainingGaps.length == 0){
         if (legalMove(newlyPlayed)){
