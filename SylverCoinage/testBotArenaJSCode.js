@@ -16,8 +16,9 @@ var winsAndLosses = [];
 var haventSelectedBot = true;
 var botChoice = 0;
 /** Information for table of wins and losses **/
-var winsPerBot = [0, 0, 0, 0];
-var lossesPerBot = [0, 0, 0, 0];
+var winsPerBot = [0, 0, 0, 0, 0, 0];
+var lossesPerBot = [0, 0, 0, 0, 0, 0];
+var possibleBots;
 
 /** Reset all parameters **/
 function restartGame(){
@@ -171,6 +172,23 @@ function gaps(Semigroup){
     return gapList;
 }
 
+
+/* Upload the bot */
+function loadBot(){
+	var temp = localStorage.MyNewBot;
+    var newFunction = "<script>" + temp + "</script>";
+    var placehold = document.getElementById("placeHolder");
+    placehold.innerHTML = newFunction;
+    var oldScript = placehold.querySelector('script');
+    var newScript = document.createElement('script');
+    newScript.textContent = oldScript.textContent;
+    var attrs = oldScript.attributes;
+    for(var j=0;j<attrs.length;j++){
+        newScript.setAttribute(attrs[j],oldScript.getAttribute(attrs[j]));
+    }
+    oldScript.parentNode.replaceChild(newScript,oldScript);
+	possibleBots = [alwaysOddBot, alwaysMaxBot, alwaysMinBot, alwaysRandomBot, myNewBot];
+}
 
 /** Checking the legality of a given move **/
 function legalMove(thisMove){
@@ -436,8 +454,6 @@ function alwaysRandomBot() {
         return parseInt(1);
 }
 
-var possibleBots = [alwaysOddBot, alwaysMaxBot, alwaysMinBot, alwaysRandomBot];
-
 
 /** CODE TO PLAY BOT MOVE **/
 function playBotMove(){
@@ -584,21 +600,6 @@ function penaltyForPlayer(){
 	checkGameState();
 }
 
-/* Upload the bot */
-function loadBot(){
-	var temp = localStorage.MyNewBot;
-    var newFunction = "<script>" + temp + "</script>";
-    var placehold = document.getElementById("placeHolder");
-    placehold.innerHTML = newFunction;
-    var oldScript = placehold.querySelector('script');
-    var newScript = document.createElement('script');
-    newScript.textContent = oldScript.textContent;
-    var attrs = oldScript.attributes;
-    for(var j=0;j<attrs.length;j++){
-        newScript.setAttribute(attrs[j],oldScript.getAttribute(attrs[j]));
-    }
-    oldScript.parentNode.replaceChild(newScript,oldScript);
-}
 
 /* Automated Playing Code */
 function numberOfGames() {
@@ -653,6 +654,8 @@ function automatedTest() {
 	document.getElementById("t3Losses").innerHTML = lossesPerBot[2];
 	document.getElementById("t4Wins").innerHTML = winsPerBot[3];
 	document.getElementById("t4Losses").innerHTML = lossesPerBot[3];
+	document.getElementById("t5Wins").innerHTML = winsPerBot[4];
+	document.getElementById("t5Losses").innerHTML = lossesPerBot[4];
 }
 
 

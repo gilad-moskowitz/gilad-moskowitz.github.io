@@ -75,7 +75,7 @@
 			<button type="button" onclick="playVSBot()" id="playBot" class="gameStartButton">Play Bot</button>
 		</div>
 		<div class='wholePage'>
-			<button type="button" onclick="location.href='sylverCoinageUploadBot.html';" id="uploadBot" class="gameStartButton">Upload Bot</button>
+			<button type="button" onclick="location.href='sylverCoinageUploadBot.html';" id="uploadBot" class="gameStartButton">Upload (local) Bot</button>
 			<button type="button" onclick="location.href='testBotArena.html'" id="testBot" class="gameStartButton">Test Uploaded Bot</button>
 		</div>
 		<div id="firstPart">
@@ -91,6 +91,7 @@
 						<option value="1">Test Bot 2 (medium)</option>
 						<option value="2">Test Bot 3 (easy)</option>
 						<option value="3">Test Bot 4 (unknowable)</option>
+						<option value="4" id="uploadedBot1">Uploaded Bot 1</option>
 					</select>
 				</form>
 			</div>
@@ -115,6 +116,7 @@
 		</div>
 	</div>
 </div>
+<div id = "placeHolder"></div>
 <script src="sylverCoinageGameplay.js"></script> 
 <script>
 var menuCount = 0;
@@ -129,22 +131,7 @@ function removeCheck() {
 document.body.addEventListener("click", removeCheck);
 </script>
 
-<script>
-function checkIfBotAvailable() {
-	if(localStorage.MyNewBot == "undefined" || localStorage.MyNewBot == undefined){
-		document.getElementById("testBot").innerText = "No bot available";
-		document.getElementById("testBot").disabled = true;
-		document.getElementById("testBot").classList.remove('gameStartButton');
-		document.getElementById("testBot").classList.add('disabledGameStartButton');
-	}
-	else {
-		document.getElementById("testBot").innerText = "Test Uploaded Bot";
-		document.getElementById("testBot").disabled = false;
-		document.getElementById("testBot").classList.remove('disabledGameStartButton');
-		document.getElementById("testBot").classList.add('gameStartButton');
-	}
-}
-</script>
+
 <script>
 function unavailable() {
 	document.getElementById("testBot").style.cursor = "not-allowed";

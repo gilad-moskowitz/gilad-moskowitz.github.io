@@ -13,6 +13,7 @@ var playingHuman = false;
 var relations = [];
 var haventSelectedBot = true;
 var botChoice = 0;
+var possibleBots;
 
 
 /** Setting Up the Page **/
@@ -46,6 +47,7 @@ function playVSHuman(){
 	document.getElementById("uploadBot").style.display = 'none';
 	document.getElementById("testBot").style.display = 'none';
 	document.getElementById("rules").style.display = 'none';
+	document.getElementById("selectBot").style.display = 'none';
 	settingTheGameUp();
 }
 function playVSBot(){
@@ -66,6 +68,7 @@ function resetGame(){
 	document.getElementById("uploadBot").style.display = 'initial';
 	document.getElementById("testBot").style.display = 'initial';
 	document.getElementById("rules").style.display = 'initial';
+	document.getElementById("selectBot").style.display = 'initial';
 	gamesCounter = -1;
 	restartGame();
 	settingTheGameUp();
@@ -87,6 +90,8 @@ function restartGame(){
 		document.getElementById("selectBot").style.display = 'initial';
 		haventSelectedBot = true;
 	}
+	if(playingHuman)
+		document.getElementById("selectBot").style.display = 'none';
 	else
 		document.getElementById("currentTurn").innerHTML = "Current Turn: Player 2";
     document.getElementById("gameNumber").innerHTML = "Game " + (gamesCounter + 1);
@@ -503,7 +508,6 @@ function alwaysRandomBot() {
         return parseInt(1);
 }
 
-var possibleBots = [alwaysOddBot, alwaysMaxBot, alwaysMinBot, alwaysRandomBot];
 
 /** CODE TO PLAY THE BOT'S MOVE **/
 function playBotMove(){
@@ -852,6 +856,38 @@ function coverRelations(gap, linComb){
 }
 
 
+
+function checkIfBotAvailable() {
+	if(localStorage.MyNewBot == "undefined" || localStorage.MyNewBot == undefined){
+		document.getElementById("testBot").innerText = "No bot available";
+		document.getElementById("testBot").disabled = true;
+		document.getElementById("testBot").classList.remove('gameStartButton');
+		document.getElementById("testBot").classList.add('disabledGameStartButton');
+		document.getElementById("uploadedBot1").style.display = 'none';
+		possibleBots = [alwaysOddBot, alwaysMaxBot, alwaysMinBot, alwaysRandomBot];
+	}
+	else {
+		document.getElementById("testBot").innerText = "Test Uploaded Bot";
+		document.getElementById("testBot").disabled = false;
+		document.getElementById("testBot").classList.remove('disabledGameStartButton');
+		document.getElementById("testBot").classList.add('gameStartButton');
+		document.getElementById("uploadedBot1").style.display = 'initial';
+		//Loading the bot
+		var temp = localStorage.MyNewBot;
+		var newFunction = "<script>" + temp + "</script>";
+		var placehold = document.getElementById("placeHolder");
+		placehold.innerHTML = newFunction;
+		var oldScript = placehold.querySelector('script');
+		var newScript = document.createElement('script');
+		newScript.textContent = oldScript.textContent;
+		var attrs = oldScript.attributes;
+		for(var j=0;j<attrs.length;j++){
+			newScript.setAttribute(attrs[j],oldScript.getAttribute(attrs[j]));
+		}
+		oldScript.parentNode.replaceChild(newScript,oldScript);
+		possibleBots = [alwaysOddBot, alwaysMaxBot, alwaysMinBot, alwaysRandomBot, myNewBot];
+	}
+}
 
 
 /** Setting the page theme and coloration **/
