@@ -156,7 +156,6 @@ nav li a:hover {
     background : var(--wrapper-color);
     margin : 0 auto;
 	margin-top: 100px;
-	text-align: left;
 	padding-left: 20px;
 	padding-right: 20px;
 	padding-top: 10px;
@@ -173,13 +172,37 @@ nav li a:hover {
 	margin: 0 0 100px 0;
 }
 
+#Projects ul li p{
+	font-size: calc(14px + 0.3vw);
+}
+
+#Projects ul li ul {
+	list-style: inside;
+}
+
+#Projects ul li ul li{
+	font-size: calc(12px + 0.2vw);
+	margin: 0 0 0 0;
+}
+
+
 #Projects a {
-	font-size: 15px;
+	font-size: calc(17px + 0.6vw);
 	text-decoration: none;
 	color: var(--text-color-url);
 }
 
 #Projects a:hover {
+	text-decoration: underline;
+}
+
+#shoutOutChris {
+	font-size: calc(14px + 0.3vw);
+	font-style: italic;
+}
+
+#shoutOutChris:hover {
+	cursor: pointer;
 	text-decoration: underline;
 }
 
@@ -214,6 +237,36 @@ nav li a:hover {
 	-webkit-transform: scale(2.5); 
 	transform: scale(2.5); 
 }
+
+/**image on hover zoom**/
+.puslingImage {
+	border-radius: 125px;
+	transition: transform .2s;
+	margin: 0 30px 0 0;
+	transform-origin: 50% 50%;
+
+}
+
+.puslingImage:hover {
+	animation-name: pulsing; 
+	animation-duration: 1.2s; 
+	animation-timing-function: ease-out;  
+	animation-iteration-count: infinite; 
+	animation-play-state: running; 
+}
+
+@keyframes pulsing {
+	0%{
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.5);
+	}
+	70%{
+		box-shadow: 0 0 0 14px rgba(0, 0, 0, 0);
+	}
+	100%{
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+}
+
 
 /** TRYING TO DO MEDIA STUFF **/
 
