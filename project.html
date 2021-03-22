@@ -14,7 +14,7 @@
 	<ul>
 		<li><a href="index.html">Home</a></li><li>
 		<a class="active" href="">Projects</a></li><li>
-		<a href="resume.html">Resume</a></li><li>
+		<a href="#" onclick="checkWidthLink();return false;">Resume</a></li><li>
 		<a href="https://github.com/gilad-moskowitz">github</a></li>
 		<li><div id="revealOnHover">
 			<label class="switch" onchange = "toggleTheme()">
@@ -32,7 +32,7 @@
 		<ul>
 			<li><a href="index.html">Home</a></li><li>
 			<a class="active" href="">Projects</a></li><li>
-			<a href="resume.html">Resume</a></li><li>
+			<a href="#" onclick="checkWidthLink();return false;">Resume</a></li><li>
 			<a href="https://github.com/gilad-moskowitz">github</a></li>
 		</ul>
 	</div>
@@ -62,6 +62,8 @@ function setTheme() {
 	}
 }
 
+
+var menuCount = 0;
 function removeCheck() {
 	if(menuCount > 1){
 		document.getElementById("menu").checked = false;
@@ -71,6 +73,17 @@ function removeCheck() {
 		menuCount ++;
 }
 document.body.addEventListener("click", removeCheck);
+
+
+function checkWidthLink(){
+	let checkedWindowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+	if(checkedWindowWidth > 650){
+		location.href = 'resume.html';
+	}
+	else {
+		location.href = 'moskowitzResume.pdf';
+	}
+}
 </script>
 
 </body>

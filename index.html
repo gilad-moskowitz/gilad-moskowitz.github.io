@@ -19,7 +19,7 @@
 	<ul>
 		<li><a class="active" href="">Home</a></li><li>
 		<a href="project.html">Projects</a></li><li>
-		<a href="resume.html">Resume</a></li><li>
+		<a href="#" onclick="checkWidthLink();return false;">Resume</a></li><li>
 		<a href="https://github.com/gilad-moskowitz">github</a></li>
 		<li><div id="revealOnHover">
 			<label class="switch" onchange = "toggleTheme()">
@@ -37,7 +37,7 @@
 		<ul>
 			<li><a class="active" href="">Home</a></li><li>
 			<a href="project.html">Projects</a></li><li>
-			<a href="resume.html">Resume</a></li><li>
+			<a href="#" onclick="checkWidthLink();return false;">Resume</a></li><li>
 			<a href="https://github.com/gilad-moskowitz">github</a></li>
 		</ul>
 	</div>
@@ -283,7 +283,15 @@ function changeTopDisplay() {
 window.addEventListener('scroll', changeTopDisplay);
 window.onresize = changeTopDisplay;
 
-
+function checkWidthLink(){
+	let checkedWindowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+	if(checkedWindowWidth > 650){
+		location.href = 'resume.html';
+	}
+	else {
+		location.href = 'moskowitzResume.pdf';
+	}
+}
 
 
 </script>
