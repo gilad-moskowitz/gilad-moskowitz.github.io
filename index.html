@@ -13,7 +13,7 @@
 
 
 </head>
-<body class="dark-theme || light-theme" onload="setTheme(); changeTopDisplay();">
+<body class="dark-theme || light-theme" onload="setTheme(); changeTopDisplay(); showMathInterests(); showWorldTravels(); showSlides(slideIndex);">
 <!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
 <nav id="navBar">
 	<ul>
@@ -46,7 +46,7 @@
 
 
 <div id="intro">
-<img src="backgroundPic.jpg" id="firstPic">
+<img src="backgroundPicWithText.jpg" id="firstPic">
 <div id="centeredText"><h1>GILAD MOSKOWITZ</h1><h3>MATHEMATICIAN, PROGRAMMER, AVID FAN OF TABLE-TOP GAMES</h3></div>
 <div>
 
@@ -61,9 +61,9 @@
 			<div class='halfPage'>
 				<p id="fullPagefill">
 				<br><br>
-					I completed my undergraduate education at UCLA where I got my B.S. in Chemistry and B.S. in Mathematics. 
+					I completed my undergraduate education at <span style="color:#3284BF;" onclick="window.open('https://www.ucla.edu/', '_blank')" class="schoolName">UCLA</span> where I got my B.S. in Chemistry and B.S. in Mathematics. 
 					I then took a small break from education to work and travel the world. 
-					I returned to school to pursue an M.S. in Applied Mathematics with a Concentration in Communication Systems at SDSU. 
+					I returned to school to pursue an M.S. in Applied Mathematics with a Concentration in Communication Systems at <span style="color:#C41230;" onclick="window.open('https://math.sdsu.edu/', '_blank')" class="schoolName" title="That's me learning on the front page">SDSU</span>. 
 					My primary mathematic interests are number theory, abstract algebra, and combinatorics. 
 					I also enjoy applying machine learning and other algorithmic approaches to attempt to solve difficult math problems. 
 					For more information on my educational and mathematical background you can check out my <a href="moskowitzResume.pdf" target="_blank">resume</a>.
@@ -73,69 +73,118 @@
 				</p>
 			</div>
 			<div class='wholePage' id="mathBackground">
-				<h3>My Mathematical Interests</h3>
-				&emsp;Most of my mathematical research involves the study of <span class="nsHover" id="numericalSemigroup">numerical semigroups</span> 
-				<div class="nsDef" id="numericalSemigroupDefn">
-					<LATEX>
-					\begin{defn}
-						A numerical semigroup is a subsemigroup of $(\!&#8469;_0, +\!).$
-					\end{defn}
-					<div id="additionalText">We often write a numerical <span id="semigroup" class="nsHover">semigroup</span> as $S = \langle\!n_1, n_2, ..., n_k \!\rangle$ for $n_j \in &#8469;$ and $n_j < n_{j+1}.$ 
-					The elements of $S$ are then the non-negative integers that can be written as linear combinations of the generators of $S$.</div>
-					</LATEX>
+				<div class="clickMeToShow" onclick="toggleMathInterest();"><h3 id="titleOfMath">My Mathematical Interests<div class="arrow" id="mathArrow"></div></h3></div>
+				<div id="fullDescription">
+					&emsp;Most of my mathematical research involves the study of <span class="nsHover" id="numericalSemigroup">numerical semigroups</span> 
+					<div class="nsDef" id="numericalSemigroupDefn">
+						<LATEX>
+						\begin{defn}
+							A numerical semigroup is a subsemigroup of $(\!&#8469;_0, +\!).$
+						\end{defn}
+						<div id="additionalText">We often write a numerical <span id="semigroup" class="nsHover">semigroup</span> as $S = \langle\!n_1, n_2, ..., n_k \!\rangle$ for $n_j \in &#8469;$ and $n_j < n_{j+1}.$ 
+						The elements of $S$ are then the non-negative integers that can be written as linear combinations of the generators of $S$.</div>
+						</LATEX>
+					</div>
+					<div class="nsDef" id="semigroupDefn">
+						<LATEX>
+						\begin{defn}
+							A semigroup is a set, $S,$ with an associative binary operator, $+.$
+						\end{defn}
+						</LATEX>
+					</div>
+					and their properties. 
+					Particularly, the properties that I study are the <span class="nsHover" id="factorization">factorizations</span>, 
+					<div class="nsDef" id="factorizationDefn">
+						<LATEX>
+						\begin{defn}
+							Let $S = \langle n_1, n_2, \dots, n_k \rangle$ be a numerical semigroup. We say that $\mathbf{p} = (p_1, p_2, ..., p_k)$ is a \emph{factorization} of $n \in S$ if 
+							\[n = p_1n_1 + p_2n_2 + ... + p_kn_k.\]
+							We say that this factorization has \emph{length} $|$ $\mathbf{p}| = p_1 + p_2 + ... + p_k$. 
+						\end{defn}
+						\begin{defn}
+							The \emph{factorization set} of an integer $n \in S$ is 
+							\[\mathsf{Z}_S(n) = \{(p_1, p_2, ..., p_k) : n = p_1n_1 + p_2n_2 + ... + p_kn_k\}.\]
+							When it is clear which semigroup we are referring to, we simply write $\mathsf{Z}_S(n)$.
+						\end{defn}
+						</LATEX>
+					</div>
+					<span class="nsHover" id="lengthSet">length sets</span>, 
+					<div class="nsDef" id="lengthSetDefn">
+						<LATEX>
+						\begin{defn}
+							The \emph{length set} of an integer $n \in S$ is 
+							\[\mathsf{L}_S(n) = \{|\mathbf{p}| : \mathbf{p} = (p_1, p_2, ..., p_k) \in \mathsf{Z}_S(n) \}.\]
+							When there is no ambiguity, we simply write $\mathsf{L}(n)$.
+						\end{defn}
+						</LATEX>
+					</div>
+					and <span class="nsHover" id="gaps">gaps</span>.
+					<div class="nsDef" id="gapsDefn">
+						<LATEX>
+						\begin{defn}
+							Let $S$ be a numerical semigroup, then we define the gaps of $S$ as the set
+							\[\{i : i \in &#8469;_0 \mbox{ and } i \notin S\}.\]
+						\end{defn}
+						</LATEX>
+					</div>
+					I have worked several projects that were centered around the factorization set and length set of a numerical semigroup. 
+					<br>
+					&emsp;Currently, I have shifted my focus to examine the gaps of a numerical semigroup. 
+					This project is centered on the game <i><a href="SylverCoinage/SylverCoinageHome.html">Sylver Coinage</a></i>, and attempts to tackle the problem with the lens of a numerical semigroup. 
+					I am actively building towards a competition where the competitors submit bots to play the game Sylver Coinage, and the winner is the bot with the best overall score.
+					This project has required me to develop serveral pieces of code for working with numerical semigroups in Javascript and Python<sup><a href="https://github.com/gilad-moskowitz/numericalSemigroupPackage">1</a></sup>.
+					<br>
+					&emsp;Beyond numerical semigroups, I have also explored other areas of mathematics, including toying around with factorization algorithms, using machine learning to try and predict properties of the integers, and a few cryptography related projects.
+					Additionally, I truly enjoy teaching mathematics and am in the process of writting up notes to introduce students to proof based mathematics. 
+					I hope one day to put together an introductory Algebra textbook for elementry school students, but I know that this will be a long and timely endeavor. 
 				</div>
-				<div class="nsDef" id="semigroupDefn">
-					<LATEX>
-					\begin{defn}
-						A semigroup is a set, $S,$ with an associative binary operator, $+.$
-					\end{defn}
-					</LATEX>
+			</div>
+			<div class="wholePage" id="worldTravels">
+				<div class="clickMeToShow" onclick="toggleWorldTravels();"><h3 id="titleOfMath">World Travels<div class="arrow" id="travelsArrow"></div></h3></div>
+				<div id="travelsDescription">
+					&emsp;I love to travel and hope to one day explore the entire world. 
+					I believe that learning about the culture and values of different countries is extremely important and enjoyable. 
+					I have been very fortunate in my life to be able to travel to at least some parts of the world, but I have a lot more to explore. 
+					My next big travel destination will be Japan, where I hope to find a nice small apartment to rent for a little while (a month or two) and really experience the life there.
+					<br>
+					<br>
+					<div class="slideshow-container">
+						<div class="mySlides" id="1">
+							<img src="pictures/osteria.jpg" style="width:100%">
+							<div class="picDesc"><div class="textDesc">Taken at Osteria Francescana in Modena, Italy.</div>
+							</div>
+						</div>
+						<div class="mySlides" id="2">
+							<img src="pictures/stonehenge.jpg" style="width:100%">
+							<div class="picDesc"><div class="textDesc">Taken at Stonehenge during one of my trips to the UK.</div>
+							</div>
+						</div>
+						<div class="mySlides" id="3">
+							<img src="pictures/theMonster.jpg" style="width:100%">
+							<div class="picDesc"><div class="textDesc">Taken in Jerusalem, Israel. This slide is known as "The Monster", a classic landmark in Israel.</div>
+							</div>
+						</div>
+						<div class="mySlides" id="4">
+							<img src="pictures/venus.jpg" style="width:100%">
+							<div class="picDesc"><div class="textDesc">Taken at the Lourve in Paris, France.</div>
+							</div>
+						</div>
+						<div class="mySlides" id="5">
+							<img src="pictures/zion.jpg" style="width:100%">
+							<div class="picDesc"><div class="textDesc">Taken while trekking through Zion National Park in Utah, USA.</div>
+							</div>
+						</div>
+						<div id="prev" onclick="plusSlides(-1)">&#10094;</div>
+						<div id="next" onclick="plusSlides(1)">&#10095;</div>
+						<div style="text-align:center" id="slideDisplay">
+							<span class="dot" onclick="currentSlide(1)"></span> 
+							<span class="dot" onclick="currentSlide(2)"></span> 
+							<span class="dot" onclick="currentSlide(3)"></span> 
+							<span class="dot" onclick="currentSlide(4)"></span> 
+							<span class="dot" onclick="currentSlide(5)"></span> 
+						</div>
+					</div>
 				</div>
-				and their properties. 
-				Particularly, the properties that I study are the <span class="nsHover" id="factorization">factorizations</span>, 
-				<div class="nsDef" id="factorizationDefn">
-					<LATEX>
-					\begin{defn}
-						Let $S = \langle n_1, n_2, \dots, n_k \rangle$ be a numerical semigroup. We say that $\mathbf{p} = (p_1, p_2, ..., p_k)$ is a \emph{factorization} of $n \in S$ if 
-						\[n = p_1n_1 + p_2n_2 + ... + p_kn_k.\]
-						We say that this factorization has \emph{length} $|$ $\mathbf{p}| = p_1 + p_2 + ... + p_k$. 
-					\end{defn}
-					\begin{defn}
-						The \emph{factorization set} of an integer $n \in S$ is 
-						\[\mathsf{Z}_S(n) = \{(p_1, p_2, ..., p_k) : n = p_1n_1 + p_2n_2 + ... + p_kn_k\}.\]
-						When it is clear which semigroup we are referring to, we simply write $\mathsf{Z}_S(n)$.
-					\end{defn}
-					</LATEX>
-				</div>
-				<span class="nsHover" id="lengthSet">length sets</span>, 
-				<div class="nsDef" id="lengthSetDefn">
-					<LATEX>
-					\begin{defn}
-						The \emph{length set} of an integer $n \in S$ is 
-						\[\mathsf{L}_S(n) = \{|\mathbf{p}| : \mathbf{p} = (p_1, p_2, ..., p_k) \in \mathsf{Z}_S(n) \}.\]
-						When there is no ambiguity, we simply write $\mathsf{L}(n)$.
-					\end{defn}
-					</LATEX>
-				</div>
-				and <span class="nsHover" id="gaps">gaps</span>.
-				<div class="nsDef" id="gapsDefn">
-					<LATEX>
-					\begin{defn}
-						Let $S$ be a numerical semigroup, then we define the gaps of $S$ as the set
-						\[\{i : i \in &#8469;_0 \mbox{ and } i \notin S\}.\]
-					\end{defn}
-					</LATEX>
-				</div>
-				I have worked several projects that were centered around the factorization set and length set of a numerical semigroup. 
-				<br>
-				&emsp;Currently, I have shifted my focus to examine the gaps of a numerical semigroup. 
-				This project is centered on the game <i><a href="SylverCoinage/SylverCoinageHome.html">Sylver Coinage</a></i>, and attempts to tackle the problem with the lens of a numerical semigroup. 
-				I am actively building towards a competition where the competitors submit bots to play the game Sylver Coinage, and the winner is the bot with the best overall score.
-				This project has required me to develop serveral pieces of code for working with numerical semigroups in Javascript and Python<sup><a href="https://github.com/gilad-moskowitz/numericalSemigroupPackage">1</a></sup>.
-				<br>
-				&emsp;Beyond numerical semigroups, I have also explored other areas of mathematics, including toying around with factorization algorithms, using machine learning to try and predict properties of the integers, and a few cryptography related projects.
-				Additionally, I truly enjoy teaching mathematics and am in the process of writting up notes to introduce students to proof based mathematics. 
-				I hope one day to put together an introductory Algebra textbook for elementry school students, but I know that this will be a long and timely endeavor. 
 			</div>
 		</div>
 	</div>
@@ -156,8 +205,63 @@ var hideCount = 0;
 var menuCount = 0;
 var scrolled = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
 var theWindowWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+var clickedMath = false;
+var clickedTravels = false;
 
 /** Displaying on Click **/
+function showMathInterests() {
+	if(!clickedMath){
+		document.getElementById("fullDescription").style.opacity = '0';
+		document.getElementById("fullDescription").style.height = '0';
+		document.getElementById("fullDescription").style.overflow = 'hidden';
+		document.getElementById("mathArrow").style.transform = "rotate(0deg)";
+	}
+	else{
+		document.getElementById("fullDescription").style.opacity = '1';
+		document.getElementById("fullDescription").style.height = 'auto';
+		document.getElementById("fullDescription").style.overflow = 'initial';
+		document.getElementById("mathArrow").style.transform = "rotate(-90deg)";
+	}
+}
+
+function toggleMathInterest(){
+	if(!clickedMath){
+		clickedMath = true;
+		showMathInterests();
+	}
+	else{
+		clickedMath = false;
+		showMathInterests();
+	}
+}
+
+
+function showWorldTravels() {
+	if(!clickedTravels){
+		document.getElementById("travelsDescription").style.opacity = '0';
+		document.getElementById("travelsDescription").style.height = '0';
+		document.getElementById("travelsDescription").style.overflow = 'hidden';
+		document.getElementById("travelsArrow").style.transform = "rotate(0deg)";
+	}
+	else{
+		document.getElementById("travelsDescription").style.opacity = '1';
+		document.getElementById("travelsDescription").style.height = 'auto';
+		document.getElementById("travelsDescription").style.overflow = 'initial';
+		document.getElementById("travelsArrow").style.transform = "rotate(-90deg)";
+	}
+}
+
+function toggleWorldTravels(){
+	if(!clickedTravels){
+		clickedTravels = true;
+		showWorldTravels();
+	}
+	else{
+		clickedTravels = false;
+		showWorldTravels();
+	}
+}
+
 /** DISPLAY NUMERICAL SEMIGROUP DEFINITION **/
 function hideDefinition(stringo) {
 	if(hideCount > 0){
@@ -295,6 +399,62 @@ function checkWidthLink(){
 
 
 </script>
+
+
+<script>
+/** SLIDESHOW FUNCTIONALITY **/
+var slideIndex = 1;
+var descript = document.getElementsByClassName("picDesc");
+var slides = document.getElementsByClassName("mySlides");
+var dots = document.getElementsByClassName("dot");
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+	var i;
+	if (n > slides.length) {slideIndex = 1}    
+	if (n < 1) {slideIndex = slides.length}
+	for (i = 0; i < slides.length; i++) {
+		slides[i].style.display = "none";  
+		slides[i].style.height = "0";
+	}
+	for (i = 0; i < dots.length; i++) {
+		dots[i].className = dots[i].className.replace(" activeDot", "");
+	}
+	slides[slideIndex-1].style.display = "initial";  
+	slides[slideIndex-1].style.height = "auto";
+	slides[slideIndex-1].style.width = "100%";
+	slides[slideIndex-1].onmouseover = showDesc;
+	slides[slideIndex-1].onmouseout = removeDesc;
+	dots[slideIndex-1].className += " activeDot";
+}
+
+for(i = 0; i<slides.length;i++) {
+	
+}
+
+var showDesc = function showDescription() {
+	corresponding = parseInt(this.id);
+	descript[corresponding - 1].style.maxHeight = '100px';
+}
+
+
+var removeDesc = function removeDescription() {
+	corresponding = parseInt(this.id);
+	descript[corresponding - 1].style.maxHeight = '0';
+}
+
+
+</script>
+
+
 
 </body>
 
