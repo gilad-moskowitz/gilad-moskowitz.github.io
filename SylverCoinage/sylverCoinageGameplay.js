@@ -889,6 +889,14 @@ function checkIfBotAvailable() {
 	}
 }
 
+/* CODE FOR USER UPLOAD */
+var __count = 0;
+const __detectInfiniteLoop = () => {
+	if(__count > 10000000) {
+		throw new Error('Infinite Loop detected');
+	}
+	__count += 1;
+}
 
 /** Setting the page theme and coloration **/
 var currentTheme = "lightmode";

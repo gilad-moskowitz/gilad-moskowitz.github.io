@@ -473,6 +473,9 @@ function parseScriptAndFix(theScript) {
 	let position = 0;
 	let stillGoing = true;
 	let stillGoing2 = true;
+	let theFirstFunction = newString.indexOf("myNewBot");
+	let theFirstInsert = newString.indexOf("{", theFirstFunction);
+	newString = newString.substr(0, theFirstInsert) + "{__count = 0;" + newString.substr(theFirstInsert + 1);
 	var replacement = "{__detectInfiniteLoop();"
 	while(stillGoing){
 		let whilePosition = newString.indexOf("while", position);
