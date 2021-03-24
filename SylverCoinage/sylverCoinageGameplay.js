@@ -299,8 +299,8 @@ function gameNotComplete(list){
 function alwaysOddBot(){
     if (movesPlayed.length == 0){
         let possibility = getRandomInt(1, 7);
-		let primes = [5, 5, 7, 11, 13, 17, 19, 23];
-		return primes[possibility];
+        let primes = [5, 5, 7, 11, 13, 17, 19, 23];
+        return primes[possibility];
     }
     else if (movesPlayed.includes(3) && !movesPlayed.includes(2)){
         return 2;
@@ -310,6 +310,39 @@ function alwaysOddBot(){
     }
     else if (movesPlayed.includes(2) && movesPlayed.includes(3)){
         return parseInt(1);
+    }
+    if((movesPlayed.length == 1) && (movesPlayed.includes(4))){
+        return 6;
+    }
+    else if((movesPlayed.length == 1) && (movesPlayed.includes(6))){
+        return 4;
+    }
+    if(movesPlayed.length >= 2){
+        let fourFiveEleven = [0, 0, 0];
+        let arrayOf4511 = [4, 5, 11];
+        for(let i = 0; i < movesPlayed.length; i++){
+            let currentTest = parseInt(movesPlayed[i]);
+            if(currentTest == 4){
+                fourFiveEleven[0] = 1;
+            }
+            if(currentTest == 5){
+                fourFiveEleven[1] = 1;
+            }
+            if(currentTest == 11){
+                fourFiveEleven[2] = 1;
+            }
+        }
+        let currentThree = 0;
+        for(let j = 0; j < 3; j++){
+            currentThree += fourFiveEleven[j];
+        }
+        if((currentThree == 2) && (!movesPlayed.includes(6)) && (!movesPlayed.includes(7))){
+            for(let f = 0; f < 3; f++){
+                if(fourFiveEleven[f] == 0){
+                    return arrayOf4511[f];
+                }
+            }
+        }
     }
     if ((currentGCD > 1) && (movesPlayed.length == 1)){
         let factor = PrimeFactorization(parseInt(movesPlayed[0]))
@@ -370,10 +403,10 @@ function alwaysOddBot(){
 }
 
 function alwaysMaxBot() {
-	if (movesPlayed.length == 0){
+    if (movesPlayed.length == 0){
         let possibility = getRandomInt(1, 7);
-		let primes = [5, 5, 7, 11, 13, 17, 19, 23];
-		return primes[possibility];
+        let primes = [5, 5, 7, 11, 13, 17, 19, 23];
+        return primes[possibility];
     }
     else if (movesPlayed.includes(3) && !movesPlayed.includes(2)){
         return 2;
@@ -383,6 +416,39 @@ function alwaysMaxBot() {
     }
     else if (movesPlayed.includes(2) && movesPlayed.includes(3)){
         return parseInt(1);
+    }
+    if((movesPlayed.length == 1) && (movesPlayed.includes(4))){
+        return 6;
+    }
+    else if((movesPlayed.length == 1) && (movesPlayed.includes(6))){
+        return 4;
+    }
+    if(movesPlayed.length >= 2){
+        let fourFiveEleven = [0, 0, 0];
+        let arrayOf4511 = [4, 5, 11];
+        for(let i = 0; i < movesPlayed.length; i++){
+            let currentTest = parseInt(movesPlayed[i]);
+            if(currentTest == 4){
+                fourFiveEleven[0] = 1;
+            }
+            if(currentTest == 5){
+                fourFiveEleven[1] = 1;
+            }
+            if(currentTest == 11){
+                fourFiveEleven[2] = 1;
+            }
+        }
+        let currentThree = 0;
+        for(let j = 0; j < 3; j++){
+            currentThree += fourFiveEleven[j];
+        }
+        if((currentThree == 2) && (!movesPlayed.includes(6)) && (!movesPlayed.includes(7))){
+            for(let f = 0; f < 3; f++){
+                if(fourFiveEleven[f] == 0){
+                    return arrayOf4511[f];
+                }
+            }
+        }
     }
     if ((currentGCD > 1) && (movesPlayed.length == 1)){
         let factor = PrimeFactorization(parseInt(movesPlayed[0]))
@@ -414,10 +480,10 @@ function alwaysMaxBot() {
 }
 
 function alwaysMinBot() {
-	if (movesPlayed.length == 0){
+    if (movesPlayed.length == 0){
         let possibility = getRandomInt(1, 7);
-		let primes = [5, 5, 7, 11, 13, 17, 19, 23];
-		return primes[possibility];
+        let primes = [5, 5, 7, 11, 13, 17, 19, 23];
+        return primes[possibility];
     }
     else if (movesPlayed.includes(3) && !movesPlayed.includes(2)){
         return 2;
@@ -427,6 +493,39 @@ function alwaysMinBot() {
     }
     else if (movesPlayed.includes(2) && movesPlayed.includes(3)){
         return parseInt(1);
+    }
+    if((movesPlayed.length == 1) && (movesPlayed.includes(4))){
+        return 6;
+    }
+    else if((movesPlayed.length == 1) && (movesPlayed.includes(6))){
+        return 4;
+    }
+    if(movesPlayed.length >= 2){
+        let fourFiveEleven = [0, 0, 0];
+        let arrayOf4511 = [4, 5, 11];
+        for(let i = 0; i < movesPlayed.length; i++){
+            let currentTest = parseInt(movesPlayed[i]);
+            if(currentTest == 4){
+                fourFiveEleven[0] = 1;
+            }
+            if(currentTest == 5){
+                fourFiveEleven[1] = 1;
+            }
+            if(currentTest == 11){
+                fourFiveEleven[2] = 1;
+            }
+        }
+        let currentThree = 0;
+        for(let j = 0; j < 3; j++){
+            currentThree += fourFiveEleven[j];
+        }
+        if((currentThree == 2) && (!movesPlayed.includes(6)) && (!movesPlayed.includes(7))){
+            for(let f = 0; f < 3; f++){
+                if(fourFiveEleven[f] == 0){
+                    return arrayOf4511[f];
+                }
+            }
+        }
     }
     if ((currentGCD > 1) && (movesPlayed.length == 1)){
         let factor = PrimeFactorization(parseInt(movesPlayed[0]))
@@ -461,10 +560,10 @@ function alwaysMinBot() {
 }
 
 function alwaysRandomBot() {
-	if (movesPlayed.length == 0){
+    if (movesPlayed.length == 0){
         let possibility = getRandomInt(1, 7);
-		let primes = [5, 5, 7, 11, 13, 17, 19, 23];
-		return primes[possibility];
+        let primes = [5, 5, 7, 11, 13, 17, 19, 23];
+        return primes[possibility];
     }
     else if (movesPlayed.includes(3) && !movesPlayed.includes(2)){
         return 2;
@@ -474,6 +573,39 @@ function alwaysRandomBot() {
     }
     else if (movesPlayed.includes(2) && movesPlayed.includes(3)){
         return parseInt(1);
+    }
+    if((movesPlayed.length == 1) && (movesPlayed.includes(4))){
+        return 6;
+    }
+    else if((movesPlayed.length == 1) && (movesPlayed.includes(6))){
+        return 4;
+    }
+    if(movesPlayed.length >= 2){
+        let fourFiveEleven = [0, 0, 0];
+        let arrayOf4511 = [4, 5, 11];
+        for(let i = 0; i < movesPlayed.length; i++){
+            let currentTest = parseInt(movesPlayed[i]);
+            if(currentTest == 4){
+                fourFiveEleven[0] = 1;
+            }
+            if(currentTest == 5){
+                fourFiveEleven[1] = 1;
+            }
+            if(currentTest == 11){
+                fourFiveEleven[2] = 1;
+            }
+        }
+        let currentThree = 0;
+        for(let j = 0; j < 3; j++){
+            currentThree += fourFiveEleven[j];
+        }
+        if((currentThree == 2) && (!movesPlayed.includes(6)) && (!movesPlayed.includes(7))){
+            for(let f = 0; f < 3; f++){
+                if(fourFiveEleven[f] == 0){
+                    return arrayOf4511[f];
+                }
+            }
+        }
     }
     if ((currentGCD > 1) && (movesPlayed.length == 1)){
         let factor = PrimeFactorization(parseInt(movesPlayed[0]))
