@@ -9,7 +9,7 @@
 <link rel ="stylesheet" type="text/css" href="sylverCoinageStyle.css">
 
 </head>
-<body class="light-theme || dark-theme" onload="setTheme(); settingTheGameUp(); checkIfBotAvailable();">
+<body class="light-theme || dark-theme" onload="setTheme(); settingTheGameUp(); checkIfBotAvailable(); showReferences();">
 <!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
 <nav id="navBar">
 	<ul>
@@ -68,6 +68,17 @@
 					The first player to name the number 1 loses</li><li>
 					For the benefit of the players, this version of the game allows you to make an illegal move (i.e. name an integer that CAN be made as a linear combination of previously named integers) up to 2 times. On the third time making this mistake, you automatically choose 1 and lose.</li>
 				</ul>
+			</div>
+			<div class='wholePage' id="refs">
+				<div class="clickMeToShow" onclick="toggleReferences();"><h3 id="references">Additional Resources<div class="arrow" id="refArrow"></div></h3></div>
+				<div id="fullDescription">
+					<ul>
+						<li><a href='https://userpages.monmouth.com/~colonel/sylver/' target="_blank">The Colonel's Website</a>, a hub for all things Sylver</li>
+						<li><a href='https://en.wikipedia.org/wiki/Sylver_coinage' target="_blank">Sylver Coinage Wiki</a>, the Wikipedia page for Sylver Coinage</li>
+						<li><i>Winning Ways for Your Mathematical Plays</i>, chapter 18 'The Emperor and His Money', by Berlekamp, Conway, and Guy</li>
+						<li><i>Numerical Semigroups and the Game of Sylver Coinage</i>, American Mathematical Monthly, by Eaton, Herzinger, Pierce, and Thompson</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		<div class='wholePage'>
@@ -135,6 +146,38 @@ document.body.addEventListener("click", removeCheck);
 <script>
 function unavailable() {
 	document.getElementById("testBot").style.cursor = "not-allowed";
+}
+</script>
+
+<script>
+var clickedRefs = false;
+/** Displaying on Click **/
+function showReferences() {
+	if(!clickedRefs){
+		document.getElementById("fullDescription").style.opacity = '0';
+		document.getElementById("fullDescription").style.height = '0';
+		document.getElementById("fullDescription").style.paddingBottom = '0';
+		document.getElementById("fullDescription").style.overflow = 'hidden';
+		document.getElementById("refArrow").style.transform = "rotate(0deg)";
+	}
+	else{
+		document.getElementById("fullDescription").style.opacity = '1';
+		document.getElementById("fullDescription").style.height = 'auto';
+		document.getElementById("fullDescription").style.paddingBottom = '35px';
+		document.getElementById("fullDescription").style.overflow = 'initial';
+		document.getElementById("refArrow").style.transform = "rotate(-90deg)";
+	}
+}
+
+function toggleReferences(){
+	if(!clickedRefs){
+		clickedRefs = true;
+		showReferences();
+	}
+	else{
+		clickedRefs = false;
+		showReferences();
+	}
 }
 </script>
 

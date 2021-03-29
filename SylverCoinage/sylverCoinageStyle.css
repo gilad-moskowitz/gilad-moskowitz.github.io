@@ -281,6 +281,31 @@ nav li a:hover {
 	padding-bottom: 10px;
 }
 
+
+#references {
+	border-bottom: 2px solid #000;
+}
+
+.clickMeToShow:hover {
+	cursor: pointer;
+}
+
+#fullDescription {
+	transition: 0.5s opacity ease-in;
+}
+
+
+.arrow{
+  width: 0; 
+  height: 0; 
+  border-right: 10px solid black;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  float: right;
+  margin-right: 10px;
+  transition: 0.4s;
+}
+
 /** TRYING TO DO MEDIA STUFF **/
 .collapsible-menu {
 	display: none;
