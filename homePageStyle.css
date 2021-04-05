@@ -1,3 +1,23 @@
+body.dark-theme{
+	--bkg-color: #000000;
+	--text-color: #FFF;
+	--text-color-new: #a9a9d6;
+	--text-color-url: #FFF;
+	--text-area-color: #999;
+	--centered-text-color: #FFF;
+	--button-color: #607d8b;
+	--wrapper-color: #333;
+	--wrapper-color-old: #536878;
+	--button-hover-color: #5353ac;
+	--toggle-switch-bkg-color: #b3cce6;
+	--toggle-slider-bkg-color: #407dbf;
+	--toggle-switch-bkg-hover-color: #FFF;
+	--nav-bkg-color: #000;
+	--nav-button-color: #5353ac;
+	--nav-text-color: #FFF;
+	--top-of-page: transparent;
+}
+
 body.light-theme{
 	--bkg-color: #FFF;
 	--text-color: #737373;
@@ -18,25 +38,6 @@ body.light-theme{
 	--top-of-page: transparent;
 }
 
-body.dark-theme{
-	--bkg-color: #000000;
-	--text-color: #FFF;
-	--text-color-new: #a9a9d6;
-	--text-color-url: #FFF;
-	--text-area-color: #999;
-	--centered-text-color: #FFF;
-	--button-color: #607d8b;
-	--wrapper-color: #333;
-	--wrapper-color-old: #536878;
-	--button-hover-color: #5353ac;
-	--toggle-switch-bkg-color: #b3cce6;
-	--toggle-slider-bkg-color: #407dbf;
-	--toggle-switch-bkg-hover-color: #FFF;
-	--nav-bkg-color: #000;
-	--nav-button-color: #5353ac;
-	--nav-text-color: #FFF;
-	--top-of-page: transparent;
-}
 
 /** Old Color Scheme **/
 /**
@@ -257,17 +258,21 @@ nav li a:hover {
 	transform-origin: 0 0;
 	float: left;
 }
+#mainImage:hover {
+	cursor: pointer;
+}
 
 #fullPagefill {
-	line-height: 1.3;
+	line-height: 1.4;
 }
 
 #mathBackground {
-	line-height: 1.6;
+	line-height: 1.4;
 }
 
 #worldTravels {
 	padding-bottom: 4vw;
+	line-height: 1.4;
 }
 
 #additionalText {
@@ -349,6 +354,7 @@ nav li a:hover {
   transition: 0.4s;
 }
 
+
 /** OLD CODE THAT WORKS WITH OLD INDEX FILE
 #introduce {
 	white-space: wrap;
@@ -402,7 +408,6 @@ nav li a:hover {
 #prev:hover, #next:hover {
 	background-color: rgba(0,0,0,0.8);
 }
-
 /* Caption text */
 .picDesc {
 	color: #f2f2f2;

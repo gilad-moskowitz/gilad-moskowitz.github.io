@@ -13,7 +13,7 @@
 
 
 </head>
-<body class="dark-theme || light-theme" onload="setTheme(); changeTopDisplay(); showMathInterests(); showWorldTravels(); showSlides(slideIndex);">
+<body class="light-theme" onload="setTheme(); changeTopDisplay(); showMathInterests(); showWorldTravels(); showSlides(slideIndex);">
 <!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
 <nav id="navBar">
 	<ul>
@@ -23,7 +23,7 @@
 		<a href="https://github.com/gilad-moskowitz">github</a></li>
 		<li><div id="revealOnHover">
 			<label class="switch" onchange = "toggleTheme()">
-			<input type="checkbox" id="darkModeSwitch" checked>
+			<input type="checkbox" id="darkModeSwitch">
 			<span class="slider"></span>
 			</label>
 		</li>
@@ -56,7 +56,7 @@
 		<div id="fullPage">
 			<div class='halfPage'>
 				<h2>About Me</h2>
-				<div class = "myImg"><a href="#mathBackground"><img src="myImage.jpg" id="mainImage"></a></div>
+				<div class = "myImg" onclick="moveToMath();"><img src="myImage.jpg" id="mainImage"></div>
 			</div>
 			<div class='halfPage'>
 				<p id="fullPagefill">
@@ -150,13 +150,13 @@
 					<br>
 					<div class="slideshow-container">
 						<div class="mySlides" id="1">
-							<img src="pictures/osteria.jpg" style="width:100%">
-							<div class="picDesc"><div class="textDesc">Taken at Osteria Francescana in Modena, Italy.</div>
+							<img src="pictures/stonehenge.jpg" style="width:100%">
+							<div class="picDesc"><div class="textDesc">Taken at Stonehenge during one of my trips to the UK.</div>
 							</div>
 						</div>
 						<div class="mySlides" id="2">
-							<img src="pictures/stonehenge.jpg" style="width:100%">
-							<div class="picDesc"><div class="textDesc">Taken at Stonehenge during one of my trips to the UK.</div>
+							<img src="pictures/osteria.jpg" style="width:100%">
+							<div class="picDesc"><div class="textDesc">Taken at Osteria Francescana in Modena, Italy.</div>
 							</div>
 						</div>
 						<div class="mySlides" id="3">
@@ -232,6 +232,16 @@ function toggleMathInterest(){
 	else{
 		clickedMath = false;
 		showMathInterests();
+	}
+}
+
+function moveToMath(){
+	if(clickedMath){
+		location.href = "#mathBackground";
+	}
+	else{
+		toggleMathInterest();
+		location.href = "#mathBackground";
 	}
 }
 
@@ -407,7 +417,12 @@ var slideIndex = 1;
 var descript = document.getElementsByClassName("picDesc");
 var slides = document.getElementsByClassName("mySlides");
 var dots = document.getElementsByClassName("dot");
+var previousB = document.getElementById("prev");
+var nextB = document.getElementById("next");
+var isHovered = false;
 showSlides(slideIndex);
+
+
 
 function plusSlides(n) {
   showSlides(slideIndex += n);
@@ -434,20 +449,28 @@ function showSlides(n) {
 	slides[slideIndex-1].onmouseover = showDesc;
 	slides[slideIndex-1].onmouseout = removeDesc;
 	dots[slideIndex-1].className += " activeDot";
+	if(isHovered) {descript[slideIndex-1].style.maxHeight = '100px';}
 }
 
-
 var showDesc = function showDescription() {
-	corresponding = parseInt(this.id);
-	descript[corresponding - 1].style.maxHeight = '100px';
+	descript[slideIndex-1].style.maxHeight = '100px';
+	isHovered = true;
 }
 
 
 var removeDesc = function removeDescription() {
-	corresponding = parseInt(this.id);
-	descript[corresponding - 1].style.maxHeight = '0';
+	descript[slideIndex-1].style.maxHeight = '0';
+	isHovered = false;
 }
 
+for(i = 0; i < dots.length; i++){
+	dots[i].onmouseover = showDesc;
+	dots[i].onmouseout = removeDesc;
+}
+previousB.onmouseover = showDesc;
+previousB.onmouseout = removeDesc;
+nextB.onmouseover = showDesc;
+nextB.onmouseout = removeDesc;
 
 </script>
 
