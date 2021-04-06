@@ -937,7 +937,7 @@ function addTable() {
 				remainingGaps = [...newGappies];
 				movesPlayed.push(newlyPlayed);
 				checkGameState();
-				playBotMove();
+				if(playingBot){playBotMove();}
 			}
 		
 		var removeHighlight = function removingHighlights() {
