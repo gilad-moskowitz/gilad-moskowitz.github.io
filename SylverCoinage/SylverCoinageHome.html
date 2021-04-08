@@ -82,8 +82,8 @@
 			</div>
 		</div>
 		<div class='wholePage'>
-			<button type="button" onclick="playVSHuman()" id="playHuman" class="gameStartButton">Play Human</button>
-			<button type="button" onclick="playVSBot()" id="playBot" class="gameStartButton">Play Bot</button>
+			<button type="button" onclick="playVSHuman(); location.href = '#'" id="playHuman" class="gameStartButton">Play Human</button>
+			<button type="button" onclick="playVSBot(); location.href = '#'" id="playBot" class="gameStartButton">Play Bot</button>
 		</div>
 		<div class='wholePage'>
 			<button type="button" onclick="location.href='sylverCoinageUploadBot.html';" id="uploadBot" class="gameStartButton">Upload (local) Bot</button>
@@ -91,7 +91,7 @@
 		</div>
 		<div id="firstPart">
 			<button type="button" onclick="restartGame()">Restart</button>
-			<button type="button" onclick="resetGame()">Reset (choose oponenent)</button>
+			<button type="button" onclick="resetGame(); location.href = ''">Reset (choose oponenent)</button>
 			<br>
 			<div id="selectBot">
 			<br>

@@ -295,6 +295,336 @@ function gameNotComplete(list){
         return true;
 }
 
+
+
+
+
+/** SPECIAL CODE FOR THE BEST BOT (NO ACTUAL ACCESS TO PLAY AGAINST IT YET **/
+/** SPECIAL CODE FOR THE BEST BOT (NO ACTUAL ACCESS TO PLAY AGAINST IT YET **/
+/** SPECIAL CODE FOR THE BEST BOT (NO ACTUAL ACCESS TO PLAY AGAINST IT YET **/
+/** SPECIAL CODE FOR THE BEST BOT (NO ACTUAL ACCESS TO PLAY AGAINST IT YET **/
+function coversRelations(gap){
+    let linComb = []
+    for(let j = 0; j < Math.max(...gap); j++){
+        if(!gap.includes(j)){
+            linComb.push(j);
+        }
+    }
+    let dictionary = {};
+    for (let i = 0; i < gap.length; i++){
+        let covers = [];
+        for (let j = i + 1; j < gap.length; j++){
+            for (let k = 0; k < linComb.length; k++){
+                if(gap[j] - linComb[k] < gap[i])
+                    break;
+                if(((gap[j] - linComb[k]) > 0) && ((gap[j] - linComb[k])%gap[i] == 0)){
+                    covers.push(gap[j]);
+                    break;
+                }
+            }
+        }
+        dictionary[gap[i]] = covers;
+    }
+    return dictionary
+}
+
+
+// NEW CODE BELOW:
+function pretendMove(gaps, pretend){
+    let pretendCovers = coversRelations(gaps);
+    let newyGaps = [];
+    for(let current = 0; current < gaps.length; current++){
+        if((!pretendCovers[pretend].includes(gaps[current])) && (gaps[current] != pretend))
+            newyGaps.push(gaps[current]);
+    }
+    return newyGaps;
+}
+
+function singletons(gaps, alreadyPair = []){
+    let covers = coversRelations(gaps);
+    let singles = [];
+    for(let f = 0; f < gaps.length; f++){
+        let isSingle = true;
+        for(let g = f + 1; g < gaps.length; g++){
+            if(!covers[gaps[f]].includes(gaps[g])){
+                isSingle = false;
+                break;
+            }
+        }
+        if(alreadyPair.includes(gaps[f]))
+            isSingle = false;
+        if(isSingle){
+            singles.push(gaps[f]);
+        }
+    }
+    let nonSingle = [];
+    for(let testing = 0; testing < gaps.length; testing++){
+        if(!singles.includes(gaps[testing]))
+            nonSingle.push(gaps[testing]);
+    }
+    if(((nonSingle.length)%2 != 0) && (singles.length > 1))
+        singles.splice(1, 1);
+    singles.sort(function(a, b) { return a - b; });
+    return singles;
+}
+
+function pairings(gaps){
+    let nextStage = [];
+    let possibles = [];
+    let firstCheckFind = false;
+    let isPairing = true;
+    let singleLadies = singletons(gaps)
+    let tempGaps = gaps.slice(1, gaps.length);
+    let newGaps = gaps;
+    let covers = coversRelations(gaps);
+    let pairs = [];
+    let alreadyPaired = [];
+    let notPairs = [];
+    let start = 0;
+    let end = tempGaps.length;
+    let noNewSingles = true;
+    while(start < end){
+        let a = parseInt(tempGaps[start]);
+        nextStage = pretendMove(newGaps, a);
+        firstCheckFind = false;
+        if((alreadyPaired.length) > 0){
+            covers = coversRelations(nextStage);
+            for(let checkingPair = 0; checkingPair < nextStage.length; checkingPair++){
+                let g = parseInt(nextStage[checkingPair]);
+                if((g > a) && (!alreadyPaired.includes(g))){
+                    let remaining = []
+                    for(let rem = 0; rem < nextStage.length; rem++){
+                        if((parseInt(nextStage[rem]) > 1) && (!covers[g].includes(parseInt(nextStage[rem]))) && (g != parseInt(nextStage[rem])))
+                            remaining.push(parseInt(nextStage[rem]));
+                    }
+                    if((remaining.length)%2 != 0)
+                        continue;
+                    isPairing = true;
+                    for(let b = 0; b < remaining.length; b++){
+                        if(!alreadyPaired.includes(parseInt(remaining[b]))){
+                            isPairing = false;
+                            break
+                        }
+                    }
+                    if(isPairing){
+                        pairs.push([a, g]);
+                        alreadyPaired.push(a);
+                        alreadyPaired.push(g);
+                        start = 0;
+                        tempGaps.splice(tempGaps.indexOf(a), 1);
+                        tempGaps.splice(tempGaps.indexOf(g), 1);
+                        end = tempGaps.length;
+                        firstCheckFind = true;
+                        break
+                    }
+                }
+            }
+        }
+        if(!firstCheckFind) {
+            let newSingles = singletons(nextStage, alreadyPaired);
+            for (let singleCheck = 0; singleCheck < newSingles.length; singleCheck++) {
+                let g = parseInt(newSingles[singleCheck]);
+                if (tempGaps.includes(g)) {
+                    pairs.push([a, g]);
+                    alreadyPaired.push(a);
+                    alreadyPaired.push(g);
+                    start = 0;
+                    tempGaps.splice(tempGaps.indexOf(a), 1);
+                    tempGaps.splice(tempGaps.indexOf(g), 1);
+                    end = tempGaps.length;
+                    firstCheckFind = true;
+                    break
+                }
+            }
+        }
+        if(!firstCheckFind) {
+            let newSingles = singletons(nextStage, alreadyPaired);
+            let newTempGaps = [];
+            for(let i = 0; i < nextStage.length; i++){
+                if(!newSingles.includes(parseInt(nextStage[i])))
+                    newTempGaps.push(parseInt(nextStage[i]))
+            }
+            if((newTempGaps.length)%2 == 1){
+                possibles = [];
+                for(let j = 0; j < newTempGaps.length; j++){
+                    if((parseInt(newTempGaps[j]) > a) && (tempGaps.includes(parseInt(newTempGaps[j]))))
+                        possibles.push(parseInt(newTempGaps[j]));
+                }
+                if(possibles.length == 0){
+                    if(!notPairs.includes(a)){
+                        notPairs.push(a);
+                        newGaps = pretendMove(newGaps, a);
+                        tempGaps = [...newGaps];
+                        tempGaps.splice(tempGaps.indexOf(1), 1);
+                        pairs = [];
+                        alreadyPaired = [];
+                        start = 0;
+                        end = tempGaps.length;
+                    }
+                    else
+                        start += 1;
+                    continue
+                }
+                let d = Math.min(...possibles)
+                pairs.push([a, d]);
+                alreadyPaired.push(a);
+                alreadyPaired.push(d);
+                start = 0;
+                tempGaps.splice(tempGaps.indexOf(a), 1);
+                tempGaps.splice(tempGaps.indexOf(d), 1);
+                end = tempGaps.length;
+            }
+            else {
+                if(!notPairs.includes(a)){
+                    notPairs.push(a);
+                    newGaps = pretendMove(newGaps, a);
+                    tempGaps = [...newGaps];
+                    tempGaps.splice(tempGaps.indexOf(1), 1);
+                    pairs = [];
+                    alreadyPaired = [];
+                    start = 0;
+                    end = tempGaps.length;
+                }
+                else
+                    start += 1;
+            }
+        }
+    }
+    let newEnd = notPairs.length;
+    while(newEnd > 1){
+        pairs.push([notPairs[0], notPairs[1]]);
+        notPairs.splice(0, 2);
+        newEnd = notPairs.length;
+    }
+    return [pairs, notPairs, singleLadies];
+}
+
+function maybeSolved(){
+    let remainingMoves = remainingGaps;
+    let alreadyMoved = movesPlayed;
+    let myPairs = [];
+    if((alreadyMoved.length == 1) && (alreadyMoved.includes(4))){
+        return 6;
+    }
+    else if((alreadyMoved.length == 1) && (alreadyMoved.includes(6))){
+        return 4;
+    }
+    if((remainingMoves.length > 0) && (remainingMoves.length < 100) && (alreadyMoved.length != 0)){
+        myPairs = pairings(remainingMoves);
+        if(myPairs[1].length > 0) {
+            return Math.min(myPairs[1]);
+        }
+        else{
+            //DO WHENEVER WE DON'T KNOW WHAT ELSE TO DO
+            if(remainingMoves.length%2 == 0)
+                return Math.max(...remainingMoves);
+            let thisValue = remainingMoves.length - 1;
+            let linearCombis = [];
+            for (let i = 0; i < Math.max(...remainingMoves); i++){
+                if (!remainingMoves.includes(i))
+                    linearCombis.push(i);
+            }
+            while(thisValue > 0){
+                let pretendMove = remainingMoves[thisValue];
+                if (pretendMove < 4)
+                    return Math.max(...remainingMoves);
+                let positionForOpponent = [];
+                for(let x = 0; x < remainingMoves.length; x++){
+                    let x_stays = true;
+                    for(let y = 0; y < linearCombis.length; y++){
+                        if(((remainingMoves[x] - linearCombis[y]) >= 0) && ((remainingMoves[x] - linearCombis[y])%pretendMove == 0)){
+                            x_stays = false;
+                            break;
+                        }
+                    }
+                    if(x_stays)
+                        positionForOpponent.push(remainingMoves[x]);
+                }
+                if(positionForOpponent.length%2 != 0)
+                    return pretendMove;
+                else
+                    thisValue--;
+            }
+            return Math.max(...remainingMoves);
+        }
+    }
+    else if (alreadyMoved.length == 0){
+        let possibility = getRandomInt(1, 8);
+        let primes = [5, 5, 7, 11, 13, 17, 19, 23, 29];
+        return primes[possibility];
+    }
+    else if ((currentGCD > 1) && (alreadyMoved.length == 1)){
+        let factor = PrimeFactorization(parseInt(alreadyMoved[0]))
+        if ((factor.length == 1) && (parseInt(alreadyMoved[0]) > 10))
+            return 9;
+        else if (factor.length == 1)
+            return (parseInt(alreadyMoved[0]) + 1);
+        else{
+            for(let e = 0; e < factor.length; e++){
+                if(parseInt(factor[e]) > 3)
+                    return parseInt(factor[e]);
+            }
+            if(parseInt(alreadyMoved[0]) > 16)
+                return 16;
+            else
+                return (parseInt(alreadyMoved[0]) + 1);
+        }
+    }
+    else{
+        let gcd_moves = gcd_list(alreadyMoved);
+        let newSet = []
+        for(let i = 0; i < alreadyMoved.length; i++){
+            newSet.push(alreadyMoved[i]/gcd_moves);
+        }
+        remainingMoves = gaps(ListByGensUpToE(newSet));
+        if((remainingMoves.length <= 1) && (gcd_moves > 1)){
+            return (gcd_moves*2 + 1);
+        }
+        else{
+            //DO WHENEVER WE DON'T KNOW WHAT ELSE TO DO
+            if(remainingMoves.length%2 == 0)
+                return Math.max(...remainingMoves);
+            let thisValue = remainingMoves.length - 1;
+            let linearCombis = [];
+            for (let i = 0; i < Math.max(...remainingMoves); i++){
+                if (!remainingMoves.includes(i))
+                    linearCombis.push(i);
+            }
+            while(thisValue > 0){
+                let pretendMove = remainingMoves[thisValue];
+                if (pretendMove < 4)
+                    return Math.max(...remainingMoves);
+                let positionForOpponent = [];
+                for(let x = 0; x < remainingMoves.length; x++){
+                    let x_stays = true;
+                    for(let y = 0; y < linearCombis.length; y++){
+                        if(((remainingMoves[x] - linearCombis[y]) >= 0) && ((remainingMoves[x] - linearCombis[y])%pretendMove == 0)){
+                            x_stays = false;
+                            break;
+                        }
+                    }
+                    if(x_stays)
+                        positionForOpponent.push(remainingMoves[x]);
+                }
+                if(positionForOpponent.length%2 != 0)
+                    return pretendMove;
+                else
+                    thisValue--;
+            }
+            return Math.max(...remainingMoves);
+        }
+    }
+}
+/** SPECIAL CODE FOR THE BEST BOT (NO ACTUAL ACCESS TO PLAY AGAINST IT YET **/
+/** SPECIAL CODE FOR THE BEST BOT (NO ACTUAL ACCESS TO PLAY AGAINST IT YET **/
+/** SPECIAL CODE FOR THE BEST BOT (NO ACTUAL ACCESS TO PLAY AGAINST IT YET **/
+/** SPECIAL CODE FOR THE BEST BOT (NO ACTUAL ACCESS TO PLAY AGAINST IT YET **/
+
+
+
+
+
+
 /** Code for bots **/
 function alwaysOddBot(){
     if (movesPlayed.length == 0){
@@ -974,7 +1304,7 @@ function coverRelations(gap, linComb){
         let covers = [];
         for (let j = i + 1; j < gap.length; j++){
             for (let k = 0; k < linComb.length; k++){
-                if(gaps[j] - linComb[k] < gap[i])
+                if(gap[j] - linComb[k] < gap[i])
                     break;
                 if(((gap[j] - linComb[k]) > 0) && ((gap[j] - linComb[k])%gap[i] == 0)){
                     covers.push(gap[j]);
