@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title> Sylver Coinage </title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel ="stylesheet" type="text/css" href="sylverCoinageStyle.css">
+
+</head>
+<body class="light-theme || dark-theme" onload="setTheme(); settingTheGameUp(); checkIfBotAvailable(); showReferences();">
+<!-- NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+<nav id="navBar">
+	<ul>
+		<li><a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
+		<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
+		<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
+		<a href="https://github.com/gilad-moskowitz">github</a></li><li>
+		<li><div id="revealOnHover">
+			<label class="switch" onchange = "toggleTheme()">
+			<input type="checkbox" id="darkModeSwitch" checked>
+			<span class="slider"></span>
+			</label>
+		<div></li>
+	</ul>
+</nav>
+
+<div class="collapsible-menu">
+	<input type="checkbox" id="menu">
+	<label for="menu"><img src="menuicon.png" id="menuBarIcon">Menu</label>
+	<div class="menu-content">
+		<ul>
+			<li><a href="https://gilad-moskowitz.github.io/">Home</a></li><li>
+			<a class="active" href="https://gilad-moskowitz.github.io/project.html">Projects</a></li><li>
+			<a href="https://gilad-moskowitz.github.io/resume.html">Resume</a></li><li>
+			<a href="https://github.com/gilad-moskowitz">github</a></li>
+		</ul>
+	</div>
+</div>
+<!-- END NAV BAR TO BE PUT ON ALL PARTS OF SITE -->
+
+<div id="wrapper">
+	<div id="header">
+		<h1><i>2021 Annual Sylver Coinage Tournament</i></h1>
+	</div>
+	<div id="game">
+		<h3>Tournament Rules: </h3>
+		This tournament will use the standard rules which can be found on the <a href='SylverCoinageTournamentHome.html'>main tournament page</a>, but will also be restated here:
+		<ul>
+			<li>The bots must be written in Python3 and work in the environment found on the main testing package page.</li>
+			<li>The bots must have a function called 'nextMove' which is what the testing program will call</li>
+			<li>The 'nextMove' function takes in three arguments</li>
+			<ol>
+				<li>The moves played so far (array of integers)</li>
+				<li>The remaining possible moves if there is a finite number of them (array of integers or empty array if infinite remaining moves)</li>
+				<li>The remaining time the bot has for the game (float)</li>
+			</ol>
+			<li>The 'nextMove' function returns an integer as the move to play</li>
+		</ul>
+		The general tournament rules (again subject to change per tournament) are as follows:
+		<ul>
+			<li>If the 'nextMove' function returns something that is not an integer or an integer that is not a legal move, the bot loses.</li>
+			<li>The bot has a chess clock with 30 seconds total (that means that per game, the bot has 30 seconds to make all of its moves).</li>
+			<li>The largest move the bot can play is 1000000.</li>
+		</ul>
+		This will be a double round robin tournament where each match between two bots is made up of 50 games. 
+		The winner will be the bot with the most overall MATCH wins. It doesn't matter by how many games a bot wins a match. 
+		The code for each bot will be read by the tournament organizer to ensure legitimacy. 
+		
+		<h3>Prizing: </h3>
+		The winning bot will receive a cash prize of 100 USD. 
+		The top 8 bots will have their name published as part of the results of this tournament. 
+		If the owners of the bots allow it, the code for the bots will also be published.
+		
+		<h3>Results: </h3>
+		TBD
+	</div>
+</div>
+<script src="sylverCoinageGameplay.js"></script> 
+
+<script>
+var menuCount = 0;
+function removeCheck() {
+	if(menuCount > 1){
+		document.getElementById("menu").checked = false;
+		menuCount = 0;
+	}
+	else
+		menuCount ++;
+}
+document.body.addEventListener("click", removeCheck);
+</script>
+
+</body>
+
+
+
+</html>

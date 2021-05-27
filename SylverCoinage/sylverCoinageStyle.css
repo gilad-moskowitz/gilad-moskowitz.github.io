@@ -294,6 +294,19 @@ nav li a:hover {
 	transition: 0.5s opacity ease-in;
 }
 
+#tourneyInfo {
+	font-family: 'Helvetica';
+	line-height: 1.5;
+	font-size: calc(12px + 0.3vw);
+}
+
+#tourneyInfo h3 {
+	font-size: calc(15px + 0.5vw);
+}
+
+#tourneyInfo ul {
+	font-family: 'Courier';
+}
 
 .arrow{
   width: 0; 
