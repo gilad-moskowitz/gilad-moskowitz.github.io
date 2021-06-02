@@ -49,11 +49,13 @@
 			<div id="actualRules">
 				<br>
 				<h3>GAMEPLAY:</h3>
-				Sylver Coinage is a game played between two players. On each player's turn they list a positive integer that can't be made as a linear combination of the previously named numbers.
+				Sylver Coinage is a game played between two players. On each player's turn they list a positive integer that can't be made as a combination of the previously named numbers.
+				For example, if the only numbers that have been chosen are 3 and 5, then it turns out the only possible remaining numbers that can be chosen are 1, 2, 4, and 7. 
+				This is because 8 can be made up with 5 + 3, 9 can be made using three 3's, and 10 can be made using two 5's. Now, since we have 8, we also get 11 since 11 = 8 + 3 = 5 + 3 + 3, and so on. 
 				The first player to pick the number 1, loses. 
 				<ul>
 				<i>For example, if for the first move of the game, Player 1 picks 2, then Player 2 can respond with 3. 
-				We see that from here the only number that isn't a linear combination of 2 and 3 is 1, so Player 1 is forced to pick 1 and loses. 
+				We see that from here the only number that isn't a combination of 2 and 3 is 1, so Player 1 is forced to pick 1 and loses. 
 				In fact, while 2 and 3 are both still viable moves, picking one will lead to a loss if your opponent is any good.</i>
 				</ul>
 			</div>
@@ -68,7 +70,7 @@
 					<li>The 'nextMove' function takes in three arguments</li>
 					<ol>
 						<li>The moves played so far (array of integers)</li>
-						<li>The remaining possible moves if there is a finite number of them (array of integers or empty array if infinite remaining moves)</li>
+						<li>The remaining possible moves if there are a finite number of them (array of integers or empty array if infinitely many remaining moves)</li>
 						<li>The remaining time the bot has for the game (float)</li>
 					</ol>
 					<li>The 'nextMove' function returns an integer as the move to play</li>
